@@ -16,6 +16,11 @@ export const NIVELES = [
   { nombre: 'oficina', revelado: true, comicAntes: 'piso22' } // piso 22
 ];
 
+export const PENSAMIENTOS = {
+  letrasPorSegundo: 45, // velocidad con que se escriben los pensamientos de Felipito
+  permanencia: 2800 // ms que el pensamiento queda en pantalla después de terminar de escribirse
+};
+
 export const TUTORIAL = {
   resistenciaMuneco: 0.4 // segundos de chorro para derribar el cartel de práctica (T); una ráfaga dura 0,5
 };

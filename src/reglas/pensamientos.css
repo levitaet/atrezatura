@@ -1,23 +1,42 @@
-/* Pensamientos de Felipito: abajo al centro, en ámbar e itálica (la Mastermind va arriba, en verde). */
+/* Pensamientos de Felipito estilo novela visual: caja ancha abajo con retrato y pestaña de nombre.
+   Ámbar, como los pensamientos del cómic; la Mastermind habla arriba a la derecha, en verde. */
 .pensamiento-juego {
   position: absolute;
-  left: 50%;
-  bottom: 6%;
-  transform: translateX(-50%);
-  box-sizing: border-box;
-  max-width: min(34rem, 90%);
-  padding: 0.6rem 1rem;
-  border-left: 3px solid #ffd34d;
-  background: rgb(20 16 8 / 88%);
-  color: #ffe9a8;
-  font: 1.35rem/1.15 var(--fuente-texto);
+  left: 3%;
+  right: 3%;
+  bottom: 3%;
+  display: flex;
+  align-items: stretch;
+  gap: 0.9rem;
+  padding: 0.7rem;
+  border: 3px solid #ffbf60;
+  background: rgb(9 24 32 / 94%);
+  box-shadow: 4px 4px 0 #05090d;
   pointer-events: none;
+  z-index: 15;
 }
-.pensamiento-juego::before {
-  content: 'Felipito (piensa)';
-  display: block;
-  color: #ffd34d;
-  margin-bottom: .35em;
-  font: .55rem/1 var(--fuente-titulo);
+.pensamiento-juego[hidden] { display: none; }
+.vn-retrato {
+  flex: 0 0 96px;
+  height: 96px;
+  border: 3px solid #ffbf60;
+  background-color: #1c3340;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
 }
-.pensamiento-juego:empty { visibility: hidden; }
+.vn-cuerpo { position: relative; flex: 1; min-height: 96px; }
+.vn-nombre {
+  position: absolute;
+  top: -1.9rem;
+  left: -0.2rem;
+  padding: 0.35rem 0.6rem;
+  border: 3px solid #ffbf60;
+  background: #0c1926;
+  color: #ffd378;
+  font: 0.7rem/1 var(--fuente-titulo);
+}
+.vn-texto {
+  margin: 0.4rem 0 0;
+  color: #ffe09c;
+  font: clamp(1.5rem, 3vw, 2.1rem)/1.15 var(--fuente-texto);
+}

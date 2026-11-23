@@ -1,4 +1,9 @@
 import carteles from '../data/carteles.json';
+import { CAMARA } from '../config.js';
+
+// El texto del canvas se dibuja como imagen y luego lo agrandan el zoom de la cámara y el ajuste
+// a la pantalla: se renderiza a más resolución para que no se vea borroso.
+const RESOLUCION = Math.ceil(CAMARA.zoom * Math.max(2, window.devicePixelRatio || 1));
 
 /**
  * Carteles de texto (?) en el mapa: instrucciones del tutorial y detalles del escenario.
@@ -24,7 +29,8 @@ export function conectarCarteles(escena) {
         align: 'center',
         backgroundColor: '#101820cc',
         padding: { x: 6, y: 3 },
-        wordWrap: { width: 200 }
+        wordWrap: { width: 200 },
+        resolution: RESOLUCION
       })
       .setOrigin(0.5, 1)
       .setDepth(2);
