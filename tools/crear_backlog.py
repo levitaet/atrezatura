@@ -25,12 +25,15 @@ SPRINTS = [
 ]
 
 ROLES = {
-    "P1": "Prog 1 · Jugador",
-    "P2": "Prog 2 · Mundo",
-    "ART": "Arte y audio",
-    "APO": "Apoyo · Nivel y datos",
+    "P1": "Sofía · Jugador",
+    "P2": "Ciro · Mundo",
+    "ART": "Rocío · Arte y audio",
+    "APO": "Benja · Nivel y datos",
     "EQ": "Todo el equipo",
 }
+
+# Usuarios de GitHub conocidos (agregar los demás cuando se sepan)
+ASSIGNEES = {"P1": "levitaet"}
 
 LABELS = {
     "código": ("1f6feb", "Programación"),
@@ -53,8 +56,8 @@ TASKS = [
      "Elegir tono (cómico, inquietante o mezcla), nombre y look del oficinista y de la Mastermind. Anotarlo en el documento de definición.",
      ["Tono y personalidad en 2–3 frases escritas en el doc", "Boceto rápido del protagonista y la Mastermind"], []),
     ("T03", 0, "ART", ["arte", "imprescindible"], "Guía de estilo: resolución, tiles y paletas",
-     "Acordar con Prog 1: resolución del juego (propuesta 960×540), tamaño de tile (propuesta 32×32), tamaño del personaje, formato de spritesheets (PNG horizontal, frames del mismo tamaño) y paletas antes/después de la revelación.",
-     ["`docs/ESTILO.md` con tamaños, paletas y nombres de archivo", "Prog 1 confirmó los tamaños"], []),
+     "Acordar con Sofía: resolución del juego (propuesta 960×540), tamaño de tile (propuesta 32×32), tamaño del personaje, formato de spritesheets (PNG horizontal, frames del mismo tamaño) y paletas antes/después de la revelación.",
+     ["`docs/ESTILO.md` con tamaños, paletas y nombres de archivo", "Sofía confirmó los tamaños"], []),
     ("T04", 0, "APO", ["docs", "imprescindible"], "Entorno listo + crear ITERACIONES.md",
      "Instalar Node LTS, clonar el repo y correr el juego (cuando T01 esté listo). Crear `ITERACIONES.md` con formato: `HH:MM · qué probamos · cómo se sintió · qué cambiamos`. Cada integrante agrega líneas durante el día.",
      ["El juego corre en tu computador", "`ITERACIONES.md` existe con la primera entrada"], ["T01"]),
@@ -71,7 +74,7 @@ TASKS = [
      ["Sin carga no hay chorro", "Barra visible en pantalla", "Se recarga al aterrizar"], ["T06"]),
     ("T08", 1, "P2", ["código", "imprescindible"], "Cargar niveles desde un mapa de texto",
      "Leer un mapa ASCII desde `src/data/niveles/*.txt` y crear el nivel. Leyenda propuesta: `#` suelo/pared, `=` plataforma, `^` pinchos, `P` inicio, `K` checkpoint, `c` computador pequeño, `M` Mastermind, `S` salida, `D` puerta, `~` cable, `!` disparador de la revelación. Documentar la leyenda en `src/data/niveles/LEEME.md`.",
-     ["Cambiar el `.txt` y recargar cambia el nivel", "Leyenda documentada para que Apoyo pueda diseñar sin tocar código"], ["T01"]),
+     ["Cambiar el `.txt` y recargar cambia el nivel", "Leyenda documentada para que Benja pueda diseñar sin tocar código"], ["T01"]),
     ("T09", 1, "P2", ["código", "imprescindible"], "Esqueleto de escenas y pausa",
      "Escenas Inicio → Juego → Victoria / Derrota con texto temporal y transiciones. Pausa con Esc/P: Continuar, Reiniciar nivel, Volver al inicio. El juego se congela en pausa.",
      ["Se puede ir de inicio a juego y volver", "La pausa congela todo y sus 3 opciones funcionan"], ["T01"]),
@@ -85,7 +88,7 @@ TASKS = [
      "Suelo, paredes, plataformas (escritorios, estantes), fondo de oficina luminoso.",
      ["Tileset en `public/assets/tiles/` con el tamaño de tile acordado"], ["T03"]),
     ("T13", 1, "EQ", ["prueba", "imprescindible"], "Playtest 1: ¿propulsarse es divertido?",
-     "Todos juegan la sala de prueba 5 minutos. Apoyo dirige: ajustar en `config.js` gravedad, fuerza del retroceso y carga hasta que se sienta bien. Registrar en `ITERACIONES.md`.",
+     "Todos juegan la sala de prueba 5 minutos. Benja dirige: ajustar en `config.js` gravedad, fuerza del retroceso y carga hasta que se sienta bien. Registrar en `ITERACIONES.md`.",
      ["Valores finales anotados en `config.js`", "Al menos 2 entradas en `ITERACIONES.md`"], ["T07", "T10"]),
 
     # ---------------- S2
@@ -94,7 +97,7 @@ TASKS = [
      ["El chorro los avería", "El contador baja", "Se nota claramente cuando quedan averiados"], ["T06", "T08"]),
     ("T15", 2, "P2", ["código", "imprescindible"], "Peligros controlados por computadores: puerta y cable",
      "Cada computador controla un peligro cercano. Puerta (`D`) bloquea el paso; cable (`~`) daña al tocarlo. Al averiar el computador, el peligro se desactiva. Definir en el mapa o en un `.json` qué computador controla qué.",
-     ["Averiar el computador abre la puerta / apaga el cable", "Apoyo puede conectar computador ↔ peligro sin programar"], ["T14"]),
+     ["Averiar el computador abre la puerta / apaga el cable", "Benja puede conectar computador ↔ peligro sin programar"], ["T14"]),
     ("T16", 2, "P1", ["código", "imprescindible"], "Corazones, daño, checkpoints y reaparición",
      "3 corazones. Peligro = −1 corazón y vuelta al último checkpoint (`K`), con invulnerabilidad breve. Computadores averiados siguen averiados. 0 corazones → escena Derrota.",
      ["Morir te devuelve al checkpoint", "0 corazones lleva a Derrota y Reintentar reinicia el nivel"], ["T05", "T08", "T09"]),
@@ -121,7 +124,7 @@ TASKS = [
      ["Todos los objetos del mapa tienen sprite"], ["T03"]),
     ("T24", 2, "ART", ["arte"], "Variante \"IA\" de la oficina",
      "Versión fría/roja del fondo y tiles, o definir el tinte exacto que se aplicará tras la revelación.",
-     ["Prog 2 puede aplicar el cambio en T18"], ["T12"]),
+     ["Ciro puede aplicar el cambio en T18"], ["T12"]),
 
     # ---------------- S3
     ("T25", 3, "P1", ["código", "arte", "imprescindible"], "Integrar sprites y animaciones",
@@ -151,7 +154,7 @@ TASKS = [
 
     # ---------------- S4
     ("T33", 4, "EQ", ["código", "imprescindible"], "Corregir bugs del playtest",
-     "Repartir los issues del playtest 2 entre Prog 1 y Prog 2. Desde las 15:00 no se agregan funciones nuevas.",
+     "Repartir los issues del playtest 2 entre Sofía y Ciro. Desde las 15:00 no se agregan funciones nuevas.",
      ["No hay bugs que impidan terminar el juego"], ["T32"]),
     ("T34", 4, "P1", ["código", "extra"], "Efectos de \"juice\"",
      "Sacudida de cámara al impulsarse y al golpear a la Mastermind, parpadeo al recibir daño, partículas al averiar computadores.",
@@ -239,8 +242,8 @@ def to_github(con_project=True):
         print("Creado", full, url)
     # Reescribir cuerpos con dependencias como #n
     for t in TASKS:
-        if t[7]:
-            gh("issue", "edit", str(numeros[t[0]]), "--repo", REPO, "--body", body(t, numeros))
+        extra = ["--add-assignee", ASSIGNEES[t[2]]] if t[2] in ASSIGNEES else []
+        gh("issue", "edit", str(numeros[t[0]]), "--repo", REPO, "--body", body(t, numeros), *extra)
     if not con_project:
         print('Issues listos (sin Project).')
         return
