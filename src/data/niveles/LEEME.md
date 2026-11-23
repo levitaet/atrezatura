@@ -44,3 +44,5 @@ En esta etapa el juego dibuja los elementos interactivos con su símbolo y color
 Felipito mide 1 × 2 celdas. Salto normal: ~4 celdas de alto y ~8 de largo corriendo. Súper salto (W + ↓): ~10 celdas de alto. Salto + chorro lateral: ~10 celdas de largo. Las paredes de 3 celdas piden mantener W; las de 8 o 9, súper salto.
 
 **Cómo se dibujan los sólidos (`#`):** las filas del fondo son alfombra; las pilas de 3 o más celdas de alto y hasta 2 de ancho son estanterías; lo demás son escritorios y cajas amontonados. Las `=` son mesas.
+
+**Ensanchar un mapa:** `python tools/estirar_mapa.py src/data/niveles/<nivel>.txt` agrega espacio libre entre obstáculos sin cambiarlos. Con `--proteger a-b` se evitan zonas donde la distancia importa (saltos medidos, sala de la Mastermind).
