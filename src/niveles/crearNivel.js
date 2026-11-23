@@ -45,9 +45,10 @@ export function crearNivel(escena, nombre) {
     const anchoAgua = (c1 - c0 + 1) * lado;
     const x = c0 * lado + anchoAgua / 2;
     const y = (f0 + 0.5) * lado;
-    // Los 38 píxeles de agua del dibujo cubren el tramo completo; la altura no cambia.
+    // La fila 26 es el punto visible más alto de toda la animación, incluidas las chispas.
+    const bordeSuperiorCharco = 26;
     return escena.add.sprite(x, y, 'charco-electrico').setScale(anchoAgua / 38, 1)
-      .setDisplayOrigin(32, 47 - lado / 2).setData('anchoAgua', anchoAgua).play('charco-con-corriente');
+      .setDisplayOrigin(32, bordeSuperiorCharco - lado / 2).setData('anchoAgua', anchoAgua).play('charco-con-corriente');
   });
   entidades.set('~', charcos);
   // Las celdas sólidas contiguas se unen en rectángulos grandes: con un cuerpo por celda, el jugador
