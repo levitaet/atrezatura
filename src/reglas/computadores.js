@@ -156,8 +156,6 @@ export function conectarComputadores(escena) {
     escena.events.emit('computadores', estado.computadoresRestantes);
     escena.events.emit('dialogo', 'computador_averiado', { restantes: estado.computadoresRestantes });
   }
-
-  mostrarContadorTemporal(escena, estado, computadores.length);
 }
 
 // La puerta ocupa su celda y sube hasta el primer bloque sólido o el techo del mapa.
@@ -213,17 +211,4 @@ function crearTexturaHumo(escena) {
   g.fillStyle(0x9aa3ad).fillCircle(6, 6, 6);
   g.generateTexture(TEXTURA_HUMO, 12, 12);
   g.destroy();
-}
-
-// Indicador mínimo hasta el HUD definitivo (T26).
-function mostrarContadorTemporal(escena, estado, total) {
-  if (total === 0) return;
-  const texto = escena.add
-    .text(16, 46, '', { fontFamily: 'monospace', fontSize: '16px', color: '#cfe0ff' })
-    .setScrollFactor(0)
-    .setDepth(20);
-  const dibujar = (n) => texto.setText(n > 0 ? `Computadores: ${n}` : 'Computadores: 0 ✓');
-  dibujar(estado.computadoresRestantes);
-  escena.events.on('computadores', dibujar);
-  escena.events.once('shutdown', () => escena.events.off('computadores', dibujar));
 }

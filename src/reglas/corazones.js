@@ -81,18 +81,4 @@ export function conectarCorazones(escena) {
     escena.cameras.main.centerOn(x, y);
   }
   escena.danarJugador = danar;
-
-  mostrarCorazonesTemporales(escena, estado);
-}
-
-// Indicador mínimo hasta el HUD definitivo (T26).
-function mostrarCorazonesTemporales(escena, estado) {
-  const texto = escena.add
-    .text(16, 12, '', { fontFamily: 'monospace', fontSize: '26px', color: '#fe6960' })
-    .setScrollFactor(0)
-    .setDepth(20);
-  const dibujar = (n) => texto.setText('♥'.repeat(n) + '♡'.repeat(JUGADOR.corazones - n));
-  dibujar(estado.corazones);
-  escena.events.on('corazones', dibujar);
-  escena.events.once('shutdown', () => escena.events.off('corazones', dibujar));
 }
