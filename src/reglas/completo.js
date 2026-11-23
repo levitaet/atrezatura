@@ -42,7 +42,8 @@ export function conectarCompletos(escena) {
   }
 
   // La Mastermind comenta cuando el jugador se queda sin tanque.
-  const alVaciar = () => escena.events.emit('dialogo', 'tanque_vacio', {});
+  // (Solo si la IA ya apareció: en el tutorial la Mastermind todavía no habla.)
+  const alVaciar = () => { if (estado.revelado) escena.events.emit('dialogo', 'tanque_vacio', {}); };
   escena.events.on('tanque-vacio', alVaciar);
   escena.events.once('shutdown', () => escena.events.off('tanque-vacio', alVaciar));
 
@@ -51,7 +52,8 @@ export function conectarCompletos(escena) {
 
 /**
  * Avisos grandes en pantalla sobre el tanque del extintor:
- * - "¡Queda poca espuma!" al bajar de EXTINTOR.avisoPoco segundos.
+ * - "¡Queda una pura gotita de espuma!" al bajar de EXTINTOR.avisoPoco segundos.
+ * - Si el nivel tiene rellenoAutomatico (tutorial), al vaciarse el tanque se rellena solo.
  * - "¡Sin espuma!" al vaciarse, con qué hacer: buscar un completo o, si no quedan, reiniciar.
  * Vuelven a avisar después de rellenar el tanque.
  */
@@ -64,6 +66,7 @@ function conectarAvisosTanque(escena) {
   escena.game.canvas.parentElement.append(aviso);
 
   let fase = 'normal'; // normal → poco → vacio
+  const relleno = escena.configNivel?.rellenoAutomatico ?? 0; // segundos que repone en el tutorial
   let ocultar = null;
   const mostrar = (clase, titulo, detalle, ms) => {
     aviso.className = `aviso-tanque ${clase}`;
@@ -85,7 +88,17 @@ function conectarAvisosTanque(escena) {
     }
     if (tanque > 0 && fase === 'normal') {
       fase = 'poco';
-      mostrar('aviso-poco', '¡Queda poca espuma!', 'Úsala con cuidado. Un completo italiano rellena el extintor.', 3200);
+      mostrar('aviso-poco', '¡Queda una pura gotita de espuma!', 'Úsala con cuidado. Un completo italiano rellena el extintor.', 3200);
+    } else if (tanque <= 0 && fase !== 'vacio' && relleno) {
+      // Tutorial: no se puede quedar atascado. El tanque se rellena solo después de un momento.
+      fase = 'vacio';
+      mostrar('aviso-poco', '¡Espuma de emergencia!', 'En el tutorial el extintor se rellena solo. Desde el piso 22, solo con completos.', 3500);
+      escena.time.delayedCall(900, () => {
+        extintor.tanque = relleno;
+        extintor.carga = EXTINTOR.carga;
+        escena.events.emit('tanque-lleno');
+        escena.pensar?.('relleno');
+      });
     } else if (tanque <= 0 && fase !== 'vacio') {
       fase = 'vacio';
       const detalle = estado.completosRestantes > 0
@@ -97,6 +110,7 @@ function conectarAvisosTanque(escena) {
   escena.events.on('postupdate', revisar);
   const alRellenar = () => {
     fase = 'normal';
+    if (relleno) return; // en el tutorial el aviso de emergencia se queda su tiempo
     ocultar?.remove();
     aviso.hidden = true;
   };
