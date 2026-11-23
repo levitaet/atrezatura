@@ -8,6 +8,10 @@
     <title>MasterIA</title>
     <style>
       html, body, #juego { width: 100%; height: 100%; margin: 0; }
+      /* La página nunca se desplaza: Espacio y las flechas son del juego.
+         overflow en #juego también evita que el margen con que Phaser centra el canvas
+         se salga del contenedor y alargue la página. */
+      html, body, #juego { overflow: hidden; }
       body { background: #101820; }
       canvas { display: block; }
     </style>
