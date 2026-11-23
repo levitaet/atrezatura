@@ -61,6 +61,7 @@ export const EXTINTOR = {
   tiempoRecarga: 0.25, // segundos para llenar la carga desde cero, en el suelo y sin disparar
   alcance: 110, // px que llega el chorro desde la boquilla (para averiar computadores, T14)
   tanque: 8, // segundos de chorro en TODO el nivel. No se recarga en el suelo: solo con un completo
+  avisoPoco: 2, // segundos de tanque desde los que se avisa "¡Queda poca espuma!"
 
   // Qué significan las flechas:
   //   'apuntar' → hacia dónde sale el chorro (↓ te hace subir). Sirve para apuntar a los computadores.

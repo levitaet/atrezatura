@@ -34,6 +34,7 @@ export function mostrarHud(escena) {
       tanque.value = Math.round(100 * segundos / EXTINTOR.tanque);
       tanqueTexto.textContent = `${(decimas / 10).toFixed(1)} s`;
       tanque.classList.toggle('hud-vacio', segundos <= 0);
+      tanque.closest('label').classList.toggle('hud-bajo', segundos > 0 && segundos <= EXTINTOR.avisoPoco);
     }
     const valor = Math.round(100 * escena.jugador.extintor.carga / EXTINTOR.carga);
     if (carga.hasAttribute('value') && valor === carga.value) return;
