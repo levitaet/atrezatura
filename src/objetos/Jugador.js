@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { JUGADOR } from '../config.js';
+import { EXTINTOR, JUGADOR } from '../config.js';
 import Extintor from './Extintor.js';
 
 const TEXTURA_TEMPORAL = 'jugador-temp';
@@ -88,8 +88,10 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     }
     cuerpo.setVelocityX(acercar(vx, direccion * JUGADOR.velocidadMax, tasa * dt));
 
-    // Mira hacia donde camina; si dispara de lado, hacia donde apunta la boquilla.
-    const haciaBoquilla = disparando ? Math.sign(this.extintor.direccion.x) : 0;
+    // Mira hacia donde camina. Si dispara de lado: en modo 'apuntar' mira hacia la boquilla;
+    // en modo 'mover', hacia donde lo lleva el empuje.
+    const sentidoMirada = EXTINTOR.modoFlechas === 'mover' ? -1 : 1;
+    const haciaBoquilla = disparando ? sentidoMirada * Math.sign(this.extintor.direccion.x) : 0;
     const mirar = haciaBoquilla || direccion;
     if (mirar !== 0) {
       this.mirando = mirar;

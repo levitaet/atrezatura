@@ -35,7 +35,13 @@ export const EXTINTOR = {
   velocidadMax: 420, // px/s: el chorro deja de acelerar al llegar a esta velocidad en su dirección
   carga: 0.5, // segundos de chorro continuo con la carga llena
   tiempoRecarga: 0.25, // segundos para llenar la carga desde cero, en el suelo y sin disparar
-  alcance: 110 // px que llega el chorro desde la boquilla (para averiar computadores, T14)
+  alcance: 110, // px que llega el chorro desde la boquilla (para averiar computadores, T14)
+
+  // Qué significan las flechas:
+  //   'apuntar' → hacia dónde sale el chorro (↓ te hace subir). Sirve para apuntar a los computadores.
+  //   'mover'   → hacia dónde quieres ir (↑ te hace subir; el chorro sale al lado contrario).
+  // Para comparar sin editar este archivo, agrega ?flechas=mover a la dirección del juego.
+  modoFlechas: new URLSearchParams(window.location.search).get('flechas') === 'mover' ? 'mover' : 'apuntar'
 };
 
 export const CAMARA = {

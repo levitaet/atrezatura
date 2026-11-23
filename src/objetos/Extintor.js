@@ -8,6 +8,7 @@ const { KeyCodes } = Phaser.Input.Keyboard;
  * El extintor del jugador (T06 + T07).
  *
  * - Flechas (y combinaciones para diagonales) disparan el chorro en 8 direcciones.
+ *   EXTINTOR.modoFlechas decide si la flecha indica hacia dónde sale el chorro o hacia dónde moverse.
  * - Mientras dispara, empuja al jugador en sentido contrario al chorro.
  * - Tiene carga limitada: se gasta disparando y se recarga en el suelo sin disparar.
  *
@@ -59,14 +60,16 @@ export default class Extintor {
     g.destroy();
   }
 
-  // Dirección de las flechas apretadas, normalizada. null si no hay ninguna.
+  // Dirección en que sale el chorro según las flechas apretadas, normalizada. null si no hay ninguna.
+  // En modo 'mover' las flechas indican hacia dónde ir, así que el chorro sale al lado contrario.
   direccionApuntada() {
     const t = this.teclas;
     const x = (t.derecha.isDown ? 1 : 0) - (t.izquierda.isDown ? 1 : 0);
     const y = (t.abajo.isDown ? 1 : 0) - (t.arriba.isDown ? 1 : 0);
     if (x === 0 && y === 0) return null;
+    const signo = EXTINTOR.modoFlechas === 'mover' ? -1 : 1;
     const largo = Math.hypot(x, y);
-    return { x: x / largo, y: y / largo };
+    return { x: (signo * x) / largo, y: (signo * y) / largo };
   }
 
   angulo() {
