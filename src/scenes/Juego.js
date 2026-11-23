@@ -4,6 +4,8 @@ import Jugador from '../objetos/Jugador.js';
 import { CAMARA, TAMANO_CELDA } from '../config.js';
 import { conectarMonitor } from '../dialogos.js';
 import { conectarCorazones } from '../reglas/corazones.js';
+import { conectarComputadores } from '../reglas/computadores.js';
+import { conectarRevelacion } from '../reglas/revelacion.js';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
@@ -36,6 +38,8 @@ export default class Juego extends Phaser.Scene {
     }
     this.crearJugador();
     conectarCorazones(this);
+    conectarComputadores(this);
+    conectarRevelacion(this);
   }
 
   crearJugador() {

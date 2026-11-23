@@ -48,6 +48,16 @@ export const EXTINTOR = {
   modoFlechas: new URLSearchParams(window.location.search).get('flechas') === 'mover' ? 'mover' : 'apuntar'
 };
 
+export const COMPUTADOR = {
+  resistencia: 0.3 // segundos de chorro acumulado para averiar un computador pequeño (la carga llena dura 0,5)
+};
+
+export const REVELACION = {
+  color: 0x8a0f2a, // tinte de la oficina después de que aparece la IA
+  opacidad: 0.2, // 0 = sin tinte, 1 = pantalla completamente de ese color
+  fondo: 0x1c1020 // color de fondo después de la revelación (antes: 0x172638)
+};
+
 export const CAMARA = {
   suavizado: 0.12, // 0–1. Más bajo = la cámara sigue con más retraso
   zonaMuertaAncho: 160, // px en que el jugador se mueve sin que la cámara lo siga

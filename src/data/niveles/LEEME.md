@@ -9,15 +9,19 @@ Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejem
 | `.` o espacio | Aire. Usa puntos para ver las celdas vacías del final de cada fila. |
 | `#` | Suelo o pared sólida. Ocupa toda la celda. |
 | `=` | Plataforma fina en el borde superior de la celda, con colisión por arriba. El jugador la atraviesa saltando desde abajo y baja con **S**. |
-| `^` | Pinchos. |
+| `^` | Pinchos. Quitan un corazón y devuelven al último checkpoint. |
 | `P` | Punto de inicio del jugador. Coloca exactamente uno. |
-| `K` | Checkpoint. Se admiten varios. |
-| `c` | Computador pequeño. Se escribe en minúscula. |
+| `K` | Checkpoint. Se admiten varios. Se activa al cruzar su columna, aunque sea saltando por encima. |
+| `c` | Computador pequeño. Se escribe en minúscula. Se avería con 0,3 s de chorro. |
 | `M` | Mastermind. |
 | `S` | Salida. |
-| `D` | Puerta. |
-| `~` | Cable. |
-| `!` | Disparador de la revelación. |
+| `D` | Puerta. Bloquea toda su columna hacia arriba, hasta el primer `#` o el techo del mapa. Se abre al averiar su computador. |
+| `~` | Cable. Hace daño hasta que se avería su computador. |
+| `!` | Disparador de la revelación. Ocurre una vez, al cruzar su columna. |
+
+**Qué computador controla qué:** cada puerta `D` y cada cable `~` lo controla el computador `c` más cercano. Pon cada computador cerca de lo que debe abrir o apagar. Un peligro sin computadores en el mapa no se desactiva nunca.
+
+**Pozos:** el borde inferior del mapa está abierto. Si dejas un hueco en el suelo de la última fila, caer por él quita un corazón.
 
 Todas las filas deben tener el mismo ancho. Guarda en UTF-8. Usa saltos de línea normales de Windows o Unix y evita tabuladores, comentarios y líneas vacías entre filas. Si hay un error, el juego muestra el motivo en pantalla.
 
