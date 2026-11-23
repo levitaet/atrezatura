@@ -9,6 +9,8 @@ import { conectarRevelacion } from '../reglas/revelacion.js';
 import { conectarMastermind } from '../reglas/mastermind.js';
 import { conectarCompletos } from '../reglas/completo.js';
 import { conectarCarteles } from '../reglas/carteles.js';
+import { conectarPensamientos } from '../reglas/pensamientos.js';
+import { conectarTutorial } from '../reglas/tutorial.js';
 import { mostrarHud } from './Hud.js';
 
 export default class Juego extends Phaser.Scene {
@@ -63,10 +65,13 @@ export default class Juego extends Phaser.Scene {
       return;
     }
     this.crearJugador();
+    if (this.configNivel.tanqueInicial !== undefined) this.jugador.extintor.tanque = this.configNivel.tanqueInicial;
+    conectarPensamientos(this);
     conectarCorazones(this);
     conectarComputadores(this);
     conectarMastermind(this);
     conectarCompletos(this);
+    conectarTutorial(this);
     conectarCarteles(this);
     conectarRevelacion(this);
     mostrarHud(this);
@@ -108,7 +113,9 @@ export default class Juego extends Phaser.Scene {
     this.enTransicion = true;
     this.cameras.main.fadeOut(450, 0, 0, 0);
     this.cameras.main.once('camerafadeoutcomplete', () => {
-      if (this.nombreNivel === 'tutorial') {
+      // Cómic entre niveles: NIVELES.comicAntes. 'piso22' es el descenso que Ciro armó en la
+      // escena Introduccion; al terminar, ella arranca Juego con { nivel }.
+      if (siguiente.comicAntes === 'piso22') {
         this.scene.start('Introduccion', { descenso: true, nivel: siguiente.nombre });
       } else {
         this.scene.restart({ nivel: siguiente.nombre });

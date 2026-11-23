@@ -9,10 +9,16 @@ export const TAMANO_CELDA = 32;
 
 // Orden de los niveles. Al cruzar la salida de uno se pasa al siguiente; la del último gana el juego.
 // revelado: el nivel empieza con la oficina ya tomada por la IA (sin pasar por el disparador !).
+// tanqueInicial: segundos de tanque al empezar (si no, EXTINTOR.tanque).
+// comicAntes: cómic que se muestra antes de este nivel ('piso22' = descenso, escena Introduccion de Ciro).
 export const NIVELES = [
-  { nombre: 'tutorial' },
-  { nombre: 'oficina', revelado: true }
+  { nombre: 'tutorial', tanqueInicial: 3 }, // piso 23
+  { nombre: 'oficina', revelado: true, comicAntes: 'piso22' } // piso 22
 ];
+
+export const TUTORIAL = {
+  resistenciaMuneco: 0.4 // segundos de chorro para derribar el cartel de práctica (T); una ráfaga dura 0,5
+};
 
 export const MUNDO = {
   gravedad: 1000 // px/s². Más alto = cae más rápido y los saltos se sienten más pesados.

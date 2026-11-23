@@ -24,6 +24,7 @@ export default class Extintor {
     this.jugador = jugador;
     this.carga = EXTINTOR.carga; // segundos de chorro disponibles en esta ráfaga
     this.tanque = EXTINTOR.tanque; // segundos de chorro que quedan en todo el nivel
+    this.habilitado = true; // false hasta recoger el extintor (tutorial: símbolo e en el mapa)
     this.disparando = false;
     this.direccion = { x: 0, y: 1 }; // hacia dónde sale el chorro (vector unitario)
 
@@ -84,6 +85,11 @@ export default class Extintor {
   // Se ejecuta después de cada paso de física y decide el empuje del paso siguiente.
   paso(delta) {
     const cuerpo = this.jugador.body;
+    if (!this.habilitado) {
+      this.disparando = false;
+      cuerpo.setAcceleration(0, 0);
+      return;
+    }
     const apuntada = this.direccionApuntada();
 
     if (apuntada && this.carga > 0 && this.tanque > 0) {

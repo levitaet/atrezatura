@@ -1,0 +1,21 @@
+{
+  "tutorial": {
+    "mapa": [
+      "¿Dónde están todos? Tengo que salir de aquí.",
+      "Demasiado alto... ¿y ese extintor?",
+      "Me estoy quedando sin espuma...",
+      "Las escaleras. Tengo que bajar."
+    ],
+    "extintor": "Un extintor. Si apunto el chorro hacia abajo... ¿saldré volando?",
+    "muneco": "Perdón, Empleado del Mes.",
+    "muneco_sin_espacio": [
+      "Salí volando como globo de cumpleaños. ¿Y si mantengo ESPACIO para plantarme?",
+      "Cartel de cartón 1, Felipito 0. Mantén ESPACIO, Felipito. ESPACIO.",
+      "El chorro me empuja a mí, no a él. Física de oficina. Mantengo ESPACIO y lo intento de nuevo.",
+      "Si sigo así voy a terminar de vuelta en mi escritorio. ¡ESPACIO para quedarme quieto!"
+    ]
+  },
+  "oficina": {
+    "mapa": []
+  }
+}

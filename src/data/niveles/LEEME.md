@@ -20,6 +20,9 @@ Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejem
 | `!` | Disparador de la revelación. Ocurre una vez, al cruzar su columna. |
 | `o` | Completo italiano. Al recogerlo llena el tanque del extintor. |
 | `?` | Cartel de texto. Los textos están en `src/data/carteles.json`, una lista por nivel, en orden de izquierda a derecha. |
+| `*` | Pensamiento de Felipito: se muestra una vez al cruzar su columna. Textos en `src/data/pensamientos.json` (lista `mapa` del nivel, de izquierda a derecha). |
+| `e` | Extintor para recoger. Si el mapa tiene una `e`, Felipito empieza sin extintor. |
+| `T` | Cartel de práctica (Empleado del mes). Bloquea el paso hasta que lo rocías; enseña a plantarse con Espacio. |
 
 **Qué computador controla qué:** cada puerta `D` y cada cable `~` lo controla el computador `c` más cercano. Pon cada computador cerca de lo que debe abrir o apagar. Un peligro sin computadores en el mapa no se desactiva nunca.
 
@@ -39,3 +42,5 @@ En esta etapa el juego dibuja los elementos interactivos con su símbolo y color
 ## Medidas útiles para diseñar
 
 Felipito mide 1 × 2 celdas. Salto normal: ~4 celdas de alto y ~8 de largo corriendo. Súper salto (W + ↓): ~10 celdas de alto. Salto + chorro lateral: ~10 celdas de largo. Las paredes de 3 celdas piden mantener W; las de 8 o 9, súper salto.
+
+**Cómo se dibujan los sólidos (`#`):** las filas del fondo son alfombra; las pilas de 3 o más celdas de alto y hasta 2 de ancho son estanterías; lo demás son escritorios y cajas amontonados. Las `=` son mesas.

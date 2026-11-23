@@ -1,0 +1,24 @@
+/* Pensamientos de Felipito: abajo al centro, en ámbar e itálica (la Mastermind va arriba, en verde). */
+.pensamiento-juego {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  max-width: min(34rem, 90%);
+  padding: 0.6rem 1rem;
+  border-left: 3px solid #ffd34d;
+  background: rgb(20 16 8 / 88%);
+  color: #ffe9a8;
+  font: italic 1rem/1.4 system-ui, sans-serif;
+  pointer-events: none;
+}
+.pensamiento-juego::before {
+  content: 'Felipito (piensa)';
+  display: block;
+  color: #ffd34d;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.85em;
+}
+.pensamiento-juego:empty { visibility: hidden; }

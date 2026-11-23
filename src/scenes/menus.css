@@ -127,3 +127,4 @@
   padding: .5rem .9rem;
   flex-shrink: 0;
 }
+.hud [hidden] { display: none !important; }

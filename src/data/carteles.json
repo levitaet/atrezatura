@@ -1,13 +1,15 @@
 {
   "tutorial": [
+    "PISO 23 · Gerencia de Productividad",
     "A / D para caminar · W para saltar",
     "Mantén W para saltar más alto",
-    "Las flechas disparan el extintor y el chorro te empuja al revés. W + ↓ = súper salto",
+    "Flechas: disparan el extintor y el chorro te empuja al revés. W + ↓ = súper salto",
+    "Este reloj control es un checkpoint: si pierdes un corazón, vuelves aquí",
     "Salta y dispara ← para impulsarte hacia la derecha",
-    "Rocía el computador para apagar la puerta. Mantén Espacio para no retroceder",
-    "¡Chinches! Sáltalas",
-    "La barra amarilla es tu tanque: se acaba. Un completo italiano lo rellena",
-    "¿Qué fue eso? Corre a la salida"
+    "El cartel tapa la puerta. Mantén Espacio para plantarte y dispárale →",
+    "¡Chinches! Cada pinchazo te quita un corazón (arriba a la izquierda)",
+    "La barra amarilla es tu tanque: si se vacía, no hay chorro. Un completo italiano lo rellena",
+    "ESCALERAS ↓ PISO 22"
   ],
   "oficina": [
     "La Mastermind tomó la oficina. Llega a la sala de servidores",
