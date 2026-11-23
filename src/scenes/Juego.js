@@ -107,7 +107,13 @@ export default class Juego extends Phaser.Scene {
     if (this.enTransicion) return;
     this.enTransicion = true;
     this.cameras.main.fadeOut(450, 0, 0, 0);
-    this.cameras.main.once('camerafadeoutcomplete', () => this.scene.restart({ nivel: siguiente.nombre }));
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      if (this.nombreNivel === 'tutorial') {
+        this.scene.start('Introduccion', { descenso: true, nivel: siguiente.nombre });
+      } else {
+        this.scene.restart({ nivel: siguiente.nombre });
+      }
+    });
   }
 
   perder() {

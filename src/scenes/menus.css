@@ -116,6 +116,12 @@
   font: 500 clamp(.9rem, 2.3vw, 1.45rem)/1.4 system-ui, sans-serif;
 }
 .prologo-pie p:empty { display: none; }
+.prologo-pie .pensamiento { color: #ffe09c; border-color: #ffbf60; font-style: italic; }
+.prologo-piso {
+  position: absolute; top: 4%; left: 3%; padding: .3em .65em;
+  background: #0c1926; color: #ffd378; border-left: 4px solid currentColor;
+  font: bold clamp(1rem, 3vw, 2rem) monospace; text-transform: uppercase;
+}
 .prologo-pie button {
   width: auto;
   padding: .5rem .9rem;
