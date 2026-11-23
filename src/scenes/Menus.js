@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { obtenerDialogo } from '../dialogos.js';
-import despertar from '../arte/despertar.png';
+import dormido from '../arte/prologo/dormido.png';
+import despierto from '../arte/prologo/despierto.png';
+import oficina from '../arte/prologo/oficina.png';
 import './menus.css';
 
 // Los botones nativos comparten la misma acción con ratón, Tab, Enter y Espacio.
@@ -48,16 +50,43 @@ export class Introduccion extends Phaser.Scene {
 
   create() {
     const pagina = document.createElement('section');
-    pagina.className = 'menu comic';
+    pagina.className = 'menu prologo';
     pagina.setAttribute('aria-label', 'Prólogo de MasterIA');
     const imagen = new Image();
-    imagen.alt = 'Felipito duerme sobre su escritorio. Al despertar, levanta la cabeza y mira alrededor. Todas las sillas de la oficina están vacías.';
-    imagen.src = despertar;
+    const planos = [
+      { src: dormido, alt: 'Felipito duerme sobre su escritorio.', texto: 'Zzz' },
+      { src: despierto, alt: 'Felipito abre los ojos y levanta la cabeza.', texto: '¿me quedé dormido en el trabajo?¿Qué hora es?' },
+      { src: oficina, alt: 'Felipito mira las filas de escritorios y sillas vacías.', texto: '' }
+    ];
+    const marco = document.createElement('div');
+    marco.className = 'prologo-marco';
+    const pie = document.createElement('div');
+    pie.className = 'prologo-pie';
+    const dialogo = document.createElement('p');
+    dialogo.setAttribute('aria-live', 'polite');
     const continuar = document.createElement('button');
     continuar.type = 'button';
-    continuar.textContent = 'Continuar';
-    continuar.addEventListener('click', () => this.scene.start('Juego'), { once: true });
-    pagina.append(imagen, continuar);
+    let indice = 0;
+    const mostrarPlano = () => {
+      const plano = planos[indice];
+      imagen.src = plano.src;
+      imagen.alt = plano.alt;
+      dialogo.textContent = plano.texto;
+      continuar.textContent = indice === planos.length - 1 ? 'Entrar al juego' : 'Continuar';
+    };
+    continuar.addEventListener('click', () => {
+      if (indice === planos.length - 1) {
+        continuar.disabled = true;
+        this.scene.start('Juego');
+        return;
+      }
+      indice++;
+      mostrarPlano();
+    });
+    mostrarPlano();
+    pie.append(dialogo, continuar);
+    marco.append(imagen, pie);
+    pagina.append(marco);
     this.game.canvas.parentElement.append(pagina);
     continuar.focus({ preventScroll: true });
     this.events.once('shutdown', () => pagina.remove());

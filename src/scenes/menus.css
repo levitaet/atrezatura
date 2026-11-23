@@ -83,18 +83,41 @@
   outline-offset: 2px;
 }
 
-.menu.comic {
+.menu.prologo {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  justify-items: center;
-  justify-content: stretch;
-  padding: clamp(.5rem, 2vh, 1.5rem);
+  place-items: center;
+  padding: 0;
   background: #080f16;
 }
-.comic img {
+.prologo-marco {
+  position: relative;
+  width: min(100vw, 180vh);
+}
+.prologo img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
   image-rendering: pixelated;
-  color: #edf6fa;
+}
+.prologo-pie {
+  position: absolute;
+  inset: auto 3% 4%;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  gap: .6rem;
+}
+.prologo-pie p {
+  flex: 1;
+  margin: 0;
+  padding: clamp(.5rem, 2vw, 1.2rem);
+  border-inline-start: 3px solid #91dece;
+  background: rgb(9 24 32 / 94%);
+  font: 500 clamp(.9rem, 2.3vw, 1.45rem)/1.4 system-ui, sans-serif;
+}
+.prologo-pie p:empty { display: none; }
+.prologo-pie button {
+  width: auto;
+  padding: .5rem .9rem;
+  flex-shrink: 0;
 }
