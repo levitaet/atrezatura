@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { EXTINTOR, JUGADOR } from '../config.js';
+import { EXTINTOR, JUGADOR, MASTERMIND } from '../config.js';
 import Extintor from './Extintor.js';
 
 const TEXTURA_TEMPORAL = 'jugador-temp';
@@ -55,6 +55,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     this.bajandoHasta = -Infinity;
     this.saltando = false; // true mientras sube por un salto (no por el extintor)
     this.invulnerableHasta = -Infinity;
+    this.paralizado = false;
+    this.recuperaControlEn = null;
     // Reloj propio en ms: solo avanza mientras la escena corre, así la pausa no gasta
     // invulnerabilidad ni ventanas de salto (el reloj de escena sigue avanzando en pausa).
     this.reloj = 0;
@@ -114,8 +116,32 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     return this.reloj < this.invulnerableHasta;
   }
 
+  electrocutar(sentido) {
+    this.paralizado = true;
+    this.saltando = false;
+    this.ultimoSaltoPedido = -Infinity;
+    this.ultimoEnSuelo = -Infinity;
+    this.extintor.disparando = false;
+    this.setAcceleration(0, 0).setVelocity(sentido * MASTERMIND.retrocesoX, -MASTERMIND.retrocesoY);
+    if (this.conSprite) this.play('felipito-aire', true);
+    this.setTint(0xa8ebff);
+    this.rayo = this.scene.add.graphics().setDepth(this.depth + 2);
+    this.rayo.lineStyle(2, 0xfded84).beginPath()
+      .moveTo(12, -29).lineTo(23, -15).lineTo(16, -16).lineTo(25, -3).strokePath();
+    this.rayo.setPosition(this.x, this.y);
+  }
+
+  terminarDescarga() {
+    this.paralizado = false;
+    this.recuperaControlEn = null;
+    this.rayo?.destroy();
+    this.rayo = null;
+    this.clearTint();
+  }
+
   // Vuelve a un punto (pies en yPies) sin velocidad, con la carga llena e invulnerable un rato (T16).
   reaparecer(x, yPies) {
+    if (this.paralizado) this.terminarDescarga();
     this.colocar(x, yPies);
     this.extintor.recargar();
     this.saltando = false;
@@ -135,6 +161,23 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     const ahora = this.reloj;
     const cuerpo = this.body;
     const { teclas } = this;
+
+    if (this.paralizado) {
+      // En el paso del impacto todavía puede figurar suelo, aunque ya esté subiendo.
+      if (this.recuperaControlEn === null && this.enSuelo && cuerpo.velocity.y === 0) {
+        cuerpo.setVelocityX(0);
+        this.recuperaControlEn = ahora + MASTERMIND.paralisisAlAterrizar;
+        if (this.conSprite) this.play('felipito-quieto', true);
+      }
+      Phaser.Input.Keyboard.JustDown(teclas.saltar);
+      Phaser.Input.Keyboard.JustDown(teclas.bajar);
+      if (this.recuperaControlEn === null || ahora < this.recuperaControlEn) {
+        this.rayo.setPosition(this.x, this.y).setScale(Math.floor(ahora / 140) % 2 ? -1 : 1, 1);
+        this.extintor.actualizarDibujo(delta);
+        return;
+      }
+      this.terminarDescarga();
+    }
 
     // --- Horizontal
     const anclado = this.anclado;

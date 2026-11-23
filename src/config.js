@@ -88,7 +88,10 @@ export const MASTERMIND = {
   calma: 1800, // ms entre descargas mientras tiene escudo
   calmaDesesperada: 1000, // ms entre descargas cuando ya perdió el escudo
   aviso: 800, // ms en que el suelo parpadea antes de electrificarse
-  descarga: 900, // ms en que el suelo de la sala hace daño
+  descarga: 900, // ms en que el suelo de la sala conduce electricidad
+  retrocesoX: 210, // px/s, alejándose de la Mastermind
+  retrocesoY: 320, // px/s hacia arriba al recibir la descarga
+  paralisisAlAterrizar: 1000, // ms de inmovilidad desde el contacto con el suelo
   vidaTrasRestaurar: 0.5, // si el jugador falla la terminal, recupera esta fracción de su vida
   velocidadMusica: 1.12 // en su sala la música de persecución suena más rápida (si no hay música de jefe)
 };

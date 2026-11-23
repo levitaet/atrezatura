@@ -94,8 +94,12 @@ export function conectarMastermind(escena) {
   // --- Ataque: suelo electrificado de la sala
   const xMin = cx - radio;
   const xMax = cx + radio;
-  const descarga = escena.add.zone((xMin + xMax) / 2, piso - 6, xMax - xMin, 12).setData('tipo', 'descarga');
-  escena.peligros.add(descarga);
+  const descarga = escena.add.zone((xMin + xMax) / 2, piso - 6, xMax - xMin, 12);
+  escena.physics.add.existing(descarga, true);
+  escena.physics.add.overlap(jugador, descarga, () => {
+    if (escena.enTransicion || jugador.esInvulnerable() || jugador.paralizado) return;
+    jugador.electrocutar(jugador.x < cx ? -1 : 1);
+  });
   descarga.body.enable = false;
   const suelo = escena.add.graphics().setDepth(3);
   // Cables de energía desde cada computador del escudo hasta la Mastermind, y una flecha encima

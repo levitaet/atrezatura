@@ -85,7 +85,7 @@ export default class Extintor {
   // Se ejecuta después de cada paso de física y decide el empuje del paso siguiente.
   paso(delta) {
     const cuerpo = this.jugador.body;
-    if (!this.habilitado) {
+    if (!this.habilitado || this.jugador.paralizado) {
       this.disparando = false;
       cuerpo.setAcceleration(0, 0);
       return;
