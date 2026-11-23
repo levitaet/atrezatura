@@ -44,6 +44,7 @@ Declaramos que el trabajo presentado se realizó durante la jornada del lunes 23
 | Recurso | Autor | Enlace público | Licencia | Cambios realizados |
 | --- | --- | --- | --- | --- |
 | Arte original de Felipito y el extintor (fuentes Resprite) | Rocío · Arte y audio | [docs/arte/fuentes](docs/arte/fuentes/) | Por definir para estos archivos | Fuentes originales conservadas sin cambios |
+| Fuentes Resprite adicionales (Noche, Mastermind, Juan Carlos Bodoque y completo italiano) | Por confirmar | [docs/arte/fuentes](docs/arte/fuentes/) | Por definir para estos archivos | Fuentes originales conservadas sin cambios |
 
 ## Licencia
 Indicar la licencia del código y añadir el archivo LICENSE correspondiente.
