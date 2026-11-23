@@ -46,6 +46,10 @@ export default class Extintor {
     this.particulas.setDepth(jugador.depth + 1);
 
     this.barra = escena.add.graphics().setDepth(jugador.depth + 2);
+    // Anclar el extremo de la manguera del PNG a la boquilla que ya usa el chorro.
+    this.dibujo = escena.add.image(jugador.x, jugador.y, 'extintor')
+      .setOrigin(70 / 128, 41 / 128).setScale(jugador.scaleX)
+      .setDepth(jugador.depth + 1).setVisible(false);
 
     this.mundo = escena.physics.world;
     this.mundo.on('worldstep', this.paso, this);
@@ -153,8 +157,10 @@ export default class Extintor {
 
   // Dibujo: partículas y barra de carga. Lo llama el jugador una vez por cuadro.
   actualizarDibujo(delta) {
+    this.dibujo.setVisible(this.disparando);
     if (this.disparando) {
       const b = this.boquilla();
+      this.dibujo.setPosition(b.x, b.y).setAngle(this.angulo() + 70).setAlpha(this.jugador.alpha);
       this.particulas.emitParticleAt(b.x, b.y, Math.max(1, Math.round(delta / 6)));
     }
 
@@ -173,5 +179,6 @@ export default class Extintor {
     this.mundo.off('worldstep', this.paso, this);
     this.particulas.destroy();
     this.barra.destroy();
+    this.dibujo.destroy();
   }
 }

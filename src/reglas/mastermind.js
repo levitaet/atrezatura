@@ -53,9 +53,10 @@ export function conectarMastermind(escena) {
   const pantalla = escena.add.rectangle(cx, cy, ancho, alto, COLOR.pantalla).setStrokeStyle(4, COLOR.borde);
   escena.physics.add.existing(pantalla, true);
   escena.physics.add.collider(jugador, pantalla);
-  const cara = escena.add
-    .text(cx, cy, ':)', { fontFamily: 'monospace', fontSize: '40px', color: '#b885ed' })
-    .setOrigin(0.5);
+  // El dibujo ocupa la parte superior del lienzo de 128 px. El cuerpo sólido conserva sus dimensiones.
+  const textura = escena.textures.get('mastermind');
+  if (!textura.has('monitor')) textura.add('monitor', 0, 2, 1, 119, 93);
+  const cara = escena.add.image(cx, cy, 'mastermind', 'monitor').setScale((ancho - 6) / 119);
   const escudo = escena.add
     .ellipse(cx, cy, ancho + 40, alto + 40, COLOR.escudo, 0.12)
     .setStrokeStyle(3, COLOR.escudo, 0.9);
@@ -81,7 +82,6 @@ export function conectarMastermind(escena) {
 
   function romperEscudo() {
     escudoActivo = false;
-    cara.setText(':|');
     escena.tweens.add({ targets: escudo, scale: 1.4, alpha: 0, duration: 400, onComplete: () => escudo.setVisible(false) });
     escena.cameras.main.shake(200, 0.006);
     escena.events.emit('dialogo', 'escudo_roto', {});
@@ -140,7 +140,7 @@ export function conectarMastermind(escena) {
     const golpeada = jugador.reloj < golpeadaHasta;
     pantalla.setFillStyle(golpeada && Math.floor(jugador.reloj / 60) % 2 === 0 ? COLOR.golpe : COLOR.pantalla);
     cara.x = golpeada ? cx + Phaser.Math.Between(-3, 3) : cx;
-    if (!escudoActivo) cara.setText(vida < MASTERMIND.resistencia * 0.4 ? ':O' : ':(');
+    if (!escudoActivo) cara.setTint(golpeada ? 0xffaaaa : 0xffffff);
 
     suelo.clear();
     if (fase === 'aviso' && Math.floor(jugador.reloj / 120) % 2 === 0) {
@@ -168,7 +168,7 @@ export function conectarMastermind(escena) {
     barra.clear();
     pantalla.body.enable = false;
     pantalla.setFillStyle(COLOR.apagada).setStrokeStyle(4, 0x4b5563);
-    cara.setText('x_x').setColor('#4b5563').setX(cx);
+    cara.setTint(0x647083).setAlpha(0.55).setX(cx);
 
     // Humo y chispas temporales hasta el arte de Rocío (T22).
     const chispas = escena.add.particles(cx, cy, 'chorro-temp', {

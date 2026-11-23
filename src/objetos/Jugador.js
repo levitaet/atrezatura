@@ -86,6 +86,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     anims.create({ key: 'felipito-aire', frames: anims.generateFrameNumbers(SPRITE, { frames: animaciones.aire }) });
+    // El cuadro 0 del original está vacío; el 1 contiene la pose con las manos levantadas.
+    anims.create({ key: 'felipito-disparar', frames: [{ key: 'felipito-con-extintor', frame: 1 }] });
   }
 
   // Distancia desde el centro del sprite hasta los pies (borde inferior del cuerpo de física).
@@ -199,7 +201,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     // --- Animación
     if (this.conSprite) {
       let animacion = 'felipito-quieto';
-      if (!suelo) animacion = 'felipito-aire';
+      if (disparando) animacion = 'felipito-disparar';
+      else if (!suelo) animacion = 'felipito-aire';
       else if (Math.abs(cuerpo.velocity.x) > 20) animacion = 'felipito-caminar';
       this.play(animacion, true);
     }

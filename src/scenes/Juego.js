@@ -19,6 +19,10 @@ export default class Juego extends Phaser.Scene {
   preload() {
     this.load.spritesheet('felipito', 'assets/sprites/felipito.png', { frameWidth: 128, frameHeight: 128 });
     this.load.image('completo', 'assets/sprites/completo-italiano.png');
+    this.load.spritesheet('felipito-con-extintor', 'assets/sprites/felipito-con-extintor.png', { frameWidth: 128, frameHeight: 128 });
+    for (const nombre of ['extintor', 'mastermind', 'fondo-noche']) {
+      this.load.image(nombre, `assets/sprites/${nombre}.png`);
+    }
   }
 
   create() {

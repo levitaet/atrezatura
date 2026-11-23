@@ -41,6 +41,10 @@ export function conectarRevelacion(escena) {
     camara.flash(300, 255, 70, 90);
     camara.shake(350, 0.006);
     camara.setBackgroundColor(REVELACION.fondo);
+    const noche = escena.add.image(camara.width / 2, 0, 'fondo-noche')
+      .setOrigin(0.5, 0).setScrollFactor(0).setDepth(-10).setAlpha(0);
+    noche.setScale(Math.max(camara.width / noche.width, camara.height / noche.height));
+    escena.tweens.add({ targets: noche, alpha: 0.8, duration: 1200 });
     escena.tweens.add({ targets: tinte, fillAlpha: REVELACION.opacidad, duration: 1200, ease: 'Sine.easeOut' });
     for (const disparador of disparadores) disparador.setVisible(false);
 
