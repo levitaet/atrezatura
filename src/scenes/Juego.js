@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { crearNivel } from '../niveles/crearNivel.js';
 import Jugador from '../objetos/Jugador.js';
 import { CAMARA, TAMANO_CELDA } from '../config.js';
+import { conectarMonitor } from '../dialogos.js';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
@@ -9,6 +10,7 @@ export default class Juego extends Phaser.Scene {
   }
 
   create() {
+    conectarMonitor(this);
     this.nivel = null;
     this.enTransicion = false;
     const alContinuar = () => { this.enTransicion = false; };

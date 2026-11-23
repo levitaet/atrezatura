@@ -1,5 +1,29 @@
 #juego { position: relative; }
 
+.monitor-dialogo, .dialogo-resultado {
+  box-sizing: border-box;
+  max-width: min(36rem, 92%);
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #8fdfc7;
+  background: #142b34;
+  color: #edfff9;
+  font: 1rem/1.45 system-ui, sans-serif;
+}
+.monitor-dialogo::before, .dialogo-resultado::before {
+  content: 'Mastermind';
+  display: block;
+  color: #8fdfc7;
+  font-weight: 700;
+}
+.monitor-dialogo {
+  position: absolute;
+  top: 3%;
+  right: 4%;
+  pointer-events: none;
+}
+.monitor-dialogo:empty { visibility: hidden; }
+
 .menu {
   position: absolute;
   inset: 0;
