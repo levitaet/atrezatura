@@ -31,3 +31,4 @@ Formato: `HH:MM · qué probamos · cómo se sintió · qué cambiamos`
 - 15:09 · Consistencia de diálogos · El cómic y las pantallas de victoria/derrota tenían su propia caja de texto · Todos los diálogos usan la misma caja de novela visual (retrato, nombre y texto letra a letra): juego, cómic y resultado.
 - 15:13 · Guiño a 31 Minutos y número 23 · Bodoque estaba fuera del juego y el 23 era poco visible · Juan Carlos Bodoque presenta la Nota Verde en la terminal; los golpes del extintor muestran números de daño estilo Fortnite que siempre dicen 23 (rojo y grande en el golpe final).
 - 15:18 · Tiempo de la terminal · 25 s no alcanzaba para leer lo que se escribe · Subimos a 60 s.
+- 15:21 · Computadores que cierran puertas · Pasaban sin decir nada · Al acercarse a uno (7 celdas), la Mastermind corta el paso con una frase corporativa (una vez por computador).

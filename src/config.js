@@ -78,7 +78,8 @@ export const EXTINTOR = {
 
 export const COMPUTADOR = {
   escala: 2,
-  resistencia: 0.3 // segundos de chorro acumulado para averiar un computador pequeño (la carga llena dura 0,5)
+  resistencia: 0.3, // segundos de chorro acumulado para averiar un computador pequeño (la carga llena dura 0,5)
+  distanciaAvisoPuerta: 7 // celdas: al acercarse a un computador que cierra una puerta, la Mastermind habla
 };
 
 export const MASTERMIND = {

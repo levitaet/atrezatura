@@ -100,7 +100,15 @@ export function conectarComputadores(escena) {
 
   // --- Dibujo: el computador tiembla y se aclara mientras lo rocían
   let colorBase = COLOR.normal;
+  // Al acercarse a un computador que cierra una puerta, la Mastermind le corta el paso (una vez).
+  const custodios = computadores.filter((c) => c.controla.some((p) => p.tipo === 'puerta'));
+  const distanciaAviso = COMPUTADOR.distanciaAvisoPuerta * lado;
   const dibujar = () => {
+    for (const c of custodios) {
+      if (c.averiado || c.avisoPuerta || Math.abs(jugador.x - c.x) > distanciaAviso) continue;
+      c.avisoPuerta = true;
+      escena.events.emit('dialogo', 'puerta_cerrada', {});
+    }
     for (const c of computadores) {
       if (c.averiado) continue;
       const golpeado = jugador.reloj < c.golpeadoHasta;

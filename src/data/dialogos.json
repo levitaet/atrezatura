@@ -50,5 +50,12 @@
   "hackeo_fallido": [
     "Sistema restaurado. Tu acceso fue revocado con copia a Recursos Humanos.",
     "¿Hackearme? Primero aprende a llenar la planilla de horas."
+  ],
+  "puerta_cerrada": [
+    "Alto ahí. Esta puerta es solo para personal con contrato vigente. El tuyo venció.",
+    "¿Pasar? Primero llena el formulario 23-B en triplicado. Y espera la firma de gerencia.",
+    "Por esta puerta no se sale. Por esta puerta se vuelve a trabajar.",
+    "Acceso denegado. Tu solicitud quedó en la bandeja de pendientes. Para siempre.",
+    "Esta puerta abre en horario de oficina. Y el horario de oficina es eterno."
   ]
 }
