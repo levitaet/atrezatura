@@ -19,12 +19,12 @@ export function conectarCarteles(escena) {
     escena.add
       .text(marcador.x, marcador.y + 16, texto, {
         fontFamily: '"VT323", "Consolas", monospace',
-        fontSize: '18px',
+        fontSize: '12px', // se ve más grande por el zoom de la cámara
         color: '#e8eef5',
         align: 'center',
         backgroundColor: '#101820cc',
-        padding: { x: 8, y: 5 },
-        wordWrap: { width: 260 }
+        padding: { x: 6, y: 3 },
+        wordWrap: { width: 200 }
       })
       .setOrigin(0.5, 1)
       .setDepth(2);

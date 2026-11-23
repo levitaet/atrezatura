@@ -85,6 +85,7 @@ export default class Juego extends Phaser.Scene {
     this.physics.add.collider(jugador, solidos, null, (_j, bloque) => !(jugador.estaBajando() && esFina(bloque)));
 
     const camara = this.cameras.main;
+    camara.setZoom(CAMARA.zoom);
     camara.startFollow(jugador, true, CAMARA.suavizado, CAMARA.suavizado);
     camara.setDeadzone(CAMARA.zonaMuertaAncho, CAMARA.zonaMuertaAlto);
 

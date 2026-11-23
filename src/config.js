@@ -91,6 +91,7 @@ export const REVELACION = {
 };
 
 export const CAMARA = {
+  zoom: 1.6, // acercamiento: 1 = se ve todo el ancho de 960 px; más alto = personaje más grande, se ve menos nivel
   suavizado: 0.12, // 0–1. Más bajo = la cámara sigue con más retraso
   zonaMuertaAncho: 160, // px en que el jugador se mueve sin que la cámara lo siga
   zonaMuertaAlto: 100
