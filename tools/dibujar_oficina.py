@@ -118,11 +118,25 @@ def oficina(alarma):
         rect(x+59, 13, 82, 2, luz)
         rect(x+3, 23, 3, 152, sombra)
         ventana(x+16, i+23)
-        rect(x+211, 55, 35, 41, sombra)
-        rect(x+213, 57, 31, 37, "#6a5b54")
-        for dx, dy, w, h, col in [(2,4,11,14,"#9a9580"),(16,9,10,8,"#98816d"),(12,23,12,10,"#82928c")]:
-            rect(x+213+dx,57+dy,w,h,col)
-            rect(x+216+dx,59+dy,3,1,"#655c5b")
+        if i == 0:
+            # Placa esmaltada sobre el primer paño de pared, entre las ventanas.
+            rect(x+203, 24, 49, 48, sombra)
+            rect(x+202, 22, 49, 48, tinta)
+            rect(x+203, 23, 47, 46, "#748587" if not alarma else "#956f70")
+            rect(x+205, 24, 43, 44, "#253e4a" if not alarma else "#433640")
+            esmalte = "#c8eee4" if not alarma else "#ffdbaf"
+            with Image.open(Path(__file__).with_name("codex-mascara.png")) as logo:
+                imagen.paste(esmalte, (x+210, 25, x+244, 59), logo)
+            d.text((x+227, 63), "CODEX", fill=esmalte, anchor="mm")
+            for px in (205, 247):
+                for py in (24, 67):
+                    rect(x+px, py, 1, 1, "#c2b69c")
+        else:
+            rect(x+211, 55, 35, 41, sombra)
+            rect(x+213, 57, 31, 37, "#6a5b54")
+            for dx, dy, w, h, col in [(2,4,11,14,"#9a9580"),(16,9,10,8,"#98816d"),(12,23,12,10,"#82928c")]:
+                rect(x+213+dx,57+dy,w,h,col)
+                rect(x+216+dx,59+dy,3,1,"#655c5b")
         rect(x, 172, 256, 4, sombra)
         mesa(x+16, 154, 100)
         monitor(x+33, 132)

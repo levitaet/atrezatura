@@ -6,6 +6,13 @@
     "cuadros": 1,
     "fps": 10
   },
+  "computador": {
+    "archivo": "computador.png",
+    "anchoCuadro": 32,
+    "altoCuadro": 32,
+    "cuadros": 2,
+    "fps": 10
+  },
   "extintor": {
     "archivo": "extintor.png",
     "anchoCuadro": 128,

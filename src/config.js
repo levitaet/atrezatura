@@ -77,6 +77,7 @@ export const EXTINTOR = {
 };
 
 export const COMPUTADOR = {
+  escala: 2,
   resistencia: 0.3 // segundos de chorro acumulado para averiar un computador pequeño (la carga llena dura 0,5)
 };
 

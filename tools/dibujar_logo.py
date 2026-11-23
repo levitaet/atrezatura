@@ -6,9 +6,12 @@ from PIL import Image, ImageDraw
 
 LETRAS = {
     "M": ["1100011", "1110111", "1111111", "1101011", "1100011", "1100011", "1100011", "1100011"],
-    "A": ["011110", "111111", "110011", "110011", "111111", "110011", "110011", "110011"],
-    "S": ["011111", "111111", "110000", "111110", "011111", "000011", "111111", "111110"],
-    "T": ["111111", "111111", "001100", "001100", "001100", "001100", "001100", "001100"],
+    "F": ["111111", "111111", "110000", "111110", "111110", "110000", "110000", "110000"],
+    "-": ["0000", "0000", "0000", "1111", "1111", "0000", "0000", "0000"],
+    "s": ["00000", "00000", "01111", "11000", "01110", "00011", "11110", "00000"],
+    "u": ["00000", "00000", "11011", "11011", "11011", "11011", "01111", "00000"],
+    "d": ["00011", "00011", "01111", "11011", "11011", "11011", "01111", "00000"],
+    "o": ["00000", "00000", "01110", "11011", "11011", "11011", "01110", "00000"],
     "E": ["111111", "111111", "110000", "111110", "111110", "110000", "111111", "111111"],
     "R": ["111110", "111111", "110011", "111111", "111110", "110110", "110011", "110011"],
     "I": ["1111", "1111", "0110", "0110", "0110", "0110", "1111", "1111"],
@@ -39,14 +42,18 @@ def monitor(d):
 
 
 def titulo():
-    image = Image.new("RGBA", (220, 49))
+    image = Image.new("RGBA", (280, 49))
     d = ImageDraw.Draw(image)
     monitor(d)
     x = 55
-    for i, letra in enumerate("MASTERIA"):
+    for letra in "sudo FIRE-ME":
+        if letra == " ":
+            x += 8
+            continue
         filas = LETRAS[letra]
+        paso = 2 if letra.islower() else 3
         clara, media, baja, relieve = (
-            ("#f1ffeb", "#b8e1d6", "#8bc4c3", "#396877") if i < 6 else
+            ("#f1ffeb", "#b8e1d6", "#8bc4c3", "#396877") if letra.islower() else
             ("#ffe2a3", "#ffaa69", "#ff8363", "#9c4651")
         )
         for sombra in (True, False):
@@ -54,13 +61,13 @@ def titulo():
                 avance = x + (23 - y) // 6
                 for col, bit in enumerate(filas[y // 3]):
                     if bit == "1":
-                        px = avance + col * 3
+                        px = avance + col * paso
                         if sombra:
-                            d.rectangle((px+1,12+y,px+3,15+y), fill=relieve)
+                            d.rectangle((px+1,12+y,px+paso,15+y), fill=relieve)
                         else:
                             color = clara if y < 10 else media if y < 18 else baja
-                            d.line((px,11+y,px+2,11+y), fill=color)
-        x += len(filas[0]) * 3 + 2
+                            d.line((px,11+y,px+paso-1,11+y), fill=color)
+        x += len(filas[0]) * paso + 2
     # Pistas de circuito que conectan la firma con el piloto del monitor.
     d.line([(48,35),(54,41),(145,41),(148,38),(166,38)], fill="#43747a")
     d.line([(55,44),(103,44),(105,42)], fill="#304c59")
@@ -69,6 +76,6 @@ def titulo():
 
 
 if __name__ == "__main__":
-    destino = Path(__file__).resolve().parents[1] / "public/assets/menu/masteria.png"
+    destino = Path(__file__).resolve().parents[1] / "public/assets/menu/sudo-fire-me.png"
     destino.parent.mkdir(parents=True, exist_ok=True)
     titulo().save(destino)

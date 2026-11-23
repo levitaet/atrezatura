@@ -4,9 +4,8 @@ import { numeroDanio } from './danio.js';
 
 const TEXTURA_HUMO = 'humo-temp';
 const COLOR = {
-  normal: 0x6e9eed, // igual que en crearNivel.js
-  ia: 0xd9466f, // después de la revelación (T18)
-  golpeado: 0xf4f8ff,
+  normal: 0xffffff,
+  ia: 0xffc7cb, // después de la revelación (T18)
   averiado: 0x3a4150,
   puerta: 0xe7ac65,
   cable: 0xdf925e,
@@ -38,15 +37,13 @@ export function conectarComputadores(escena) {
 
   const computadores = (nivel.entidades.get('c') ?? []).map((objeto) => ({
     objeto,
-    fondo: objeto.list[0],
-    etiqueta: objeto.list[1],
     x: objeto.x,
     y: objeto.y,
     vida: COMPUTADOR.resistencia,
     averiado: false,
     golpeadoHasta: -Infinity,
     controla: [],
-    limites: new Phaser.Geom.Rectangle(objeto.x - lado / 2, objeto.y - lado / 2, lado, lado)
+    limites: objeto.getBounds()
   }));
   escena.computadores = computadores;
   estado.computadoresRestantes = computadores.length;
@@ -107,9 +104,9 @@ export function conectarComputadores(escena) {
     for (const c of computadores) {
       if (c.averiado) continue;
       const golpeado = jugador.reloj < c.golpeadoHasta;
-      const dano = 1 - c.vida / COMPUTADOR.resistencia;
       c.objeto.x = golpeado ? c.x + Phaser.Math.Between(-2, 2) : c.x;
-      c.fondo.setFillStyle(mezclar(colorBase, COLOR.golpeado, golpeado ? 0.35 + dano * 0.6 : dano * 0.4));
+      if (golpeado && Math.floor(jugador.reloj / 60) % 2 === 0) c.objeto.setTintFill(0xe0efff);
+      else c.objeto.setTint(colorBase);
     }
   };
   escena.events.on('update', dibujar);
@@ -129,11 +126,10 @@ export function conectarComputadores(escena) {
     numeroDanio(escena, c, c.x, c.y - lado, true);
     c.vida = 0;
     c.objeto.x = c.x;
-    c.fondo.setFillStyle(COLOR.averiado);
-    c.etiqueta.setText('x').setColor('#fe6960');
+    c.objeto.setTint(COLOR.averiado).setAlpha(0.7);
 
     // Chispas y humo temporales hasta el arte de Rocío (T22).
-    const chispas = escena.add.particles(c.x, c.y, 'chorro-temp', {
+    const chispas = escena.add.particles(c.x, c.limites.centerY, 'chorro-temp', {
       emitting: false,
       speed: { min: 80, max: 220 },
       lifespan: 320,
@@ -142,7 +138,7 @@ export function conectarComputadores(escena) {
     }).setDepth(5);
     chispas.explode(16);
     escena.time.delayedCall(600, () => chispas.destroy());
-    escena.add.particles(c.x, c.y - lado / 2, TEXTURA_HUMO, {
+    escena.add.particles(c.x, c.limites.top, TEXTURA_HUMO, {
       frequency: 160,
       speedY: { min: -45, max: -20 },
       speedX: { min: -12, max: 12 },
@@ -199,16 +195,6 @@ function asignarAlMasCercano(computadores, peligro) {
   }
   if (mejor) mejor.controla.push(peligro);
   else console.warn(`[nivel] ${peligro.tipo} sin computador que lo controle: nunca se desactiva.`);
-}
-
-function mezclar(a, b, t) {
-  const c = Phaser.Display.Color.Interpolate.ColorWithColor(
-    Phaser.Display.Color.ValueToColor(a),
-    Phaser.Display.Color.ValueToColor(b),
-    100,
-    Phaser.Math.Clamp(t, 0, 1) * 100
-  );
-  return Phaser.Display.Color.GetColor(c.r, c.g, c.b);
 }
 
 function crearTexturaHumo(escena) {

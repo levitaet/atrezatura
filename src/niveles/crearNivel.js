@@ -1,4 +1,4 @@
-import { TAMANO_CELDA } from '../config.js';
+import { COMPUTADOR, TAMANO_CELDA } from '../config.js';
 import { leerMapa } from './mapa.js';
 
 const archivos = import.meta.glob('../data/niveles/*.txt', {
@@ -9,7 +9,7 @@ const archivos = import.meta.glob('../data/niveles/*.txt', {
 
 const colores = {
   '#': 0x52677a, '=': 0xa8c2d1, '^': 0xfe6960, P: 0x46bfa6,
-  c: 0x6e9eed, M: 0xb885ed, S: 0x87c96d,
+  M: 0xb885ed, S: 0x87c96d,
   D: 0xe7ac65, '~': 0xdf925e, '!': 0xe6cc65, o: 0xf2c14e, '?': 0x8fa6c4, '*': 0xffd34d, e: 0xd33b2c, T: 0xd9b98a
 };
 
@@ -67,6 +67,10 @@ export function crearNivel(escena, nombre) {
 }
 
 function crearMarcador(escena, simbolo, x, y, lado) {
+  if (simbolo === 'c') {
+    const computador = escena.add.image(x, y, 'computador', 'carcasa').setScale(COMPUTADOR.escala);
+    return computador.setOrigin(0.5, 1 - lado / (2 * computador.displayHeight));
+  }
   if (simbolo === 'K') {
     const reloj = escena.add.image(x, y, 'checkpoint', 0);
     // La posición lógica es el centro de la celda y el pedestal se apoya en su borde inferior.

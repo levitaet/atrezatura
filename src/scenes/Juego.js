@@ -12,6 +12,7 @@ import { conectarCarteles } from '../reglas/carteles.js';
 import { conectarPensamientos } from '../reglas/pensamientos.js';
 import { conectarTutorial } from '../reglas/tutorial.js';
 import { mostrarHud } from './Hud.js';
+import { musica, ponerMusica, pausarMusica } from '../musica.js';
 import oficina from '../arte/fondos/oficina.png';
 import oficinaAlerta from '../arte/fondos/oficina-alerta.png';
 import placa from '../arte/tutorial/empleado-del-mes.png';
@@ -29,6 +30,7 @@ export default class Juego extends Phaser.Scene {
 
   // Sprites exportados con tools/exportar_resprite.py (Vite sirve public/ en la raíz).
   preload() {
+    this.load.spritesheet('computador', 'assets/sprites/computador.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('checkpoint', 'assets/sprites/checkpoint.png', { frameWidth: 32, frameHeight: 56 });
     this.load.spritesheet('felipito', 'assets/sprites/felipito.png', { frameWidth: 128, frameHeight: 128 });
     this.load.image('completo', 'assets/sprites/completo-italiano.png');
@@ -43,6 +45,12 @@ export default class Juego extends Phaser.Scene {
   }
 
   create() {
+    const textura = this.textures.get('computador');
+    textura.setFilter(Phaser.Textures.FilterMode.NEAREST);
+    if (!textura.has('carcasa')) {
+      // El primer cuadro está vacío y el segundo tiene un margen transparente.
+      textura.add('carcasa', 0, textura.get(1).cutX + 2, 1, 26, 28);
+    }
     this.textures.get('checkpoint').setFilter(Phaser.Textures.FilterMode.NEAREST);
     conectarMonitor(this);
     this.nivel = null;
@@ -83,7 +91,17 @@ export default class Juego extends Phaser.Scene {
     conectarCompletos(this);
     conectarTutorial(this);
     conectarCarteles(this);
+    const actualizarMusica = () => ponerMusica(this.estado.revelado ? musica.persecucion : musica.tranquila);
+    this.events.on('revelacion', actualizarMusica);
+    this.events.on('pause', pausarMusica);
+    this.events.on('resume', actualizarMusica);
+    this.events.once('shutdown', () => {
+      this.events.off('revelacion', actualizarMusica);
+      this.events.off('pause', pausarMusica);
+      this.events.off('resume', actualizarMusica);
+    });
     conectarRevelacion(this);
+    actualizarMusica();
     mostrarHud(this);
   }
 
