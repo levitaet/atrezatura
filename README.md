@@ -11,14 +11,16 @@ npm ci
 npm run dev
 ```
 
-Abre la dirección local que imprime Vite. La escena inicial muestra un lienzo vacío de 960 × 540 px, resolución provisional hasta T03. También puedes instalar las dependencias con `npm install`.
+Abre la dirección local que imprime Vite y selecciona **Empezar** para cargar el mapa `base.txt`. Para editarlo o abrir otro mapa, consulta la [leyenda de niveles](src/data/niveles/LEEME.md). También puedes instalar las dependencias con `npm install`.
 
 Para comprobar la versión de producción, ejecuta `npm run build` y después `npm run preview`. La configuración del juego está en `src/config.js`, las escenas en `src/scenes/`, los mapas y diálogos en `src/data/` y los recursos estáticos en `public/assets/`.
 
 ## Controles
-- Movimiento: A / D caminar · W saltar (mantener para saltar más alto) · S bajar de un escritorio
-- Acciones:
-- Reiniciar o volver al menú:
+- Movimiento: **A / D** caminar · **W** saltar (mantener para saltar más alto) · **S** bajar de una plataforma fina
+- Pulsa **Esc** o **P** para pausar o continuar. Desde la pausa también puedes reiniciar el nivel o volver al inicio.
+- En los menús, selecciona con el ratón o con **Tab** y **Enter**.
+
+La escena `Juego` expone `ganar()` para el cruce de la salida desbloqueada y `perder()` para el último corazón. Ambas transiciones abren una pantalla desde la que puedes volver a jugar o regresar al inicio.
 
 ## Integrantes
 - Nombre y aporte de cada integrante:

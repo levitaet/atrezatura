@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { JUGADOR } from '../ajustes.js';
+import { JUGADOR } from '../config.js';
 
 const TEXTURA_TEMPORAL = 'jugador-temp';
 
@@ -10,12 +10,8 @@ function acercar(valor, objetivo, paso) {
 }
 
 /**
- * El oficinista. Camina con A/D, salta con W y baja de plataformas atravesables con S.
- *
- * Uso en una escena:
- *   this.jugador = new Jugador(this, x, y);
- *   this.physics.add.collider(this.jugador, solidos);
- *   this.physics.add.collider(this.jugador, atravesables, null, () => !this.jugador.estaBajando());
+ * El oficinista. Camina con A/D, salta con W y baja de plataformas finas (=) con S.
+ * La escena Juego lo crea en el inicio del mapa y registra sus colisiones (ver Juego.crearJugador).
  *
  * El movimiento horizontal acelera hacia la velocidad deseada en vez de fijarla, para que los
  * impulsos externos (el extintor, T06) se conserven en el aire.
@@ -43,7 +39,7 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     this.saltando = false; // true mientras sube por un salto (no por el extintor)
   }
 
-  // Rectángulo temporal hasta tener el sprite de Rocío (T11/T25).
+  // Dibujo temporal hasta tener el sprite de Rocío (T11/T25).
   static crearTexturaTemporal(escena) {
     if (escena.textures.exists(TEXTURA_TEMPORAL)) return;
     const g = escena.make.graphics({ add: false });
