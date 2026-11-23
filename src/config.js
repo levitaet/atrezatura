@@ -94,7 +94,8 @@ export const TERMINAL = {
   segundos: 25, // tiempo para hackear a la Mastermind antes de que restaure su sistema
   letrasPorTecla: 3, // cuántas letras escribe cada tecla apretada
   tiempoAlerta: 1800, // ms para responder una alerta con la flecha pedida
-  castigoAlerta: 4 // segundos que se pierden si la alerta no se responde bien
+  castigoAlerta: 4, // segundos que se pierden si la alerta no se responde bien
+  pausaLectura: 2500 // ms que Felipito lee la Nota Verde antes de poder seguir (el reloj se detiene)
 };
 
 export const REVELACION = {

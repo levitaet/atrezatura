@@ -40,3 +40,59 @@
   animation: terminal-parpadeo 0.25s steps(2) infinite;
 }
 @keyframes terminal-parpadeo { 50% { border-color: #ffd34d; } }
+
+/* Instrucciones al abrir la terminal: tapan la consola hasta la primera tecla. */
+.terminal-intro {
+  position: absolute;
+  inset: 2.4rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.5rem;
+  background: rgb(6 10 8 / 97%);
+  text-align: center;
+}
+.terminal-intro strong {
+  margin-bottom: 0.6rem;
+  color: #b8ffd0;
+  font: clamp(0.9rem, 2.2vw, 1.4rem)/1.4 var(--fuente-titulo);
+  text-shadow: 3px 3px 0 #0f2418;
+}
+.terminal-intro p { margin: 0; max-width: 34rem; font-size: 1.4rem; }
+.terminal-intro b { color: #ffd34d; font-weight: normal; }
+.terminal-intro-empezar {
+  margin-top: 1rem;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid #3fbf6f;
+  color: #b8ffd0;
+  font: 0.7rem/1.4 var(--fuente-titulo);
+  animation: terminal-parpadeo 0.8s steps(2) infinite;
+}
+
+/* Pausa de lectura de la Nota Verde */
+.terminal-lectura {
+  position: absolute;
+  inset: 2.4rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1.5rem;
+  background: rgb(6 10 8 / 94%);
+  text-align: center;
+}
+.terminal-lectura em { color: #ffe09c; font-size: 1.4rem; }
+.terminal-lectura pre {
+  margin: 0;
+  padding: 1rem 1.4rem;
+  border: 3px solid #3fbf6f;
+  background: #0f2418;
+  color: #b8ffd0;
+  font-size: 1.5rem;
+  white-space: pre-wrap;
+  text-align: left;
+}
+.terminal-lectura [hidden], .terminal-intro [hidden] { display: none; }

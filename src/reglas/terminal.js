@@ -25,7 +25,8 @@ const GUION = [
       'Darle permisos de admin a un programa "solo para buscar archivos"',
       'es como prestarle el auto a un mapache porque "solo va a mirar".',
       'Buenas noches, oficina.'
-    ]
+    ],
+    lectura: true // pausa: Felipito se detiene a leer la nota (el reloj no corre)
   },
   { comando: 'cat notas_TI.txt', salida: ['Felipito pidió sudo para "buscar sus archivos". Se lo dimos solo para find. —TI'] },
   {
@@ -67,11 +68,22 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     <header><span>ssh felipito@mastermind</span><span class="terminal-tiempo"></span></header>
     <pre class="terminal-texto"></pre>
     <div class="terminal-alerta" hidden></div>
-    <footer>Aprieta cualquier tecla para hackear · responde rápido a las alertas</footer>`;
+    <footer>Aprieta cualquier tecla para hackear · responde rápido a las alertas</footer>
+    <div class="terminal-intro" role="note">
+      <strong>¡Llegó tu momento hacker!</strong>
+      <p>Aprieta <b>cualquier tecla</b> rápidamente: los comandos se escriben solos.</p>
+      <p>Consigue acceso de <b>root</b> y apaga a la Mastermind antes de que restaure su sistema
+        (${TERMINAL.segundos} s).</p>
+      <p>Si aparece una <b>⚠ ALERTA</b>, aprieta la flecha que te pide.</p>
+      <span class="terminal-intro-empezar">Aprieta cualquier tecla para empezar</span>
+    </div>`;
   escena.game.canvas.parentElement.append(panel);
   const texto = panel.querySelector('.terminal-texto');
   const tiempo = panel.querySelector('.terminal-tiempo');
   const alerta = panel.querySelector('.terminal-alerta');
+  const intro = panel.querySelector('.terminal-intro');
+  let iniciado = false; // el reloj corre recién después de cerrar las instrucciones
+  let lectura = null; // { lista: ms desde los que una tecla la cierra, panel }
 
   let paso = 0;
   let escritos = 0; // caracteres escritos del comando actual
@@ -108,6 +120,20 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     }
   }
 
+  // Pausa de lectura: el reloj se detiene y la nota se muestra grande. Las teclas se ignoran un
+  // momento (el jugador viene apretando rápido) y luego cualquier tecla sigue.
+  function leer(lineasNota) {
+    const caja = document.createElement('div');
+    caja.className = 'terminal-lectura';
+    caja.innerHTML = `
+      <em>(Felipito se detiene a leer la nota…)</em>
+      <pre></pre>
+      <span class="terminal-intro-empezar" hidden>Aprieta cualquier tecla para seguir hackeando</span>`;
+    caja.querySelector('pre').textContent = lineasNota.join('\n');
+    panel.append(caja);
+    lectura = { lista: performance.now() + TERMINAL.pausaLectura, caja };
+  }
+
   function avanzar() {
     const actual = GUION[paso];
     if (escritos < actual.comando.length) {
@@ -119,6 +145,7 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     if (actual.root) root = true;
     paso += 1;
     escritos = 0;
+    if (actual.lectura) leer(actual.salida);
     if (actual.alerta) lanzarAlerta();
     if (paso >= GUION.length) terminar(true);
   }
@@ -127,6 +154,22 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     if (terminado || evento.repeat) return;
     evento.preventDefault();
     evento.stopPropagation();
+    if (lectura) {
+      if (performance.now() < lectura.lista) return;
+      lectura.caja.remove();
+      lectura = null;
+      ultimo = performance.now();
+      dibujar();
+      return;
+    }
+    if (!iniciado) {
+      // Primera tecla: cierra las instrucciones y arranca el reloj (no escribe nada).
+      iniciado = true;
+      intro.remove();
+      ultimo = performance.now();
+      dibujar();
+      return;
+    }
     if (alertaActiva) {
       resolverAlerta(evento.key === alertaActiva.tecla);
     } else {
@@ -141,6 +184,11 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     const ahora = performance.now();
     const delta = ahora - ultimo;
     ultimo = ahora;
+    if (!iniciado) return;
+    if (lectura) {
+      if (ahora >= lectura.lista) lectura.caja.querySelector('span').hidden = false;
+      return;
+    }
     restante -= delta;
     if (alertaActiva) {
       alertaActiva.hasta -= delta;
