@@ -27,7 +27,11 @@ export const JUGADOR = {
   caidaMax: 900, // px/s velocidad máxima de caída
 
   // Plataformas finas (=)
-  tiempoBajando: 220 // ms en que ignora las plataformas finas al apretar S
+  tiempoBajando: 220, // ms en que ignora las plataformas finas al apretar S
+
+  // Vida
+  corazones: 3, // corazones al empezar el nivel
+  tiempoInvulnerable: 1200 // ms en que no recibe daño después de reaparecer (parpadea)
 };
 
 export const EXTINTOR = {

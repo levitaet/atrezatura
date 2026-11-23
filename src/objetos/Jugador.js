@@ -39,6 +39,10 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     this.ultimoSaltoPedido = -Infinity;
     this.bajandoHasta = -Infinity;
     this.saltando = false; // true mientras sube por un salto (no por el extintor)
+    this.invulnerableHasta = -Infinity;
+    // Reloj propio en ms: solo avanza mientras la escena corre, así la pausa no gasta
+    // invulnerabilidad ni ventanas de salto (el reloj de escena sigue avanzando en pausa).
+    this.reloj = 0;
 
     this.extintor = new Extintor(escena, this);
   }
@@ -59,15 +63,29 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     return this.body.blocked.down || this.body.touching.down;
   }
 
+  esInvulnerable() {
+    return this.reloj < this.invulnerableHasta;
+  }
+
+  // Vuelve a un punto sin velocidad, con la carga llena y un rato de invulnerabilidad (T16).
+  reaparecer(x, y) {
+    this.body.reset(x, y);
+    this.extintor.recargar();
+    this.saltando = false;
+    this.ultimoSaltoPedido = -Infinity;
+    this.invulnerableHasta = this.reloj + JUGADOR.tiempoInvulnerable;
+  }
+
   // Mientras es true, la escena debe ignorar las colisiones con plataformas atravesables.
   estaBajando() {
-    return this.scene.time.now < this.bajandoHasta;
+    return this.reloj < this.bajandoHasta;
   }
 
   preUpdate(tiempo, delta) {
     super.preUpdate(tiempo, delta);
     const dt = delta / 1000;
-    const ahora = this.scene.time.now;
+    this.reloj += delta;
+    const ahora = this.reloj;
     const cuerpo = this.body;
     const { teclas } = this;
 
@@ -126,6 +144,9 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
     // --- Caída máxima
     if (cuerpo.velocity.y > JUGADOR.caidaMax) cuerpo.setVelocityY(JUGADOR.caidaMax);
+
+    // --- Parpadeo mientras es invulnerable
+    this.setAlpha(this.esInvulnerable() && Math.floor(ahora / 90) % 2 === 0 ? 0.3 : 1);
 
     this.extintor.actualizarDibujo(delta);
   }

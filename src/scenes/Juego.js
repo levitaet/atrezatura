@@ -3,6 +3,7 @@ import { crearNivel } from '../niveles/crearNivel.js';
 import Jugador from '../objetos/Jugador.js';
 import { CAMARA, TAMANO_CELDA } from '../config.js';
 import { conectarMonitor } from '../dialogos.js';
+import { conectarCorazones } from '../reglas/corazones.js';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
@@ -34,6 +35,7 @@ export default class Juego extends Phaser.Scene {
       return;
     }
     this.crearJugador();
+    conectarCorazones(this);
   }
 
   crearJugador() {
