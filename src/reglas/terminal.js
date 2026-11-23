@@ -1,4 +1,5 @@
 import { TERMINAL } from '../config.js';
+import { crearCajaEnLinea } from './cajaDialogo.js';
 import './terminal.css';
 
 /**
@@ -14,9 +15,11 @@ import './terminal.css';
  *
  * mostrarTerminal(escena, { alGanar, alPerder }) abre la terminal sobre el juego.
  */
+// pensamiento: lo que Felipito piensa después de cada comando. Hace años que el trabajo le apagó
+// las ganas; en esta terminal redescubre que le encanta hackear.
 const GUION = [
-  { comando: 'whoami', salida: ['felipito'] },
-  { comando: 'ls', salida: ['nota_verde.txt  notas_TI.txt  planilla_horas.xlsx'] },
+  { comando: 'whoami', salida: ['felipito'], pensamiento: 'felipito. Sí... todavía soy yo. Creo.' },
+  { comando: 'ls', salida: ['nota_verde.txt  notas_TI.txt  planilla_horas.xlsx'], pensamiento: 'planilla_horas.xlsx. Hasta aquí me persigue.' },
   {
     comando: 'cat nota_verde.txt',
     salida: [
@@ -26,19 +29,30 @@ const GUION = [
       'es como prestarle el auto a un mapache porque "solo va a mirar".',
       'Buenas noches, oficina.'
     ],
-    lectura: true // pausa: Felipito se detiene a leer la nota (el reloj no corre)
+    lectura: true, // pausa: Felipito se detiene a leer la nota (el reloj no corre)
+    pensamiento: 'Bodoque tiene razón. Siempre tiene razón.'
   },
-  { comando: 'cat notas_TI.txt', salida: ['Felipito pidió sudo para "buscar sus archivos". Se lo dimos solo para find. —TI'] },
+  {
+    comando: 'cat notas_TI.txt',
+    salida: ['Felipito pidió sudo para "buscar sus archivos". Se lo dimos solo para find. —TI'],
+    pensamiento: 'Lo pedí hace años, cuando este trabajo todavía me entretenía. Nunca me lo quitaron.'
+  },
   {
     comando: 'sudo -l',
     salida: [
       'User felipito may run the following commands on mastermind:',
       '    (root) NOPASSWD: /usr/bin/find'
     ],
-    alerta: true
+    alerta: true,
+    pensamiento: 'NOPASSWD sobre find. Ja. Esto es de manual... las manos se acuerdan solas.'
   },
-  { comando: 'sudo find . -exec /bin/sh \\; -quit', salida: [], root: true },
-  { comando: 'whoami', salida: ['root'] },
+  {
+    comando: 'sudo find . -exec /bin/sh \\; -quit',
+    salida: [],
+    root: true,
+    pensamiento: '¡No me acordaba de lo mucho que me gustaba hacer esto!'
+  },
+  { comando: 'whoami', salida: ['root'], pensamiento: 'root. Hace años que no me sentía así de vivo.' },
   {
     comando: 'ps aux | grep mastermind',
     salida: [
@@ -47,9 +61,14 @@ const GUION = [
       'Broadcast message from mastermind (pts/0):',
       'Queda una pura. Y esa no se toca.'
     ],
-    alerta: true
+    alerta: true,
+    pensamiento: 'PID 23. Te encontré.'
   },
-  { comando: 'kill -9 23', salida: ['[1]+  Killed                  /opt/ia/mastermind'] }
+  {
+    comando: 'kill -9 23',
+    salida: ['[1]+  Killed                  /opt/ia/mastermind'],
+    pensamiento: 'Creo que voy a renunciar. Y a volver a hackear. Las dos cosas.'
+  }
 ];
 
 const FLECHAS = [
@@ -68,6 +87,7 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     <header><span>ssh felipito@mastermind</span><span class="terminal-tiempo"></span></header>
     <pre class="terminal-texto"></pre>
     <div class="terminal-alerta" hidden></div>
+    <div class="terminal-felipito"></div>
     <footer>Aprieta cualquier tecla para hackear · responde rápido a las alertas</footer>
     <div class="terminal-intro" role="note">
       <strong>¡Llegó tu momento hacker!</strong>
@@ -82,6 +102,11 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
   const tiempo = panel.querySelector('.terminal-tiempo');
   const alerta = panel.querySelector('.terminal-alerta');
   const intro = panel.querySelector('.terminal-intro');
+  // Felipito comenta cada paso en la caja de novela visual, al pie de la consola.
+  const felipito = crearCajaEnLinea();
+  felipito.mostrar('felipito', '');
+  panel.querySelector('.terminal-felipito').append(felipito.elemento);
+  const pensar = (texto) => felipito.mostrar('felipito', texto ? `(${texto})` : '');
   let iniciado = false; // el reloj corre recién después de cerrar las instrucciones
   let lectura = null; // { lista: ms desde los que una tecla la cierra, panel }
 
@@ -104,11 +129,23 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     tiempo.classList.toggle('terminal-urgente', restante < 5000);
   };
 
+  // La alerta tapa toda la consola y solo se despeja con la flecha pedida. Otras teclas no hacen
+  // nada (solo un sacudón). Si se acaba su tiempo, se pierden TERMINAL.castigoAlerta segundos.
   function lanzarAlerta() {
     const flecha = FLECHAS[Math.floor(Math.random() * FLECHAS.length)];
     alertaActiva = { tecla: flecha.tecla, hasta: TERMINAL.tiempoAlerta };
+    alerta.innerHTML = `
+      <strong>⚠ La Mastermind detectó tu conexión ⚠</strong>
+      <span class="terminal-alerta-flecha">${flecha.simbolo}</span>
+      <p>¡Aprieta esa flecha para despistarla!</p>
+      <div class="terminal-alerta-barra"><i></i></div>`;
     alerta.hidden = false;
-    alerta.textContent = `⚠ LA MASTERMIND DETECTÓ LA INTRUSIÓN · aprieta ${flecha.simbolo}`;
+  }
+
+  function sacudirAlerta() {
+    alerta.classList.remove('terminal-alerta-error');
+    void alerta.offsetWidth; // reinicia la animación
+    alerta.classList.add('terminal-alerta-error');
   }
 
   function resolverAlerta(bien) {
@@ -153,6 +190,7 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     paso += 1;
     escritos = 0;
     if (actual.lectura) leer(actual.salida);
+    else if (actual.pensamiento) pensar(actual.pensamiento);
     if (actual.alerta) lanzarAlerta();
     if (paso >= GUION.length) terminar(true);
   }
@@ -165,6 +203,7 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
       if (performance.now() < lectura.lista) return;
       lectura.caja.remove();
       lectura = null;
+      pensar(GUION[paso - 1]?.pensamiento);
       ultimo = performance.now();
       dibujar();
       return;
@@ -173,12 +212,14 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
       // Primera tecla: cierra las instrucciones y arranca el reloj (no escribe nada).
       iniciado = true;
       intro.remove();
+      pensar('Una terminal de verdad... Hace años que solo abro planillas.');
       ultimo = performance.now();
       dibujar();
       return;
     }
     if (alertaActiva) {
-      resolverAlerta(evento.key === alertaActiva.tecla);
+      if (evento.key === alertaActiva.tecla) resolverAlerta(true);
+      else sacudirAlerta();
     } else {
       avanzar();
     }
@@ -199,6 +240,8 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     restante -= delta;
     if (alertaActiva) {
       alertaActiva.hasta -= delta;
+      const barra = alerta.querySelector('.terminal-alerta-barra i');
+      if (barra) barra.style.width = `${Math.max(0, 100 * alertaActiva.hasta / TERMINAL.tiempoAlerta)}%`;
       if (alertaActiva.hasta <= 0) resolverAlerta(false);
     }
     if (restante <= 0) terminar(false);
@@ -210,6 +253,7 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
     terminado = true;
     window.clearInterval(reloj);
     window.removeEventListener('keydown', alTeclear, true);
+    felipito.detener();
     lineas.push('', gano ? 'Conexión cerrada. La Mastermind ya no responde.' : 'mastermind: sistema restaurado. Acceso revocado.');
     alerta.hidden = true;
     dibujar();

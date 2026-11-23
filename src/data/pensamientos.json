@@ -1,12 +1,12 @@
 {
   "tutorial": {
     "mapa": [
-      "¿Dónde están todos? Tengo que salir de aquí.",
+      "¿Dónde están todos? Me quedé dormido sobre la planilla... otra vez. Ocho años así.",
       "¿Ese es un extintor, arriba de la mesa? Y ese estante... demasiado alto para saltarlo.",
       "Me estoy quedando sin espuma...",
-      "Las escaleras. Tengo que bajar."
+      "Las escaleras. Antes subía estos pisos con ganas de llegar. Ahora solo quiero bajar."
     ],
-    "extintor": "Un extintor. Si apunto el chorro hacia abajo... ¿saldré volando?",
+    "extintor": "Un extintor. Si apunto el chorro hacia abajo... ¿saldré volando? Hace años que no me daba curiosidad algo.",
     "muneco": "Perdón, Empleado del Mes.",
     "muneco_sin_espacio": [
       "Salí volando como globo de cumpleaños. ¿Y si mantengo ESPACIO para plantarme?",
@@ -20,6 +20,10 @@
     ]
   },
   "oficina": {
-    "mapa": []
+    "mapa": [
+      "Antes de entrar aquí desarmaba computadores para ver cómo funcionaban. Ahora solo los apago y los prendo.",
+      "Mi currículum decía «apasionado por la seguridad informática». Me pusieron a cargo de la impresora.",
+      "Si llego a su terminal... ¿todavía me acordaré de cómo se hace?"
+    ]
   }
 }
