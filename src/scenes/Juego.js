@@ -29,6 +29,7 @@ export default class Juego extends Phaser.Scene {
 
   // Sprites exportados con tools/exportar_resprite.py (Vite sirve public/ en la raíz).
   preload() {
+    this.load.spritesheet('checkpoint', 'assets/sprites/checkpoint.png', { frameWidth: 32, frameHeight: 56 });
     this.load.spritesheet('felipito', 'assets/sprites/felipito.png', { frameWidth: 128, frameHeight: 128 });
     this.load.image('completo', 'assets/sprites/completo-italiano.png');
     this.load.spritesheet('felipito-con-extintor', 'assets/sprites/felipito-con-extintor.png', { frameWidth: 128, frameHeight: 128 });
@@ -42,6 +43,7 @@ export default class Juego extends Phaser.Scene {
   }
 
   create() {
+    this.textures.get('checkpoint').setFilter(Phaser.Textures.FilterMode.NEAREST);
     conectarMonitor(this);
     this.nivel = null;
     this.enTransicion = false;

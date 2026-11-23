@@ -9,7 +9,7 @@ const archivos = import.meta.glob('../data/niveles/*.txt', {
 
 const colores = {
   '#': 0x52677a, '=': 0xa8c2d1, '^': 0xfe6960, P: 0x46bfa6,
-  K: 0x62c4ed, c: 0x6e9eed, M: 0xb885ed, S: 0x87c96d,
+  c: 0x6e9eed, M: 0xb885ed, S: 0x87c96d,
   D: 0xe7ac65, '~': 0xdf925e, '!': 0xe6cc65, o: 0xf2c14e, '?': 0x8fa6c4, '*': 0xffd34d, e: 0xd33b2c, T: 0xd9b98a
 };
 
@@ -35,10 +35,7 @@ export function crearNivel(escena, nombre) {
     const y = (fila + 0.5) * lado;
     if (simbolo === '#') { muros.push({ fila, columna }); continue; }
     if (simbolo === '=') { finas.push({ fila, columna }); continue; }
-    const fondo = escena.add.rectangle(0, 0, lado, lado, colores[simbolo]);
-    const etiqueta = escena.add.text(0, 0, simbolo, { fontFamily: '"VT323", monospace', fontSize: '24px', color: '#101820', resolution: 4 })
-      .setOrigin(0.5);
-    const objeto = escena.add.container(x, y, [fondo, etiqueta]).setSize(lado, lado);
+    const objeto = crearMarcador(escena, simbolo, x, y, lado);
     if (!entidades.has(simbolo)) entidades.set(simbolo, []);
     entidades.get(simbolo).push(objeto);
   }
@@ -67,6 +64,18 @@ export function crearNivel(escena, nombre) {
     dibujarMesa(muebles, x0, y0, w, altura, lado);
   }
   return { solidos, entidades, inicio, ancho, alto };
+}
+
+function crearMarcador(escena, simbolo, x, y, lado) {
+  if (simbolo === 'K') {
+    const reloj = escena.add.image(x, y, 'checkpoint', 0);
+    // La posición lógica es el centro de la celda y el pedestal se apoya en su borde inferior.
+    return reloj.setOrigin(0.5, 1 - lado / (2 * reloj.height));
+  }
+  const fondo = escena.add.rectangle(0, 0, lado, lado, colores[simbolo]);
+  const etiqueta = escena.add.text(0, 0, simbolo, { fontFamily: '"VT323", monospace', fontSize: '24px', color: '#101820', resolution: 4 })
+    .setOrigin(0.5);
+  return escena.add.container(x, y, [fondo, etiqueta]).setSize(lado, lado);
 }
 
 // --- Mobiliario provisorio (se reemplaza cuando haya tiles de Rocío) ---

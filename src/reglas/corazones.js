@@ -1,8 +1,5 @@
 import { JUGADOR, TAMANO_CELDA } from '../config.js';
 
-const COLOR_CHECKPOINT = 0x62c4ed; // igual que en crearNivel.js
-const COLOR_CHECKPOINT_ACTIVO = 0xb4f3df;
-
 /**
  * T16: corazones, daño, checkpoints y reaparición.
  *
@@ -56,8 +53,8 @@ export function conectarCorazones(escena) {
 
   function activarCheckpoint(checkpoint) {
     if (estado.checkpoint === checkpoint) return;
-    estado.checkpoint?.list[0]?.setFillStyle(COLOR_CHECKPOINT);
-    checkpoint.list[0]?.setFillStyle(COLOR_CHECKPOINT_ACTIVO);
+    estado.checkpoint?.setFrame(0);
+    checkpoint.setFrame(1);
     estado.checkpoint = checkpoint;
     estado.reaparicion = piesEn(checkpoint);
     escena.events.emit('checkpoint', checkpoint);
