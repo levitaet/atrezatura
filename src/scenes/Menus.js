@@ -138,6 +138,7 @@ export class Resultado extends Phaser.Scene {
   create() {
     const mensaje = document.createElement('p');
     mensaje.className = 'dialogo-resultado';
+    mensaje.dataset.hablante = this.registry.get('hablanteMastermind') ?? 'Mastermind';
     mensaje.textContent = obtenerDialogo(this.titulo === 'Victoria' ? 'victoria' : 'muerte');
     mostrarMenu(this, this.titulo, [
       ['Reintentar', () => this.scene.start('Juego')],

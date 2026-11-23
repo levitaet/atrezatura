@@ -139,6 +139,8 @@ export default class Juego extends Phaser.Scene {
 
   terminar(destino) {
     if (this.enTransicion || !this.scene.isActive()) return;
+    // La pantalla de resultado muestra a la Mastermind como "???" si Felipito aún no la conoce.
+    this.registry.set('hablanteMastermind', this.estado?.revelado ? 'Mastermind' : '???');
     this.enTransicion = true;
     this.scene.start(destino);
   }
