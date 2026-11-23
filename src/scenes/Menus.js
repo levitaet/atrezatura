@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { obtenerDialogo } from '../dialogos.js';
-import { EXTINTOR } from '../config.js';
+import despertar from '../arte/despertar.png';
 import './menus.css';
 
 // Los botones nativos comparten la misma acción con ratón, Tab, Enter y Espacio.
@@ -34,25 +34,33 @@ export class Inicio extends Phaser.Scene {
   constructor() { super('Inicio'); }
 
   create() {
-    const controles = document.createElement('div');
-    controles.className = 'controles';
-    const mover = EXTINTOR.modoFlechas === 'mover';
-    controles.innerHTML = `
-      <dl>
-        <dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>Caminar</dd>
-        <dt><kbd>W</kbd></dt><dd>Saltar · mantén para subir más</dd>
-        <dt><kbd>S</kbd></dt><dd>Bajar de una plataforma fina</dd>
-        <dt><kbd>← ↑ ↓ →</kbd></dt><dd>${mover ? 'Impulsarte en la dirección de la flecha' : 'Apuntar y disparar el extintor'}</dd>
-        <dt><kbd>Espacio</kbd></dt><dd>Mantener en el suelo para disparar sin retroceder</dd>
-        <dt><kbd>Esc</kbd> / <kbd>P</kbd></dt><dd>Pausar o continuar</dd>
-      </dl>
-      <p>${mover ? 'Pulsa ↑ para subir con el chorro hacia abajo.' : 'Dispara hacia abajo (↓) para subir.'} Combina dos flechas para una diagonal. Suéltalas en el suelo para recargar.</p>`;
     mostrarMenu(this, 'MasterIA', [
       ['Empezar', () => {
         this.registry.remove('nivelActual'); // empezar siempre desde el primer nivel (o ?nivel=)
-        this.scene.start('Juego');
+        this.scene.start('Introduccion');
       }]
-    ], controles);
+    ]);
+  }
+}
+
+export class Introduccion extends Phaser.Scene {
+  constructor() { super('Introduccion'); }
+
+  create() {
+    const pagina = document.createElement('section');
+    pagina.className = 'menu comic';
+    pagina.setAttribute('aria-label', 'Prólogo de MasterIA');
+    const imagen = new Image();
+    imagen.alt = 'Felipito duerme sobre su escritorio. Al despertar, levanta la cabeza y mira alrededor. Todas las sillas de la oficina están vacías.';
+    imagen.src = despertar;
+    const continuar = document.createElement('button');
+    continuar.type = 'button';
+    continuar.textContent = 'Continuar';
+    continuar.addEventListener('click', () => this.scene.start('Juego'), { once: true });
+    pagina.append(imagen, continuar);
+    this.game.canvas.parentElement.append(pagina);
+    continuar.focus({ preventScroll: true });
+    this.events.once('shutdown', () => pagina.remove());
   }
 }
 

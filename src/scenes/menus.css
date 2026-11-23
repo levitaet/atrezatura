@@ -21,18 +21,6 @@
 .hud progress.hud-tanque { accent-color: #ffd34d; }
 .hud progress.hud-vacio { accent-color: #fe6960; }
 .hud b { display: inline-block; min-width: 4ch; font-variant-numeric: tabular-nums; }
-.controles {
-  width: min(29rem, 92%);
-  padding: clamp(.65rem, 2vh, 1.2rem);
-  box-sizing: border-box;
-  border-top: 2px solid #8fdfc7;
-  background: #172e39;
-}
-.controles dl { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: .45rem 1rem; margin: 0; }
-.controles dd { margin: 0; }
-.controles kbd { color: #a5f0db; font: 700 1em monospace; }
-.controles p { border-top: 1px solid #48616b; padding-top: .6rem; margin: .7rem 0 0; line-height: 1.4; }
-
 .monitor-dialogo, .dialogo-resultado {
   box-sizing: border-box;
   max-width: min(36rem, 92%);
@@ -93,4 +81,20 @@
   color: #132733;
   outline: 2px solid white;
   outline-offset: 2px;
+}
+
+.menu.comic {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  justify-content: stretch;
+  padding: clamp(.5rem, 2vh, 1.5rem);
+  background: #080f16;
+}
+.comic img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  color: #edf6fa;
 }
