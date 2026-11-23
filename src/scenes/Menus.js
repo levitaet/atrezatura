@@ -1,13 +1,20 @@
 import Phaser from 'phaser';
+import { obtenerDialogo } from '../dialogos.js';
 import './menus.css';
 
 // Los botones nativos comparten la misma acción con ratón, Tab, Enter y Espacio.
-function mostrarMenu(escena, titulo, opciones) {
+function mostrarMenu(escena, titulo, opciones, dialogo = '') {
   const panel = document.createElement('section');
   panel.className = 'menu';
   const encabezado = document.createElement('h1');
   encabezado.textContent = titulo;
   panel.append(encabezado);
+  if (dialogo) {
+    const mensaje = document.createElement('p');
+    mensaje.className = 'dialogo-resultado';
+    mensaje.textContent = dialogo;
+    panel.append(mensaje);
+  }
   let elegida = false;
   for (const [texto, accion] of opciones) {
     const boton = document.createElement('button');
@@ -70,6 +77,6 @@ export class Resultado extends Phaser.Scene {
     mostrarMenu(this, this.titulo, [
       ['Volver a jugar', () => this.scene.start('Juego')],
       ['Volver al inicio', () => this.scene.start('Inicio')]
-    ]);
+    ], obtenerDialogo(this.titulo === 'Victoria' ? 'victoria' : 'muerte'));
   }
 }

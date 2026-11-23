@@ -1,0 +1,26 @@
+{
+  "revelacion": [
+    "Llevas toda la mañana siguiendo mis flechas.",
+    "Mira el monitor. Sí, el de enfrente. Te veo."
+  ],
+  "computador_averiado": [
+    "Ese equipo tenía mi única copia del horario.",
+    "Acabo de perder otra ventana a la oficina."
+  ],
+  "muerte": [
+    "He registrado el incidente. El formulario sigue caliente.",
+    "Quizá debí señalar ese peligro en el plano."
+  ],
+  "sala_mastermind": [
+    "Cierra la puerta. Los servidores necesitan frío.",
+    "Desde aquí se oye hasta el último teclado del edificio."
+  ],
+  "escudo_roto": [
+    "¿Por qué siento la corriente de aire?",
+    "Ese siseo sonaba mejor al otro lado del escudo."
+  ],
+  "victoria": [
+    "Tu tarjeta acaba de marcar la salida. Por fin.",
+    "Te has llevado el extintor. ¿Qué pongo en el inventario?"
+  ]
+}

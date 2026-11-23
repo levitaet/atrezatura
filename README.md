@@ -21,6 +21,12 @@ Para comprobar la versión de producción, ejecuta `npm run build` y después `n
 
 La escena `Juego` expone `ganar()` para el cruce de la salida desbloqueada y `perder()` para el último corazón. Ambas transiciones abren una pantalla desde la que puedes volver a jugar o regresar al inicio.
 
+## Diálogos de la Mastermind
+
+Desde la escena de juego, emite el diálogo cuando ocurra el evento, por ejemplo `this.events.emit('dialogo', 'computador_averiado', { restantes: 2 })`. El monitor muestra una frase durante 4,5 segundos de juego. Un nuevo mensaje reemplaza al anterior. Las pantallas de victoria y derrota muestran su propia frase al abrirse.
+
+El catálogo local está en [src/data/dialogos.json](src/data/dialogos.json). Cada clave contiene una lista de frases en español: `revelacion`, `computador_averiado`, `muerte`, `sala_mastermind`, `escudo_roto` y `victoria`. Benja puede sustituir las frases provisionales o añadir variantes para T20.
+
 ## Integrantes
 - Nombre y aporte de cada integrante:
 
