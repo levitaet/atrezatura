@@ -91,7 +91,9 @@ export default class Extintor {
       const ux = -apuntada.x;
       const uy = -apuntada.y;
       const velocidadEnEmpuje = cuerpo.velocity.x * ux + cuerpo.velocity.y * uy;
-      if (velocidadEnEmpuje < EXTINTOR.velocidadMax) {
+      if (this.jugador.anclado) {
+        cuerpo.setAcceleration(0, 0); // plantado con Espacio: el chorro no lo mueve
+      } else if (velocidadEnEmpuje < EXTINTOR.velocidadMax) {
         cuerpo.setAcceleration(ux * EXTINTOR.empuje, uy * EXTINTOR.empuje);
       } else {
         cuerpo.setAcceleration(0, 0);

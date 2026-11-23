@@ -13,6 +13,7 @@ function acercar(valor, objetivo, paso) {
 /**
  * El oficinista. Camina con A/D, salta con W, baja de plataformas finas (=) con S
  * y se propulsa con el extintor usando las flechas (ver Extintor.js).
+ * Mantener Espacio en el suelo lo planta: queda quieto aunque dispare (para apuntar a computadores).
  * La escena Juego lo crea en el inicio del mapa y registra sus colisiones (ver Juego.crearJugador).
  *
  * El movimiento horizontal acelera hacia la velocidad deseada en vez de fijarla, para que los
@@ -33,6 +34,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
       saltar: Phaser.Input.Keyboard.KeyCodes.W,
       bajar: Phaser.Input.Keyboard.KeyCodes.S
     });
+    // Sin captura (false): así Espacio sigue activando los botones de los menús.
+    this.teclaAnclar = escena.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, false);
 
     this.mirando = 1; // 1 = derecha, -1 = izquierda
     this.ultimoEnSuelo = -Infinity;
@@ -63,6 +66,11 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     return this.body.blocked.down || this.body.touching.down;
   }
 
+  // Plantado con Espacio: solo en el suelo. En el aire no hace nada (no sirve para flotar).
+  get anclado() {
+    return this.teclaAnclar.isDown && this.enSuelo;
+  }
+
   esInvulnerable() {
     return this.reloj < this.invulnerableHasta;
   }
@@ -90,7 +98,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     const { teclas } = this;
 
     // --- Horizontal
-    const direccion = (teclas.derecha.isDown ? 1 : 0) - (teclas.izquierda.isDown ? 1 : 0);
+    const anclado = this.anclado;
+    const direccion = anclado ? 0 : (teclas.derecha.isDown ? 1 : 0) - (teclas.izquierda.isDown ? 1 : 0);
     const suelo = this.enSuelo;
     const vx = cuerpo.velocity.x;
     const excedeMaximo = Math.sign(vx) === direccion && Math.abs(vx) > JUGADOR.velocidadMax;
@@ -98,7 +107,9 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     const disparando = this.extintor.disparando;
 
     let tasa;
-    if (direccion === 0 || excedeMaximo) {
+    if (anclado) {
+      tasa = JUGADOR.frenadoSuelo; // plantado: se detiene aunque esté disparando
+    } else if (direccion === 0 || excedeMaximo) {
       // Mientras dispara no frena solo: el empuje del extintor manda.
       tasa = disparando ? 0 : suelo ? JUGADOR.frenadoSuelo : JUGADOR.frenadoAire;
     } else {

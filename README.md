@@ -18,6 +18,7 @@ Para comprobar la versión de producción, ejecuta `npm run build` y después `n
 ## Controles
 - Movimiento: **A / D** caminar · **W** saltar (mantener para saltar más alto) · **S** bajar de una plataforma fina
 - Extintor: **flechas** para disparar (combínalas para las diagonales). Empuja hacia el lado contrario; la barra sobre el personaje muestra la carga, que se recarga al pisar el suelo sin disparar.
+- Plantarse: mantén **Espacio** en el suelo para quedarte quieto mientras disparas (útil para averiar computadores sin que el chorro te empuje). En el aire no tiene efecto.
 - Pulsa **Esc** o **P** para pausar o continuar. Desde la pausa también puedes reiniciar el nivel o volver al inicio.
 - En los menús, selecciona con el ratón o con **Tab** y **Enter**.
 
