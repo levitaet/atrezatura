@@ -30,6 +30,14 @@ export const JUGADOR = {
   tiempoBajando: 220 // ms en que ignora las plataformas finas al apretar S
 };
 
+export const EXTINTOR = {
+  empuje: 1800, // px/s² en sentido contrario al chorro (la gravedad es 1000, así que hacia abajo sube)
+  velocidadMax: 420, // px/s: el chorro deja de acelerar al llegar a esta velocidad en su dirección
+  carga: 0.5, // segundos de chorro continuo con la carga llena
+  tiempoRecarga: 0.25, // segundos para llenar la carga desde cero, en el suelo y sin disparar
+  alcance: 110 // px que llega el chorro desde la boquilla (para averiar computadores, T14)
+};
+
 export const CAMARA = {
   suavizado: 0.12, // 0–1. Más bajo = la cámara sigue con más retraso
   zonaMuertaAncho: 160, // px en que el jugador se mueve sin que la cámara lo siga
