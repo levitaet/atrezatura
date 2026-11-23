@@ -98,6 +98,36 @@ export function conectarMastermind(escena) {
   escena.peligros.add(descarga);
   descarga.body.enable = false;
   const suelo = escena.add.graphics().setDepth(3);
+  // Cables de energía desde cada computador del escudo hasta la Mastermind, y una flecha encima
+  // de cada uno: así se ve cuáles faltan aunque estén fuera de la pantalla o tapados por la barra.
+  const lazos = escena.add.graphics().setDepth(4);
+  const dibujarLazos = () => {
+    lazos.clear();
+    if (!enSala || !escudoActivo) return;
+    const t = jugador.reloj;
+    for (const c of delEscudo) {
+      if (c.averiado) continue;
+      // línea quebrada que tiembla, como electricidad: resplandor ancho y núcleo brillante
+      const puntos = [[c.x, c.y]];
+      const pasos = 10;
+      for (let i = 1; i < pasos; i++) {
+        const k = i / pasos;
+        puntos.push([c.x + (cx - c.x) * k + Phaser.Math.Between(-5, 5), c.y + (cy - c.y) * k + Phaser.Math.Between(-5, 5)]);
+      }
+      puntos.push([cx, cy]);
+      for (const [grosor, color, alfa] of [[8, COLOR.escudo, 0.25], [3, 0xe8fff8, 0.7 + 0.3 * Math.sin(t / 90 + c.x)]]) {
+        lazos.lineStyle(grosor, color, alfa);
+        lazos.beginPath();
+        lazos.moveTo(puntos[0][0], puntos[0][1]);
+        for (const [px, py] of puntos.slice(1)) lazos.lineTo(px, py);
+        lazos.strokePath();
+      }
+      // flecha que rebota sobre el computador
+      const y = c.y - lado * 1.1 + Math.sin(t / 160) * 4;
+      lazos.fillStyle(COLOR.aviso, 1).fillTriangle(c.x - 7, y - 8, c.x + 7, y - 8, c.x, y);
+      lazos.lineStyle(2, 0x1a1206, 1).strokeTriangle(c.x - 7, y - 8, c.x + 7, y - 8, c.x, y);
+    }
+  };
   let fase = 'calma';
   let enSala = false;
   let derrotada = false;
@@ -184,6 +214,7 @@ export function conectarMastermind(escena) {
       suelo.fillStyle(COLOR.descarga, 0.5 + Math.random() * 0.4).fillRect(xMin, piso - 8, xMax - xMin, 8);
     }
 
+    dibujarLazos();
     if (enSala) {
       if (escudoActivo) {
         const n = restantesEscudo();
