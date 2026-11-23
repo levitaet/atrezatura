@@ -7,11 +7,18 @@ import { conectarCorazones } from '../reglas/corazones.js';
 import { conectarComputadores } from '../reglas/computadores.js';
 import { conectarRevelacion } from '../reglas/revelacion.js';
 import { conectarMastermind } from '../reglas/mastermind.js';
+import { conectarCompletos } from '../reglas/completo.js';
 import { mostrarHud } from './Hud.js';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
     super('Juego');
+  }
+
+  // Sprites exportados con tools/exportar_resprite.py (Vite sirve public/ en la raíz).
+  preload() {
+    this.load.spritesheet('felipito', 'assets/sprites/felipito.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.image('completo', 'assets/sprites/completo-italiano.png');
   }
 
   create() {
@@ -42,6 +49,7 @@ export default class Juego extends Phaser.Scene {
     conectarCorazones(this);
     conectarComputadores(this);
     conectarMastermind(this);
+    conectarCompletos(this);
     conectarRevelacion(this);
     mostrarHud(this);
   }
@@ -50,8 +58,9 @@ export default class Juego extends Phaser.Scene {
     const { inicio, solidos } = this.nivel;
     const jugador = new Jugador(this, inicio.x, inicio.y);
     // Apoya los pies en el borde inferior de la celda P.
-    jugador.body.reset(inicio.x, inicio.y + TAMANO_CELDA / 2 - jugador.height / 2);
+    jugador.colocar(inicio.x, inicio.y + TAMANO_CELDA / 2);
     this.jugador = jugador;
+    for (const marca of this.nivel.entidades.get('P') ?? []) marca.setVisible(false);
 
     // Las plataformas finas (=) solo chocan por arriba; con S el jugador las atraviesa.
     const esFina = (bloque) => !bloque.body.checkCollision.down;

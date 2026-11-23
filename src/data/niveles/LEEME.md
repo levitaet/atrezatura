@@ -18,6 +18,7 @@ Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejem
 | `D` | Puerta. Bloquea toda su columna hacia arriba, hasta el primer `#` o el techo del mapa. Se abre al averiar su computador. |
 | `~` | Cable. Hace daño hasta que se avería su computador. |
 | `!` | Disparador de la revelación. Ocurre una vez, al cruzar su columna. |
+| `o` | Completo italiano. Al recogerlo llena el tanque del extintor. |
 
 **Qué computador controla qué:** cada puerta `D` y cada cable `~` lo controla el computador `c` más cercano. Pon cada computador cerca de lo que debe abrir o apagar. Un peligro sin computadores en el mapa no se desactiva nunca.
 

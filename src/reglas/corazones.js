@@ -22,12 +22,12 @@ const COLOR_CHECKPOINT_ACTIVO = 0xb4f3df;
 export function conectarCorazones(escena) {
   const { jugador, nivel } = escena;
   const lado = TAMANO_CELDA;
-  const piesEn = (celda) => ({ x: celda.x, y: celda.y + lado / 2 - jugador.height / 2 });
+  const piesEn = (celda) => ({ x: celda.x, y: celda.y + lado / 2 }); // reaparicion guarda los pies
 
   const estado = {
     corazones: JUGADOR.corazones,
     muertes: 0,
-    reaparicion: { x: jugador.x, y: jugador.y },
+    reaparicion: { x: jugador.x, y: jugador.y + jugador.piesDesdeCentro() },
     checkpoint: null
   };
   escena.estado = estado;

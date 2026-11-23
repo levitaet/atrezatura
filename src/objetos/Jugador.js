@@ -3,6 +3,7 @@ import { EXTINTOR, JUGADOR } from '../config.js';
 import Extintor from './Extintor.js';
 
 const TEXTURA_TEMPORAL = 'jugador-temp';
+const SPRITE = 'felipito'; // public/assets/sprites/felipito.png (lo carga Juego.preload)
 
 // Mueve un valor hacia un objetivo sin pasarse.
 function acercar(valor, objetivo, paso) {
@@ -21,12 +22,23 @@ function acercar(valor, objetivo, paso) {
  */
 export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   constructor(escena, x, y) {
-    Jugador.crearTexturaTemporal(escena);
-    super(escena, x, y, TEXTURA_TEMPORAL);
+    const conSprite = escena.textures.exists(SPRITE);
+    if (!conSprite) Jugador.crearTexturaTemporal(escena);
+    super(escena, x, y, conSprite ? SPRITE : TEXTURA_TEMPORAL);
 
     escena.add.existing(this);
     escena.physics.add.existing(this);
     this.setCollideWorldBounds(true);
+    if (conSprite) {
+      // El dibujo de Rocío mide 128 × 128; el cuerpo de física se ajusta a Felipito, no al lienzo.
+      const { escala, cuerpo } = JUGADOR.sprite;
+      this.setScale(escala);
+      this.body.setSize(cuerpo.ancho, cuerpo.alto);
+      this.body.setOffset(cuerpo.x, cuerpo.y);
+      Jugador.crearAnimaciones(escena);
+      this.play('felipito-quieto');
+    }
+    this.conSprite = conSprite;
 
     this.teclas = escena.input.keyboard.addKeys({
       izquierda: Phaser.Input.Keyboard.KeyCodes.A,
@@ -62,6 +74,31 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     g.destroy();
   }
 
+  static crearAnimaciones(escena) {
+    const anims = escena.anims;
+    if (anims.exists('felipito-quieto')) return;
+    const { animaciones } = JUGADOR.sprite;
+    anims.create({ key: 'felipito-quieto', frames: anims.generateFrameNumbers(SPRITE, { frames: animaciones.quieto }) });
+    anims.create({
+      key: 'felipito-caminar',
+      frames: anims.generateFrameNumbers(SPRITE, { frames: animaciones.caminar }),
+      frameRate: animaciones.fpsCaminar,
+      repeat: -1
+    });
+    anims.create({ key: 'felipito-aire', frames: anims.generateFrameNumbers(SPRITE, { frames: animaciones.aire }) });
+  }
+
+  // Distancia desde el centro del sprite hasta los pies (borde inferior del cuerpo de física).
+  piesDesdeCentro() {
+    const b = this.body;
+    return (b.offset.y + b.sourceHeight) * this.scaleY - this.displayHeight * this.originY;
+  }
+
+  // Ubica al jugador con los pies en yPies (por ejemplo, el suelo de una celda).
+  colocar(x, yPies) {
+    this.body.reset(x, yPies - this.piesDesdeCentro());
+  }
+
   get enSuelo() {
     return this.body.blocked.down || this.body.touching.down;
   }
@@ -75,9 +112,9 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     return this.reloj < this.invulnerableHasta;
   }
 
-  // Vuelve a un punto sin velocidad, con la carga llena y un rato de invulnerabilidad (T16).
-  reaparecer(x, y) {
-    this.body.reset(x, y);
+  // Vuelve a un punto (pies en yPies) sin velocidad, con la carga llena e invulnerable un rato (T16).
+  reaparecer(x, yPies) {
+    this.colocar(x, yPies);
     this.extintor.recargar();
     this.saltando = false;
     this.ultimoSaltoPedido = -Infinity;
@@ -158,6 +195,14 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
     // --- Parpadeo mientras es invulnerable
     this.setAlpha(this.esInvulnerable() && Math.floor(ahora / 90) % 2 === 0 ? 0.3 : 1);
+
+    // --- Animación
+    if (this.conSprite) {
+      let animacion = 'felipito-quieto';
+      if (!suelo) animacion = 'felipito-aire';
+      else if (Math.abs(cuerpo.velocity.x) > 20) animacion = 'felipito-caminar';
+      this.play(animacion, true);
+    }
 
     this.extintor.actualizarDibujo(delta);
   }

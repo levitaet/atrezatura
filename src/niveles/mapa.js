@@ -1,4 +1,4 @@
-const simbolos = new Set('#=^PKcMSD~!');
+const simbolos = new Set('#=^PKcMSD~!o');
 
 export function leerMapa(texto) {
   const filas = texto.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').split('\n');

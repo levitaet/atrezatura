@@ -34,5 +34,13 @@
     "Te has llevado el extintor. ¿Qué pongo en el inventario?",
     "Tu salida ha sido aprobada. Bajo protesta.",
     "Has ganado. Pero el extintor se descuenta del finiquito."
+  ],
+  "completo": [
+    "¿Un completo italiano en horario laboral? Lo anotaré en tu evaluación.",
+    "Palta, tomate y mayo. Ni yo puedo competir con eso."
+  ],
+  "tanque_vacio": [
+    "Tu extintor agotó su presupuesto. Solicita más por escrito.",
+    "Sin espuma no hay productividad. Te lo advertí."
   ]
 }

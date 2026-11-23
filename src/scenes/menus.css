@@ -18,6 +18,8 @@
 .hud strong, .hud label span { display: block; color: #fff; font-size: 1rem; }
 .hud .hud-salud { color: #ffa7a5; letter-spacing: .08em; }
 .hud progress { width: clamp(2rem, 5vw, 4rem); accent-color: #8fdfc7; }
+.hud progress.hud-tanque { accent-color: #ffd34d; }
+.hud progress.hud-vacio { accent-color: #fe6960; }
 .hud b { display: inline-block; min-width: 4ch; font-variant-numeric: tabular-nums; }
 .controles {
   width: min(29rem, 92%);

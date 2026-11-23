@@ -22,7 +22,8 @@ export default class Extintor {
   constructor(escena, jugador) {
     this.escena = escena;
     this.jugador = jugador;
-    this.carga = EXTINTOR.carga; // segundos de chorro disponibles
+    this.carga = EXTINTOR.carga; // segundos de chorro disponibles en esta ráfaga
+    this.tanque = EXTINTOR.tanque; // segundos de chorro que quedan en todo el nivel
     this.disparando = false;
     this.direccion = { x: 0, y: 1 }; // hacia dónde sale el chorro (vector unitario)
 
@@ -81,9 +82,11 @@ export default class Extintor {
     const cuerpo = this.jugador.body;
     const apuntada = this.direccionApuntada();
 
-    if (apuntada && this.carga > 0) {
+    if (apuntada && this.carga > 0 && this.tanque > 0) {
       this.direccion = apuntada;
       this.carga = Math.max(0, this.carga - delta);
+      this.tanque = Math.max(0, this.tanque - delta);
+      if (this.tanque === 0) this.escena.events.emit('tanque-vacio');
       this.disparando = true;
 
       // Empuja en sentido contrario al chorro, pero no acelera más allá de EXTINTOR.velocidadMax
@@ -98,7 +101,7 @@ export default class Extintor {
       } else {
         cuerpo.setAcceleration(0, 0);
       }
-      if (this.carga === 0) cuerpo.setAcceleration(0, 0);
+      if (this.carga === 0 || this.tanque === 0) cuerpo.setAcceleration(0, 0);
       return;
     }
 
@@ -111,7 +114,14 @@ export default class Extintor {
     }
   }
 
-  // Llenar la carga (por ejemplo al reaparecer en un checkpoint, T16).
+  // Llenar el tanque del nivel (lo hace el completo italiano).
+  rellenarTanque() {
+    this.tanque = EXTINTOR.tanque;
+    this.carga = EXTINTOR.carga;
+    this.escena.events.emit('tanque-lleno');
+  }
+
+  // Llenar la carga (por ejemplo al reaparecer en un checkpoint, T16). No toca el tanque.
   recargar() {
     this.carga = EXTINTOR.carga;
     this.disparando = false;
@@ -121,8 +131,8 @@ export default class Extintor {
   // Punto de donde sale el chorro.
   boquilla() {
     return {
-      x: this.jugador.x + this.direccion.x * 16,
-      y: this.jugador.y + this.direccion.y * 16
+      x: this.jugador.x + this.direccion.x * 20,
+      y: this.jugador.y + this.direccion.y * 20
     };
   }
 
@@ -153,8 +163,8 @@ export default class Extintor {
     if (llena && !this.disparando) return;
     const ancho = 32;
     const x = this.jugador.x - ancho / 2;
-    const y = this.jugador.y - this.jugador.height / 2 - 10;
-    const fraccion = this.carga / EXTINTOR.carga;
+    const y = this.jugador.body.top - 10;
+    const fraccion = this.tanque > 0 ? this.carga / EXTINTOR.carga : 0;
     g.fillStyle(0x101820, 0.8).fillRect(x - 1, y - 1, ancho + 2, 6);
     g.fillStyle(fraccion > 0 ? 0xe8f4ff : 0xfe6960).fillRect(x, y, ancho * fraccion, 4);
   }

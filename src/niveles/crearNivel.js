@@ -10,7 +10,7 @@ const archivos = import.meta.glob('../data/niveles/*.txt', {
 const colores = {
   '#': 0x52677a, '=': 0xa8c2d1, '^': 0xfe6960, P: 0x46bfa6,
   K: 0x62c4ed, c: 0x6e9eed, M: 0xb885ed, S: 0x87c96d,
-  D: 0xe7ac65, '~': 0xdf925e, '!': 0xe6cc65
+  D: 0xe7ac65, '~': 0xdf925e, '!': 0xe6cc65, o: 0xf2c14e
 };
 
 export function crearNivel(escena, nombre) {

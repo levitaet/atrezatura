@@ -7,10 +7,14 @@ export function mostrarHud(escena) {
   hud.innerHTML = `
     <div>Salud <strong class="hud-salud"></strong></div>
     <label>Extintor <span><progress max="100" aria-label="Carga del extintor"></progress> <b></b></span></label>
+    <label>Tanque <span><progress class="hud-tanque" max="100" aria-label="Tanque del extintor en el nivel"></progress> <b class="hud-tanque-txt"></b></span></label>
     <div>Computadores restantes <strong class="hud-cuenta"></strong></div>`;
   const salud = hud.querySelector('.hud-salud');
   const cuenta = hud.querySelector('.hud-cuenta');
   const carga = hud.querySelector('progress');
+  const tanque = hud.querySelector('.hud-tanque');
+  const tanqueTexto = hud.querySelector('.hud-tanque-txt');
+  let ultimoTanque = -1;
   const porcentaje = hud.querySelector('b');
   const dibujarSalud = () => {
     const n = escena.estado.corazones;
@@ -19,6 +23,14 @@ export function mostrarHud(escena) {
   };
   const dibujarCuenta = () => { cuenta.textContent = escena.estado.computadoresRestantes; };
   const dibujarCarga = () => {
+    const segundos = escena.jugador.extintor.tanque;
+    const decimas = Math.ceil(segundos * 10);
+    if (decimas !== ultimoTanque) {
+      ultimoTanque = decimas;
+      tanque.value = Math.round(100 * segundos / EXTINTOR.tanque);
+      tanqueTexto.textContent = `${(decimas / 10).toFixed(1)} s`;
+      tanque.classList.toggle('hud-vacio', segundos <= 0);
+    }
     const valor = Math.round(100 * escena.jugador.extintor.carga / EXTINTOR.carga);
     if (carga.hasAttribute('value') && valor === carga.value) return;
     carga.value = valor;

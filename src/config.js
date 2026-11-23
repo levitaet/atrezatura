@@ -29,6 +29,13 @@ export const JUGADOR = {
   // Plataformas finas (=)
   tiempoBajando: 220, // ms en que ignora las plataformas finas al apretar S
 
+  // Sprite de Felipito (public/assets/sprites/felipito.png, cuadros de 128 × 128)
+  sprite: {
+    escala: 0.5, // Felipito queda de ~62 px de alto (unas 2 celdas)
+    cuerpo: { ancho: 52, alto: 112, x: 36, y: 11 }, // en px del dibujo original (antes de escalar)
+    animaciones: { quieto: [0], caminar: [1, 2, 3, 4, 5, 6, 7, 8, 9], fpsCaminar: 10, aire: [2] }
+  },
+
   // Vida
   corazones: 3, // corazones al empezar el nivel
   tiempoInvulnerable: 1200 // ms en que no recibe daño después de reaparecer (parpadea)
@@ -40,6 +47,7 @@ export const EXTINTOR = {
   carga: 0.5, // segundos de chorro continuo con la carga llena
   tiempoRecarga: 0.25, // segundos para llenar la carga desde cero, en el suelo y sin disparar
   alcance: 110, // px que llega el chorro desde la boquilla (para averiar computadores, T14)
+  tanque: 8, // segundos de chorro en TODO el nivel. No se recarga en el suelo: solo con un completo
 
   // Qué significan las flechas:
   //   'apuntar' → hacia dónde sale el chorro (↓ te hace subir). Sirve para apuntar a los computadores.
