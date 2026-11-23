@@ -1,0 +1,7 @@
+/* Tipografías pixel art (licencia OFL 1.1, vía @fontsource):
+   - Press Start 2P: títulos, botones y rótulos cortos.
+   - VT323: textos largos (diálogos, cómic, terminal, HUD). Es más pequeña, por eso va a mayor tamaño. */
+:root {
+  --fuente-titulo: 'Press Start 2P', 'Courier New', monospace;
+  --fuente-texto: 'VT323', 'Courier New', monospace;
+}

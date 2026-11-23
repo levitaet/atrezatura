@@ -10,15 +10,14 @@
   border-left: 3px solid #ffd34d;
   background: rgb(20 16 8 / 88%);
   color: #ffe9a8;
-  font: italic 1rem/1.4 system-ui, sans-serif;
+  font: 1.35rem/1.15 var(--fuente-texto);
   pointer-events: none;
 }
 .pensamiento-juego::before {
   content: 'Felipito (piensa)';
   display: block;
   color: #ffd34d;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 0.85em;
+  margin-bottom: .35em;
+  font: .55rem/1 var(--fuente-titulo);
 }
 .pensamiento-juego:empty { visibility: hidden; }

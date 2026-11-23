@@ -8,7 +8,7 @@
   border: 2px solid #3fbf6f;
   box-shadow: 0 0 24px rgb(63 191 111 / 35%);
   color: #7dffa8;
-  font: 18px/1.25 'VT323', 'Consolas', 'Courier New', monospace;
+  font: 20px/1.15 var(--fuente-texto);
   z-index: 30;
 }
 .terminal header,

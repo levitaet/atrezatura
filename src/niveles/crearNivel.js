@@ -36,7 +36,7 @@ export function crearNivel(escena, nombre) {
     if (simbolo === '#') { muros.push({ fila, columna }); continue; }
     if (simbolo === '=') { finas.push({ fila, columna }); continue; }
     const fondo = escena.add.rectangle(0, 0, lado, lado, colores[simbolo]);
-    const etiqueta = escena.add.text(0, 0, simbolo, { fontFamily: 'monospace', fontSize: '20px', color: '#101820' })
+    const etiqueta = escena.add.text(0, 0, simbolo, { fontFamily: '"VT323", monospace', fontSize: '24px', color: '#101820' })
       .setOrigin(0.5);
     const objeto = escena.add.container(x, y, [fondo, etiqueta]).setSize(lado, lado);
     if (!entidades.has(simbolo)) entidades.set(simbolo, []);

@@ -12,10 +12,10 @@
   border-radius: 3px;
   background: #142b34;
   color: #cbdbde;
-  font: 600 clamp(.7rem, 1.5vw, .85rem)/1.3 system-ui, sans-serif;
+  font: clamp(1rem, 2vw, 1.2rem)/1.1 var(--fuente-texto);
   pointer-events: none;
 }
-.hud strong, .hud label span { display: block; color: #fff; font-size: 1rem; }
+.hud strong, .hud label span { display: block; color: #fff; font-size: 1.25em; }
 .hud .hud-salud { color: #ffa7a5; letter-spacing: .08em; }
 .hud progress { width: clamp(2rem, 5vw, 4rem); accent-color: #8fdfc7; }
 .hud progress.hud-tanque { accent-color: #ffd34d; }
@@ -29,13 +29,14 @@
   border-left: 3px solid #8fdfc7;
   background: #142b34;
   color: #edfff9;
-  font: 1rem/1.45 system-ui, sans-serif;
+  font: 1.3rem/1.2 var(--fuente-texto);
 }
 .monitor-dialogo::before, .dialogo-resultado::before {
   content: 'Mastermind';
   display: block;
+  margin-bottom: .35em;
   color: #8fdfc7;
-  font-weight: 700;
+  font: .6rem/1 var(--fuente-titulo);
 }
 .monitor-dialogo {
   position: absolute;
@@ -62,26 +63,33 @@
   gap: 0.75rem;
   background: rgb(10 19 29 / 82%);
   color: #edf6fa;
-  font-family: system-ui, sans-serif;
+  font: 1.3rem/1.2 var(--fuente-texto);
 }
 
-.menu h1 { margin: 0 0 0.6rem; font-size: clamp(2rem, 7vw, 4rem); }
+.menu h1 {
+  margin: 0 0 1rem;
+  font: clamp(1.6rem, 5vw, 3rem)/1.2 var(--fuente-titulo);
+  text-shadow: 4px 4px 0 #0b1620;
+}
+/* Botones pixel: sin bordes redondeados y con sombra dura de 4 px. */
 .menu button {
-  width: min(14rem, 90%);
-  padding: 0.65rem;
-  border: 1px solid #8dbab8;
-  border-radius: 0.4rem;
+  width: min(16rem, 90%);
+  padding: .8rem .9rem;
+  border: 3px solid #8dbab8;
+  border-radius: 0;
   background: #223c47;
+  box-shadow: 4px 4px 0 #0b1620;
   color: inherit;
-  font: inherit;
+  font: .85rem/1.3 var(--fuente-titulo);
   cursor: pointer;
 }
 .menu button:hover, .menu button:focus-visible {
   background: #b4f3df;
   color: #132733;
-  outline: 2px solid white;
+  outline: 3px solid white;
   outline-offset: 2px;
 }
+.menu button:active { transform: translate(4px, 4px); box-shadow: none; }
 
 .menu.prologo {
   display: grid;
@@ -89,14 +97,18 @@
   padding: 0;
   background: #080f16;
 }
+/* Marco de tamaño fijo (16:9): las viñetas tienen proporciones distintas y, si el marco siguiera
+   el alto de cada imagen, el texto y el botón saltarían entre viñetas. */
 .prologo-marco {
   position: relative;
-  width: min(100vw, 180vh);
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
 }
 .prologo img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 .prologo-pie {
@@ -113,18 +125,20 @@
   padding: clamp(.5rem, 2vw, 1.2rem);
   border-inline-start: 3px solid #91dece;
   background: rgb(9 24 32 / 94%);
-  font: 500 clamp(.9rem, 2.3vw, 1.45rem)/1.4 system-ui, sans-serif;
+  font: clamp(1.2rem, 2.8vw, 1.9rem)/1.2 var(--fuente-texto);
 }
 .prologo-pie p:empty { display: none; }
 .prologo-pie .pensamiento { color: #ffe09c; border-color: #ffbf60; font-style: italic; }
 .prologo-piso {
   position: absolute; top: 4%; left: 3%; padding: .3em .65em;
   background: #0c1926; color: #ffd378; border-left: 4px solid currentColor;
-  font: bold clamp(1rem, 3vw, 2rem) monospace; text-transform: uppercase;
+  font: clamp(.7rem, 1.8vw, 1.1rem)/1.4 var(--fuente-titulo); text-transform: uppercase;
 }
+/* Ancho fijo: "Continuar" y "Buscar la salida" ocupan lo mismo y el botón no se mueve. */
 .prologo-pie button {
-  width: auto;
-  padding: .5rem .9rem;
+  width: 15rem;
+  padding: .7rem .6rem;
   flex-shrink: 0;
+  font-size: .65rem;
 }
 .hud [hidden] { display: none !important; }

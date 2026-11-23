@@ -18,8 +18,8 @@ export function conectarCarteles(escena) {
     }
     escena.add
       .text(marcador.x, marcador.y + 16, texto, {
-        fontFamily: '"VT323", "Consolas", monospace',
-        fontSize: '12px', // se ve más grande por el zoom de la cámara
+        fontFamily: '"VT323", monospace',
+        fontSize: '16px', // VT323 es pequeña; con el zoom de la cámara se ve más grande
         color: '#e8eef5',
         align: 'center',
         backgroundColor: '#101820cc',
