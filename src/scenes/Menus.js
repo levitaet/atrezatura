@@ -70,6 +70,7 @@ export class Introduccion extends Phaser.Scene {
     ] : [
       { src: despierto, alt: 'Felipito levanta la cabeza del escritorio.', texto: '¿Me quedé dormido en el trabajo? ¿Qué hora es?' },
       { src: ventana, alt: 'Por la ventana se ven incendios y edificios derrumbados.', texto: '¿D-dónde estoy? ¿Qué pasó ahí afuera?', pensamiento: true },
+      { src: ventana, alt: 'Felipito recuerda la noche anterior frente a la ventana.', texto: 'Anoche me quedé hackeando el sistema de la empresa, por diversión... ¿Tendrá algo que ver?', pensamiento: true },
       { src: ventana, alt: 'Felipito observa la ciudad en llamas.', texto: 'Tengo que salir del edificio.' }
     ];
     const marco = document.createElement('div');

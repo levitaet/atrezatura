@@ -52,6 +52,7 @@ export function conectarComputadores(escena) {
   for (const marcador of nivel.entidades.get('D') ?? []) {
     const puerta = crearPuerta(escena, marcador, nivel.solidos);
     puertas.add(puerta.cuerpo);
+    if (puerta.muro) puertas.add(puerta.muro);
     asignarAlMasCercano(computadores, puerta);
   }
   escena.physics.add.collider(jugador, puertas);
@@ -169,18 +170,44 @@ function crearPuerta(escena, marcador, solidos) {
     const bordeInferior = bloque.y + bloque.height / 2;
     if (esMuro && bordeInferior <= marcador.y && bordeInferior > arriba) arriba = bordeInferior;
   }
-  const alto = abajo - arriba;
-  const cuerpo = escena.add.rectangle(marcador.x, arriba + alto / 2, lado - 4, alto, COLOR.puerta, 0.85);
-  cuerpo.setDepth(marcador.depth - 1);
+  // Puerta de seguridad de 2 celdas de alto y, encima, un muro hasta el primer bloque o el techo:
+  // el muro es sólido siempre (no se puede saltar por encima); la puerta se abre al averiar
+  // su computador. Dibujo provisorio con bloques.
+  const altoPuerta = Math.min(lado * 2, abajo - arriba);
+  const ancho = lado - 4;
+  marcador.setVisible(false);
+  const cuerpo = escena.add.rectangle(marcador.x, abajo - altoPuerta / 2, ancho, altoPuerta);
+  const altoMuro = abajo - altoPuerta - arriba;
+  const muro = altoMuro > 0 ? escena.add.rectangle(marcador.x, arriba + altoMuro / 2, ancho, altoMuro) : null;
+
+  const x0 = marcador.x - ancho / 2;
+  const fondo = escena.add.graphics().setDepth(marcador.depth - 1);
+  if (muro) {
+    fondo.fillStyle(0x4a5566).fillRect(x0, arriba, ancho, altoMuro); // muro de concreto
+    fondo.fillStyle(0x3b4452);
+    for (let y = arriba + 8; y < arriba + altoMuro; y += 16) fondo.fillRect(x0, y, ancho, 2);
+  }
+  const yPuerta = abajo - altoPuerta;
+  fondo.fillStyle(0x2b3038).fillRect(x0 - 2, yPuerta - 4, ancho + 4, altoPuerta + 4); // marco
+  const hoja = escena.add.graphics().setDepth(marcador.depth - 1);
+  hoja.fillStyle(0x7a8699).fillRect(x0 + 2, yPuerta, ancho - 4, altoPuerta); // hoja metálica
+  hoja.fillStyle(0x5d6878).fillRect(x0 + 5, yPuerta + 6, ancho - 10, altoPuerta / 2 - 10); // panel
+  hoja.fillStyle(0x5d6878).fillRect(x0 + 5, yPuerta + altoPuerta / 2 + 2, ancho - 10, altoPuerta / 2 - 8);
+  hoja.fillStyle(0xd7dde5).fillRect(x0 + ancho - 9, yPuerta + altoPuerta / 2 - 2, 4, 6); // manilla
+  const luz = escena.add.rectangle(marcador.x, yPuerta - 8, 10, 5, 0xfe6960).setDepth(marcador.depth); // acceso denegado
+  const parpadeo = escena.tweens.add({ targets: luz, alpha: 0.35, duration: 300, yoyo: true, repeat: -1 });
   return {
     tipo: 'puerta',
     x: marcador.x,
     y: marcador.y,
     cuerpo,
+    muro,
     desactivar() {
       cuerpo.body.enable = false;
-      escena.tweens.add({ targets: cuerpo, alpha: 0, duration: 350, onComplete: () => cuerpo.setVisible(false) });
-      marcador.list[0].setFillStyle(COLOR.apagado);
+      parpadeo.stop();
+      luz.setAlpha(1).setFillStyle(0x7dffa8); // acceso permitido
+      // la hoja sube y se esconde en el muro
+      escena.tweens.add({ targets: hoja, y: -altoPuerta, alpha: 0, duration: 450, ease: 'Quad.easeIn' });
     }
   };
 }

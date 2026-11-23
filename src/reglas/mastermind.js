@@ -63,7 +63,7 @@ export function conectarMastermind(escena) {
   const escudo = escena.add
     .ellipse(cx, cy, ancho + 40, alto + 40, COLOR.escudo, 0.12)
     .setStrokeStyle(3, COLOR.escudo, 0.9);
-  const barraJefe = crearBarraJefe(escena, { nombre: 'MASTERMIND', titulo: 'Gerenta General de Productividad' });
+  const barraJefe = crearBarraJefe(escena, { nombre: 'MASTERMIND', titulo: 'IA que tomó el control de la oficina' });
   const limites = new Phaser.Geom.Rectangle(cx - ancho / 2, cy - alto / 2, ancho, alto);
 
   // --- Escudo

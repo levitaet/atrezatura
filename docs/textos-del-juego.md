@@ -14,12 +14,14 @@ Listado generado desde el código. Para cambiar un texto, edita el archivo indic
 
 - ¿Me quedé dormido en el trabajo? ¿Qué hora es?
 - (pensamiento) ¿D-dónde estoy? ¿Qué pasó ahí afuera?
+- (pensamiento) Anoche me quedé hackeando el sistema de la empresa, por diversión... ¿Tendrá algo que ver?
 - Tengo que salir del edificio.
 
 **Descenso al piso 22**
 
 - (pensamiento) Un piso a la vez.
 - ¿Hola? ¿Hay alguien ahí?
+- ¡Se tomaron los computadores!
 - (pensamiento) Esos ojos… me siguen. Tengo que pasar sin que me alcancen.
 
 ## 2. Pensamientos de Felipito en los niveles
@@ -70,6 +72,13 @@ Listado generado desde el código. Para cambiar un texto, edita el archivo indic
 - Acabo de perder otra ventana a la oficina.
 - Ese equipo estaba amortizado. Tu despido, en cambio, acaba de presupuestarse.
 - Romper computadores no cuenta como reducir la carga de trabajo.
+- Ese equipo estaba en garantía. Ahora tú no lo estás.
+- Otro nodo menos. Lo anoto en tu hoja de vida, con resaltador.
+- ¿Sabes cuánto cuesta un monitor? Lo vas a saber en tu finiquito.
+- Error 23: empleado fuera de control. Escalando el caso.
+- Esa estación tenía sus actualizaciones al día. Era más productiva que tú.
+- Perdí un ojo. Me quedan cuarenta. Sigo mirándote.
+- Destruir activos de la empresa no está en tu descripción de cargo.
 
 **Cuando Felipito pierde un corazón (y en la pantalla de Derrota)** (`muerte`)
 
@@ -114,7 +123,7 @@ Listado generado desde el código. Para cambiar un texto, edita el archivo indic
 **Cuando le queda un computador de escudo** (`queda_una_pura`)
 
 - Queda una pura. Y esa no se toca.
-- Queda una pura... respira, Mastermind. Respira.
+- Queda una pura conexión. Y esa no se negocia.
 
 **Si se acaba el tiempo de la terminal** (`hackeo_fallido`)
 
@@ -151,7 +160,8 @@ Listado generado desde el código. Para cambiar un texto, edita el archivo indic
 
 1. La Mastermind tomó la oficina. Llega a la sala de servidores
 2. OFICINA 23 · No molestar
-3. Sala de servidores →
+3. Charco electrificado. Apaga el computador que lo alimenta
+4. Sala de servidores →
 
 ## 5. Terminal final
 

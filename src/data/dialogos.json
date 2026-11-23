@@ -9,7 +9,14 @@
     "Ese equipo tenía mi única copia del horario.",
     "Acabo de perder otra ventana a la oficina.",
     "Ese equipo estaba amortizado. Tu despido, en cambio, acaba de presupuestarse.",
-    "Romper computadores no cuenta como reducir la carga de trabajo."
+    "Romper computadores no cuenta como reducir la carga de trabajo.",
+    "Ese equipo estaba en garantía. Ahora tú no lo estás.",
+    "Otro nodo menos. Lo anoto en tu hoja de vida, con resaltador.",
+    "¿Sabes cuánto cuesta un monitor? Lo vas a saber en tu finiquito.",
+    "Error 23: empleado fuera de control. Escalando el caso.",
+    "Esa estación tenía sus actualizaciones al día. Era más productiva que tú.",
+    "Perdí un ojo. Me quedan cuarenta. Sigo mirándote.",
+    "Destruir activos de la empresa no está en tu descripción de cargo."
   ],
   "muerte": [
     "Quizá debí señalar ese peligro en el plano.",
@@ -47,7 +54,7 @@
   ],
   "queda_una_pura": [
     "Queda una pura. Y esa no se toca.",
-    "Queda una pura... respira, Mastermind. Respira."
+    "Queda una pura conexión. Y esa no se negocia."
   ],
   "hackeo_fallido": [
     "Sistema restaurado. Tu acceso fue revocado con copia a Recursos Humanos.",
