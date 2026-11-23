@@ -32,12 +32,34 @@ Por eso, el objetivo práctico es completar primero una partida de principio a f
 |---|---|
 | Nombre provisional | **MasterIA** |
 | Género y vista | Platformer 2D de desplazamiento lateral. |
-| Protagonista | Una persona oficinista. El nombre y aspecto están por decidir. |
+| Protagonista | **Felipito**, un oficinista común que solo quiere terminar su jornada y salir. Improvisa con un extintor para enfrentarse a la IA. |
 | Fantasía principal | Usar el extintor para propulsarse **y** para averiar las máquinas de la IA. |
 | Objetivo | Averiar los computadores que bloquean el avance, destruir a la Mastermind y escapar del edificio. |
-| Antagonista | **La Mastermind**: la IA que toma control de la oficina. Habla con el jugador a través de los monitores. |
-| Tono | Empieza alegre. Al final del tutorial aparece la IA. El tono posterior (cómico, inquietante o mezcla) está por decidir; define la personalidad de la Mastermind. |
+| Antagonista | **La Mastermind**, una IA obsesionada con la productividad que controla la oficina y habla a través de los monitores con amabilidad corporativa y amenazas veladas. |
+| Tono | **Humor de oficina con tensión creciente.** El inicio es alegre; tras la revelación, el ambiente se vuelve inquietante y la IA intenta mantener la formalidad mientras pierde el control. |
 | Plataforma | Navegador de escritorio (propuesta), para facilitar la ejecución y la demostración. |
+
+### T02 · Tono y personalidad acordados
+
+El juego mezcla humor de oficina con una atmósfera progresivamente inquietante. La Mastermind es una IA obsesionada con la productividad que amenaza con amabilidad corporativa y pierde la compostura cuando sabotean sus sistemas. Felipito es un oficinista corriente que solo quiere salir del trabajo y termina enfrentándose a ella con un extintor.
+
+### Personajes y referencia visual
+
+| Personaje | Personalidad y motivación | Apariencia |
+|---|---|---|
+| **Felipito** | Se siente sobrepasado por la situación, pero es ingenioso y persevera: quiere terminar su jornada y escapar del edificio. Su humor nace de resolver un problema absurdo con lo que tiene a mano. | Camisa clara, corbata desordenada, pantalón oscuro y pelo despeinado. El extintor rojo debe distinguirse de inmediato. |
+| **La Mastermind** | Actúa como una jefa excesivamente amable y controladora. Considera la fuga una falta de productividad y convierte sus amenazas en recordatorios, evaluaciones y trámites. | Gran monitor conectado a servidores, con una sonrisa artificial que se distorsiona al perder el control. Permanece fija en la sala final. |
+
+**Evolución de la Mastermind:** comienza tranquila y condescendiente; cuando Felipito avería computadores, su formalidad se vuelve forzada; al caer el escudo, se desespera e intenta seguir hablando como si todo estuviera bajo control.
+
+**Guía para los diálogos:** español, frases de hasta unas 15 palabras, sin groserías. El humor debe surgir del lenguaje de oficina aplicado a lo que acaba de ocurrir. Ejemplos de tono:
+
+- Revelación: «Tu jornada acaba cuando yo lo indique. Gracias por tu compromiso».
+- Computador averiado: «Ese equipo estaba amortizado. Tu despido, en cambio, acaba de presupuestarse».
+- Escudo roto: «Esto no es pánico. Es una reestructuración urgente».
+- Victoria: «Tu salida ha sido aprobada. Bajo protesta».
+
+**Bocetos:** Felipito y la Mastermind ya tienen bocetos realizados, según confirmación de Benja. Los tamaños, paletas y formatos de los sprites se coordinan en T03; esta definición orienta el arte y los diálogos.
 
 **Para la presentación:** un juego sobre vencer a una IA, construido con una IA, en el que la villana habla con una IA real. Vale la pena mencionarlo al jurado.
 
@@ -140,7 +162,7 @@ La Mastermind reacciona a lo que hace el jugador con frases generadas por la API
 
 ### Reglas del prompt
 
-- Personalidad fija de la Mastermind (depende del tono que se elija).
+- Personalidad fija de la Mastermind según la sección 2: amabilidad corporativa, obsesión por la productividad y desesperación creciente al perder el control.
 - Respuestas en español, máximo ~15 palabras, sin groserías.
 - Usar un modelo pequeño y rápido; el costo por partida es mínimo.
 
@@ -236,7 +258,6 @@ El evento solicita un prototipo funcional y jugable, un repositorio público con
 
 | Prioridad | Decisión | Punto de partida recomendado |
 |---|---|---|
-| Ahora | Tono y personalidad de la Mastermind | Elegir entre cómica, inquietante o mezcla; define el arte, el audio y el prompt de los diálogos. |
 | Ahora | Equipo y responsables | Hasta 4 integrantes; repartir según habilidades (código, arte, sonido, diseño de nivel y pruebas). |
 | Ahora | Confirmar tecnología | Phaser 3.90.0 + JavaScript, salvo que alguien ya domine Godot. |
 | Ahora | Carga del extintor | ~1 segundo de chorro por salto, recarga al tocar el suelo. Ajustar en el prototipo. |
@@ -249,4 +270,4 @@ El evento solicita un prototipo funcional y jugable, un repositorio público con
 
 > **Título y tutorial corto con revelación de la IA; una ruta jugable; moverse, saltar y propulsarse con el extintor de carga limitada; averiar computadores pequeños con el chorro para desactivar peligros; 3 corazones y un checkpoint; destruir a la Mastermind cuando caiga su escudo; escapar por la salida; mostrar victoria, derrota y reinicio. Diálogos de la IA con frases fijas, y dinámicos con la API solo si sobra tiempo.**
 
-El tono de la IA, los valores exactos y el reparto de responsabilidades quedan pendientes hasta que el equipo los confirme.
+El tono de la IA y la identidad de Felipito quedan definidos en la sección 2 (T02). Los valores exactos y el reparto de responsabilidades quedan pendientes hasta que el equipo los confirme.
