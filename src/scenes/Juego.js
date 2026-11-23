@@ -12,6 +12,8 @@ import { conectarCarteles } from '../reglas/carteles.js';
 import { conectarPensamientos } from '../reglas/pensamientos.js';
 import { conectarTutorial } from '../reglas/tutorial.js';
 import { mostrarHud } from './Hud.js';
+import oficina from '../arte/fondos/oficina.png';
+import oficinaAlerta from '../arte/fondos/oficina-alerta.png';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
@@ -28,7 +30,9 @@ export default class Juego extends Phaser.Scene {
     this.load.spritesheet('felipito', 'assets/sprites/felipito.png', { frameWidth: 128, frameHeight: 128 });
     this.load.image('completo', 'assets/sprites/completo-italiano.png');
     this.load.spritesheet('felipito-con-extintor', 'assets/sprites/felipito-con-extintor.png', { frameWidth: 128, frameHeight: 128 });
-    for (const nombre of ['extintor', 'mastermind', 'fondo-noche']) {
+    this.load.image('oficina-fondo', oficina);
+    this.load.image('oficina-alerta', oficinaAlerta);
+    for (const nombre of ['extintor', 'mastermind']) {
       this.load.image(nombre, `assets/sprites/${nombre}.png`);
     }
   }

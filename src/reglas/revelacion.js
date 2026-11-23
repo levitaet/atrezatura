@@ -1,4 +1,5 @@
 import { REVELACION, TAMANO_CELDA } from '../config.js';
+import Phaser from 'phaser';
 
 /**
  * T18: revelación de la IA al final del tutorial.
@@ -17,6 +18,26 @@ export function conectarRevelacion(escena) {
   const { jugador, nivel, estado } = escena;
   const lado = TAMANO_CELDA;
   estado.revelado = false;
+
+  const camara = escena.cameras.main;
+  // Cada píxel del dibujo ocupa dos píxeles del canvas, independientemente del zoom del jugador.
+  const escala = 2 / camara.zoom;
+  for (const clave of ['oficina-fondo', 'oficina-alerta']) {
+    escena.textures.get(clave).setFilter(Phaser.Textures.FilterMode.NEAREST);
+  }
+  const izquierda = camara.width / 2 - camara.width / (2 * camara.zoom);
+  const arriba = camara.height / 2 - camara.height / (2 * camara.zoom);
+  const fondos = [0, 1].map(() => escena.add.image(izquierda, arriba, 'oficina-fondo')
+    .setOrigin(0).setScrollFactor(0).setScale(escala).setDepth(-20));
+  const desplazarFondo = () => {
+    const ancho = fondos[0].width;
+    const avance = Phaser.Math.Wrap(Math.round(camara.scrollX * 0.14), 0, ancho);
+    fondos[0].x = izquierda - avance * escala;
+    fondos[1].x = fondos[0].x + ancho * escala;
+  };
+  desplazarFondo();
+  escena.events.on('postupdate', desplazarFondo);
+  escena.events.once('shutdown', () => escena.events.off('postupdate', desplazarFondo));
 
   // Tinte sobre toda la pantalla, invisible hasta la revelación.
   const tinte = escena.add
@@ -38,17 +59,13 @@ export function conectarRevelacion(escena) {
     if (estado.revelado) return;
     estado.revelado = true;
 
-    const camara = escena.cameras.main;
     const duracion = instantaneo ? 0 : 1200;
     if (!instantaneo) {
       camara.flash(300, 255, 70, 90);
       camara.shake(350, 0.006);
     }
     camara.setBackgroundColor(REVELACION.fondo);
-    const noche = escena.add.image(camara.width / 2, 0, 'fondo-noche')
-      .setOrigin(0.5, 0).setScrollFactor(0).setDepth(-10).setAlpha(instantaneo ? 0.8 : 0);
-    noche.setScale(Math.max(camara.width / noche.width, camara.height / noche.height));
-    if (!instantaneo) escena.tweens.add({ targets: noche, alpha: 0.8, duration: duracion });
+    for (const fondo of fondos) fondo.setTexture('oficina-alerta');
     if (instantaneo) tinte.setFillStyle(REVELACION.color, REVELACION.opacidad);
     else escena.tweens.add({ targets: tinte, fillAlpha: REVELACION.opacidad, duration: duracion, ease: 'Sine.easeOut' });
     for (const disparador of disparadores) disparador.setVisible(false);
