@@ -16,7 +16,7 @@ Abre la dirección local que imprime Vite. La escena inicial muestra un lienzo v
 Para comprobar la versión de producción, ejecuta `npm run build` y después `npm run preview`. La configuración del juego está en `src/config.js`, las escenas en `src/scenes/`, los mapas y diálogos en `src/data/` y los recursos estáticos en `public/assets/`.
 
 ## Controles
-- Movimiento:
+- Movimiento: A / D caminar · W saltar (mantener para saltar más alto) · S bajar de un escritorio
 - Acciones:
 - Reiniciar o volver al menú:
 
