@@ -152,9 +152,10 @@ export function conectarComputadores(escena) {
     for (const peligro of c.controla) peligro.desactivar();
 
     estado.computadoresRestantes -= 1;
+    // El diálogo va primero: así una reacción más importante (p. ej. 'escudo_roto') lo reemplaza.
+    escena.events.emit('dialogo', 'computador_averiado', { restantes: estado.computadoresRestantes });
     escena.events.emit('computador-averiado', c);
     escena.events.emit('computadores', estado.computadoresRestantes);
-    escena.events.emit('dialogo', 'computador_averiado', { restantes: estado.computadoresRestantes });
   }
 }
 

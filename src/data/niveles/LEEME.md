@@ -13,8 +13,8 @@ Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejem
 | `P` | Punto de inicio del jugador. Coloca exactamente uno. |
 | `K` | Checkpoint. Se admiten varios. Se activa al cruzar su columna, aunque sea saltando por encima. |
 | `c` | Computador pequeño. Se escribe en minúscula. Se avería con 0,3 s de chorro. |
-| `M` | Mastermind. |
-| `S` | Salida. |
+| `M` | Mastermind (una sola). Se dibuja como un monitor de 3 × 3 celdas apoyado sobre la M. Los computadores a menos de 10 celdas en horizontal forman su escudo; al entrar en esa zona electrifica el suelo por turnos. |
+| `S` | Salida. Se abre al destruir la Mastermind; cruzarla abierta gana el nivel. Sin M en el mapa, está abierta desde el principio. |
 | `D` | Puerta. Bloquea toda su columna hacia arriba, hasta el primer `#` o el techo del mapa. Se abre al averiar su computador. |
 | `~` | Cable. Hace daño hasta que se avería su computador. |
 | `!` | Disparador de la revelación. Ocurre una vez, al cruzar su columna. |

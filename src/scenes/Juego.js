@@ -6,6 +6,7 @@ import { conectarMonitor } from '../dialogos.js';
 import { conectarCorazones } from '../reglas/corazones.js';
 import { conectarComputadores } from '../reglas/computadores.js';
 import { conectarRevelacion } from '../reglas/revelacion.js';
+import { conectarMastermind } from '../reglas/mastermind.js';
 import { mostrarHud } from './Hud.js';
 
 export default class Juego extends Phaser.Scene {
@@ -40,6 +41,7 @@ export default class Juego extends Phaser.Scene {
     this.crearJugador();
     conectarCorazones(this);
     conectarComputadores(this);
+    conectarMastermind(this);
     conectarRevelacion(this);
     mostrarHud(this);
   }

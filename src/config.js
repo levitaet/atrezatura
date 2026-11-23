@@ -52,6 +52,15 @@ export const COMPUTADOR = {
   resistencia: 0.3 // segundos de chorro acumulado para averiar un computador pequeño (la carga llena dura 0,5)
 };
 
+export const MASTERMIND = {
+  radioSala: 10, // celdas a cada lado de la M: los computadores dentro forman su escudo y ahí ataca
+  resistencia: 3, // segundos de chorro acumulado para destruirla (con el escudo abajo)
+  calma: 1800, // ms entre descargas mientras tiene escudo
+  calmaDesesperada: 1000, // ms entre descargas cuando ya perdió el escudo
+  aviso: 800, // ms en que el suelo parpadea antes de electrificarse
+  descarga: 900 // ms en que el suelo de la sala hace daño
+};
+
 export const REVELACION = {
   color: 0x8a0f2a, // tinte de la oficina después de que aparece la IA
   opacidad: 0.2, // 0 = sin tinte, 1 = pantalla completamente de ese color
