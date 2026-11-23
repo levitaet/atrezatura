@@ -73,10 +73,10 @@ Listado generado desde el código. Para cambiar un texto, edita el archivo indic
 
 **Cuando Felipito pierde un corazón (y en la pantalla de Derrota)** (`muerte`)
 
-- He registrado el incidente. El formulario sigue caliente.
 - Quizá debí señalar ese peligro en el plano.
 - Tu caída ha sido registrada como una pausa no autorizada.
 - Felipito, tu rendimiento acaba de tocar fondo. Literalmente.
+- Incidente registrado. El corazón perdido se descuenta de tu sueldo.
 
 **Al entrar a su sala** (`sala_mastermind`)
 

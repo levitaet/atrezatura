@@ -89,7 +89,8 @@ export const MASTERMIND = {
   calmaDesesperada: 1000, // ms entre descargas cuando ya perdió el escudo
   aviso: 800, // ms en que el suelo parpadea antes de electrificarse
   descarga: 900, // ms en que el suelo de la sala hace daño
-  vidaTrasRestaurar: 0.5 // si el jugador falla la terminal, recupera esta fracción de su vida
+  vidaTrasRestaurar: 0.5, // si el jugador falla la terminal, recupera esta fracción de su vida
+  velocidadMusica: 1.12 // en su sala la música de persecución suena más rápida (si no hay música de jefe)
 };
 
 export const TERMINAL = {

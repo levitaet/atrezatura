@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import { MASTERMIND, TAMANO_CELDA } from '../config.js';
 import { mostrarTerminal } from './terminal.js';
 import { numeroDanio } from './danio.js';
+import { crearBarraJefe } from './barraJefe.js';
+import { musica, ponerMusica, velocidadMusica } from '../musica.js';
 
 const COLOR = {
   pantalla: 0x1d2433,
@@ -61,7 +63,7 @@ export function conectarMastermind(escena) {
   const escudo = escena.add
     .ellipse(cx, cy, ancho + 40, alto + 40, COLOR.escudo, 0.12)
     .setStrokeStyle(3, COLOR.escudo, 0.9);
-  const barra = escena.add.graphics().setDepth(6);
+  const barraJefe = crearBarraJefe(escena, { nombre: 'MASTERMIND', titulo: 'Gerenta General de Productividad' });
   const limites = new Phaser.Geom.Rectangle(cx - ancho / 2, cy - alto / 2, ancho, alto);
 
   // --- Escudo
@@ -159,7 +161,13 @@ export function conectarMastermind(escena) {
   const actualizar = () => {
     if (!enSala && !derrotada && Math.abs(jugador.x - cx) <= radio) {
       enSala = true;
+      estado.enSalaJefe = true;
       escena.events.emit('dialogo', 'sala_mastermind', {});
+      barraJefe.mostrar();
+      escena.cameras.main.shake(400, 0.008);
+      // Música de jefe: si el equipo agrega musica.jefe se usa; si no, la persecución más rápida.
+      ponerMusica(musica.jefe ?? musica.persecucion);
+      velocidadMusica(musica.jefe ? 1 : MASTERMIND.velocidadMusica);
       calma();
     }
     if (derrotada) return;
@@ -176,13 +184,13 @@ export function conectarMastermind(escena) {
       suelo.fillStyle(COLOR.descarga, 0.5 + Math.random() * 0.4).fillRect(xMin, piso - 8, xMax - xMin, 8);
     }
 
-    barra.clear();
-    if (!escudoActivo) {
-      const fraccion = Math.max(0, vida / MASTERMIND.resistencia);
-      const x = cx - ancho / 2;
-      const y = cy - alto / 2 - 14;
-      barra.fillStyle(0x101820, 0.85).fillRect(x - 2, y - 2, ancho + 4, 10);
-      barra.fillStyle(COLOR.golpe).fillRect(x, y, ancho * fraccion, 6);
+    if (enSala) {
+      if (escudoActivo) {
+        const n = restantesEscudo();
+        barraJefe.actualizar(n / delEscudo.length, true, `ESCUDO · ${n} computador${n === 1 ? '' : 'es'} la protege${n === 1 ? '' : 'n'}`);
+      } else {
+        barraJefe.actualizar(vida / MASTERMIND.resistencia, false, 'SIN ESCUDO · ¡rocíala!');
+      }
     }
   };
   escena.events.on('update', actualizar);
@@ -193,7 +201,9 @@ export function conectarMastermind(escena) {
     estado.mastermindDerrotada = true;
     descarga.body.enable = false;
     suelo.clear();
-    barra.clear();
+    barraJefe.derrotada();
+    estado.enSalaJefe = false;
+    velocidadMusica(1);
     pantalla.body.enable = false;
     pantalla.setFillStyle(COLOR.apagada).setStrokeStyle(4, 0x4b5563);
     cara.setTint(0x647083).setAlpha(0.55).setX(cx);
@@ -215,6 +225,7 @@ export function conectarMastermind(escena) {
   }
 
   escena.events.once('shutdown', () => {
+    velocidadMusica(1);
     mundo.off('worldstep', paso);
     escena.events.off('update', actualizar);
     escena.events.off('computador-averiado', alAveriar);

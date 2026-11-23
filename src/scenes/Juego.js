@@ -103,7 +103,10 @@ export default class Juego extends Phaser.Scene {
     conectarCompletos(this);
     conectarTutorial(this);
     conectarCarteles(this);
-    const actualizarMusica = () => ponerMusica(this.estado.revelado ? musica.persecucion : musica.tranquila);
+    const actualizarMusica = () => {
+      if (this.estado.enSalaJefe && musica.jefe) ponerMusica(musica.jefe);
+      else ponerMusica(this.estado.revelado ? musica.persecucion : musica.tranquila);
+    };
     this.events.on('revelacion', actualizarMusica);
     this.events.on('pause', pausarMusica);
     this.events.on('resume', actualizarMusica);

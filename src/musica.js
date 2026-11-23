@@ -1,7 +1,10 @@
 import tranquila from '../Música Tranquila.mp3?url';
 import persecucion from '../persecucion_futurista.wav?url';
 
-export const musica = { tranquila, persecucion };
+// jefe: si el equipo agrega una pista para la Mastermind, importarla aquí (por ejemplo
+// `import jefe from '../musica_jefe.mp3?url';`) y poner `jefe` en el objeto. Mientras tanto,
+// la sala del jefe usa la persecución un poco más rápida.
+export const musica = { tranquila, persecucion, jefe: null };
 
 // Un mismo reproductor conserva el compás entre el cómic y el nivel.
 const reproductor = new Audio();
@@ -27,6 +30,11 @@ export function ponerMusica(url) {
   }
   enPausa = false;
   actualizar();
+}
+
+// Velocidad de reproducción (mantiene el tono en los navegadores actuales).
+export function velocidadMusica(valor) {
+  reproductor.playbackRate = valor;
 }
 
 export function pausarMusica() {
