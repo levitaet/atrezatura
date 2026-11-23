@@ -2,13 +2,15 @@ import { PENSAMIENTOS } from '../config.js';
 import './cajaDialogo.css';
 
 /**
- * Caja de diálogo única, estilo novela visual, abajo de la pantalla. La usan:
- * - Felipito (sus pensamientos, en ámbar y entre paréntesis): pensamientos.js
- * - La Mastermind (en verde): dialogos.js. Mientras Felipito no la conoce (el nivel no está
- *   revelado), aparece como "???" con una silueta y un signo de pregunta.
+ * Caja de diálogo única, estilo novela visual (retrato, pestaña con el nombre y texto que se
+ * escribe letra a letra). Se usa en TODO el juego para que los diálogos se vean iguales:
  *
- * decir(escena, 'felipito' | 'mastermind', texto): escribe el texto letra a letra y lo oculta
- * después de PENSAMIENTOS.permanencia. Un texto nuevo reemplaza al anterior.
+ * - En el juego: decir(escena, 'felipito' | 'mastermind', texto). Abajo de la pantalla, se oculta
+ *   sola. La Mastermind aparece como "???" mientras el nivel no está revelado.
+ * - Fuera del juego (cómic, pantallas de victoria/derrota): crearCajaEnLinea() devuelve una caja
+ *   que se inserta en el HTML y se llena con .mostrar(hablante, texto).
+ *
+ * Hablantes: 'felipito' (ámbar), 'mastermind' (verde), 'misterio' (??? con silueta).
  */
 const RETRATOS = {
   // Cabeza de Felipito: cuadro 0 de su sprite (x 37–85, y 6–54), ampliado ×2.
@@ -16,67 +18,103 @@ const RETRATOS = {
   // Monitor central de la Mastermind (x 44–92, y 12–60), ampliado ×2.
   mastermind: { imagen: 'assets/sprites/mastermind.png', tamano: [128 * 2, 128 * 2], posicion: [-44 * 2, -12 * 2] }
 };
+const NOMBRES = { felipito: 'Felipito', mastermind: 'Mastermind', misterio: '???' };
+const MS_POR_LETRA = 1000 / PENSAMIENTOS.letrasPorSegundo;
 
-function crearCaja(escena) {
+function construir(claseExtra = '') {
   const caja = document.createElement('aside');
-  caja.className = 'caja-dialogo';
+  caja.className = `caja-dialogo ${claseExtra}`.trim();
   caja.setAttribute('role', 'status');
-  caja.hidden = true;
   caja.innerHTML = `
     <div class="vn-retrato"></div>
     <div class="vn-cuerpo">
       <span class="vn-nombre"></span>
       <p class="vn-texto"></p>
     </div>`;
-  escena.game.canvas.parentElement.append(caja);
+  return {
+    caja,
+    retrato: caja.querySelector('.vn-retrato'),
+    nombre: caja.querySelector('.vn-nombre'),
+    parrafo: caja.querySelector('.vn-texto')
+  };
+}
 
-  const retrato = caja.querySelector('.vn-retrato');
-  const nombre = caja.querySelector('.vn-nombre');
-  const parrafo = caja.querySelector('.vn-texto');
+function aplicarHablante(partes, estilo, claseExtra = '') {
+  const { caja, retrato, nombre } = partes;
+  caja.className = `caja-dialogo vn-${estilo} ${claseExtra}`.trim();
+  nombre.textContent = NOMBRES[estilo];
+  caja.setAttribute('aria-label', NOMBRES[estilo]);
+  const r = RETRATOS[estilo];
+  retrato.textContent = estilo === 'misterio' ? '?' : '';
+  // '' deja el fondo del CSS (la silueta del "???").
+  retrato.style.backgroundImage = r ? `url("${r.imagen}")` : '';
+  retrato.style.backgroundSize = r ? `${r.tamano[0]}px ${r.tamano[1]}px` : '';
+  retrato.style.backgroundPosition = r ? `${r.posicion[0]}px ${r.posicion[1]}px` : '';
+}
+
+// --- En el juego (usa el reloj de la escena: se detiene con la pausa) ---
+function crearCajaJuego(escena) {
+  const partes = construir();
+  partes.caja.hidden = true;
+  escena.game.canvas.parentElement.append(partes.caja);
   let escribir = null;
   let ocultar = null;
 
-  function decir(hablante, texto) {
+  function decirEnJuego(hablante, texto) {
     if (!texto) return;
     escribir?.remove();
     ocultar?.remove();
-
     const misterio = hablante === 'mastermind' && !escena.estado?.revelado;
-    const estilo = misterio ? 'misterio' : hablante;
-    caja.className = `caja-dialogo vn-${estilo}`;
-    nombre.textContent = { felipito: 'Felipito', mastermind: 'Mastermind', misterio: '???' }[estilo];
-    caja.setAttribute('aria-label', nombre.textContent);
-    const r = RETRATOS[estilo];
-    retrato.textContent = misterio ? '?' : '';
-    retrato.style.backgroundImage = r ? `url("${r.imagen}")` : ''; // '' deja el fondo del CSS (silueta)
-    retrato.style.backgroundSize = r ? `${r.tamano[0]}px ${r.tamano[1]}px` : '';
-    retrato.style.backgroundPosition = r ? `${r.posicion[0]}px ${r.posicion[1]}px` : '';
-
+    aplicarHablante(partes, misterio ? 'misterio' : hablante);
     let letras = 0;
-    parrafo.textContent = '';
-    caja.hidden = false;
-    const msPorLetra = 1000 / PENSAMIENTOS.letrasPorSegundo;
+    partes.parrafo.textContent = '';
+    partes.caja.hidden = false;
     escribir = escena.time.addEvent({
-      delay: msPorLetra,
+      delay: MS_POR_LETRA,
       repeat: texto.length - 1,
       callback: () => {
         letras += 1;
-        parrafo.textContent = texto.slice(0, letras);
+        partes.parrafo.textContent = texto.slice(0, letras);
       }
     });
-    ocultar = escena.time.delayedCall(texto.length * msPorLetra + PENSAMIENTOS.permanencia, () => {
-      caja.hidden = true;
+    ocultar = escena.time.delayedCall(texto.length * MS_POR_LETRA + PENSAMIENTOS.permanencia, () => {
+      partes.caja.hidden = true;
     });
   }
 
   escena.events.once('shutdown', () => {
-    caja.remove();
+    partes.caja.remove();
     delete escena.cajaDialogo;
   });
-  return { decir };
+  return { decir: decirEnJuego };
 }
 
 export function decir(escena, hablante, texto) {
-  escena.cajaDialogo ??= crearCaja(escena);
+  escena.cajaDialogo ??= crearCajaJuego(escena);
   escena.cajaDialogo.decir(hablante, texto);
+}
+
+// --- Fuera del juego: cómic y pantallas de resultado (reloj del navegador) ---
+export function crearCajaEnLinea() {
+  const partes = construir('caja-dialogo--en-linea');
+  let intervalo = null;
+  return {
+    elemento: partes.caja,
+    mostrar(hablante, texto) {
+      window.clearInterval(intervalo);
+      partes.caja.hidden = !texto;
+      if (!texto) return;
+      aplicarHablante(partes, hablante, 'caja-dialogo--en-linea');
+      let letras = 0;
+      partes.parrafo.textContent = '';
+      intervalo = window.setInterval(() => {
+        letras += 1;
+        partes.parrafo.textContent = texto.slice(0, letras);
+        if (letras >= texto.length) window.clearInterval(intervalo);
+      }, MS_POR_LETRA);
+    },
+    detener() {
+      window.clearInterval(intervalo);
+    }
+  };
 }

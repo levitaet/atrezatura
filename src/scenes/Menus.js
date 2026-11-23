@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { obtenerDialogo } from '../dialogos.js';
+import { crearCajaEnLinea } from '../reglas/cajaDialogo.js';
 import despierto from '../arte/prologo/despierto.png';
 import ventana from '../arte/prologo/ventana.png';
 import escalera from '../arte/prologo/escalera.png';
@@ -71,10 +72,10 @@ export class Introduccion extends Phaser.Scene {
     marco.className = 'prologo-marco';
     const pie = document.createElement('div');
     pie.className = 'prologo-pie';
-    const dialogo = document.createElement('p');
+    // Las líneas de Felipito usan la misma caja de novela visual que el juego.
+    const dialogo = crearCajaEnLinea();
     const piso = document.createElement('strong');
     piso.className = 'prologo-piso';
-    dialogo.setAttribute('aria-live', 'polite');
     const continuar = document.createElement('button');
     continuar.type = 'button';
     let indice = 0;
@@ -83,8 +84,7 @@ export class Introduccion extends Phaser.Scene {
       imagen.src = plano.src;
       imagen.alt = plano.alt;
       piso.textContent = plano.piso;
-      dialogo.classList.toggle('pensamiento', Boolean(plano.pensamiento));
-      dialogo.textContent = plano.pensamiento ? `(${plano.texto})` : plano.texto;
+      dialogo.mostrar('felipito', plano.texto && (plano.pensamiento ? `(${plano.texto})` : plano.texto));
       continuar.textContent = indice === planos.length - 1 ? (datos.descenso ? 'Entrar al nivel 1' : 'Buscar la salida') : 'Continuar';
     };
     continuar.addEventListener('click', () => {
@@ -97,12 +97,15 @@ export class Introduccion extends Phaser.Scene {
       mostrarPlano();
     });
     mostrarPlano();
-    pie.append(dialogo, continuar);
+    pie.append(dialogo.elemento, continuar);
     marco.append(imagen, piso, pie);
     pagina.append(marco);
     this.game.canvas.parentElement.append(pagina);
     continuar.focus({ preventScroll: true });
-    this.events.once('shutdown', () => pagina.remove());
+    this.events.once('shutdown', () => {
+      dialogo.detener();
+      pagina.remove();
+    });
   }
 }
 
@@ -136,13 +139,14 @@ export class Resultado extends Phaser.Scene {
   }
 
   create() {
-    const mensaje = document.createElement('p');
-    mensaje.className = 'dialogo-resultado';
-    mensaje.dataset.hablante = this.registry.get('hablanteMastermind') ?? 'Mastermind';
-    mensaje.textContent = obtenerDialogo(this.titulo === 'Victoria' ? 'victoria' : 'muerte');
+    // La frase de la Mastermind va en la misma caja de novela visual ("???" si aún no se conoce).
+    const mensaje = crearCajaEnLinea();
+    const hablante = this.registry.get('hablanteMastermind') === '???' ? 'misterio' : 'mastermind';
+    mensaje.mostrar(hablante, obtenerDialogo(this.titulo === 'Victoria' ? 'victoria' : 'muerte'));
+    this.events.once('shutdown', () => mensaje.detener());
     mostrarMenu(this, this.titulo, [
       ['Reintentar', () => this.scene.start('Juego')],
       ['Inicio', () => this.scene.start('Inicio')]
-    ], mensaje);
+    ], mensaje.elemento);
   }
 }

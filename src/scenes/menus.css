@@ -21,33 +21,6 @@
 .hud progress.hud-tanque { accent-color: #ffd34d; }
 .hud progress.hud-vacio { accent-color: #fe6960; }
 .hud b { display: inline-block; min-width: 4ch; font-variant-numeric: tabular-nums; }
-.monitor-dialogo, .dialogo-resultado {
-  box-sizing: border-box;
-  max-width: min(36rem, 92%);
-  margin: 0;
-  padding: 0.75rem 1rem;
-  border-left: 3px solid #8fdfc7;
-  background: #142b34;
-  color: #edfff9;
-  font: 1.3rem/1.2 var(--fuente-texto);
-}
-.monitor-dialogo::before, .dialogo-resultado::before {
-  content: attr(data-hablante);
-  display: block;
-  margin-bottom: .35em;
-  color: #8fdfc7;
-  font: .6rem/1 var(--fuente-titulo);
-}
-.monitor-dialogo {
-  position: absolute;
-  top: 3%;
-  right: 4%;
-  pointer-events: none;
-}
-.monitor-dialogo:empty { visibility: hidden; }
-@media (max-width: 1050px) {
-  .monitor-dialogo { top: 4.5rem; }
-}
 
 .menu {
   position: absolute;
@@ -125,7 +98,7 @@
   justify-content: flex-end;
   gap: .6rem;
 }
-.prologo-pie p {
+.prologo-pie > p {
   flex: 1;
   margin: 0;
   padding: clamp(.5rem, 2vw, 1.2rem);
@@ -133,8 +106,8 @@
   background: rgb(9 24 32 / 94%);
   font: clamp(1.2rem, 2.8vw, 1.9rem)/1.2 var(--fuente-texto);
 }
-.prologo-pie p:empty { display: none; }
-.prologo-pie .pensamiento { color: #ffe09c; border-color: #ffbf60; font-style: italic; }
+.prologo-pie > p:empty { display: none; }
+.prologo-pie > .pensamiento { color: #ffe09c; border-color: #ffbf60; font-style: italic; }
 .prologo-piso {
   position: absolute; top: 4%; left: 3%; padding: .3em .65em;
   background: #0c1926; color: #ffd378; border-left: 4px solid currentColor;
