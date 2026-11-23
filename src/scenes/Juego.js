@@ -30,6 +30,8 @@ export default class Juego extends Phaser.Scene {
 
   // Sprites exportados con tools/exportar_resprite.py (Vite sirve public/ en la raíz).
   preload() {
+    this.load.spritesheet('charco-electrico', 'assets/sprites/charco-electrico.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.image('salida', 'assets/sprites/salida.png');
     this.load.spritesheet('computador', 'assets/sprites/computador.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('checkpoint', 'assets/sprites/checkpoint.png', { frameWidth: 32, frameHeight: 56 });
     this.load.spritesheet('felipito', 'assets/sprites/felipito.png', { frameWidth: 128, frameHeight: 128 });
@@ -52,6 +54,16 @@ export default class Juego extends Phaser.Scene {
       textura.add('carcasa', 0, textura.get(1).cutX + 2, 1, 26, 28);
     }
     this.textures.get('checkpoint').setFilter(Phaser.Textures.FilterMode.NEAREST);
+    this.textures.get('charco-electrico').setFilter(Phaser.Textures.FilterMode.NEAREST);
+    this.textures.get('salida').setFilter(Phaser.Textures.FilterMode.NEAREST);
+    if (!this.anims.exists('charco-con-corriente')) {
+      this.anims.create({
+        key: 'charco-con-corriente',
+        frames: this.anims.generateFrameNumbers('charco-electrico'),
+        frameRate: 5,
+        repeat: -1
+      });
+    }
     conectarMonitor(this);
     this.nivel = null;
     this.enTransicion = false;

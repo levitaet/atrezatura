@@ -10,9 +10,7 @@ const COLOR = {
   apagada: 0x0b0f16,
   escudo: 0x8fdfc7,
   aviso: 0xffd34d,
-  descarga: 0xe8f4ff,
-  salidaCerrada: 0x35502f,
-  salidaAbierta: 0x87c96d // igual que la S en crearNivel.js
+  descarga: 0xe8f4ff
 };
 
 /**
@@ -226,8 +224,19 @@ export function conectarMastermind(escena) {
 // La salida (S) se cruza para ganar, pero solo cuando está abierta.
 function conectarSalidas(escena, salidas, estado) {
   const lado = TAMANO_CELDA;
+  const persianas = escena.add.graphics().setDepth(-0.25);
   for (const salida of salidas) {
-    salida.list[0].setFillStyle(COLOR.salidaCerrada);
+    if (!estado.mastermindDerrotada) {
+      // Cubre el vano del dibujo dejando el rótulo SALIDA a la vista.
+      const borde = salida.getTopLeft();
+      const x = borde.x + 14;
+      const y = borde.y + 10;
+      persianas.fillStyle(0x394451).fillRect(x, y, 35, 54);
+      for (let fila = y; fila < y + 54; fila += 6) {
+        persianas.fillStyle(0x637381).fillRect(x, fila, 35, 1);
+        persianas.fillStyle(0x202936).fillRect(x, fila + 4, 35, 2);
+      }
+    }
     const zona = escena.add.zone(salida.x, salida.y, lado, lado);
     escena.physics.add.existing(zona, true);
     escena.physics.add.overlap(escena.jugador, zona, () => {
@@ -236,10 +245,7 @@ function conectarSalidas(escena, salidas, estado) {
   }
   return {
     abrir() {
-      for (const salida of salidas) {
-        salida.list[0].setFillStyle(COLOR.salidaAbierta);
-        escena.tweens.add({ targets: salida, scale: 1.15, duration: 400, yoyo: true, repeat: -1 });
-      }
+      persianas.clear();
     }
   };
 }

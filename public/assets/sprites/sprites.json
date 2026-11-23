@@ -1,4 +1,11 @@
 {
+  "charco-electrico": {
+    "archivo": "charco-electrico.png",
+    "anchoCuadro": 64,
+    "altoCuadro": 64,
+    "cuadros": 19,
+    "fps": 5
+  },
   "completo-italiano": {
     "archivo": "completo-italiano.png",
     "anchoCuadro": 128,
@@ -52,6 +59,13 @@
     "archivo": "mastermind.png",
     "anchoCuadro": 128,
     "altoCuadro": 128,
+    "cuadros": 1,
+    "fps": 10
+  },
+  "salida": {
+    "archivo": "salida.png",
+    "anchoCuadro": 64,
+    "altoCuadro": 64,
     "cuadros": 1,
     "fps": 10
   }

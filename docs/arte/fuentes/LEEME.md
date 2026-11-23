@@ -21,6 +21,8 @@ Para actualizar un dibujo: reemplaza su `.resprite` aquí, con el mismo nombre, 
 | `extintor.resprite` | Extintor | 128 × 128 | 1 |
 | `mastermind.resprite` | La Mastermind | 128 × 128 | 1 |
 | `computador.resprite` | Computador que se avería con el extintor. El dibujo está en el cuadro 1. | 32 × 32 | 2 |
+| `charco-electrico.resprite` | Charco electrificado. El cuadro 1 muestra el agua sin corriente. | 64 × 64 | 19, a 5 fps |
+| `salida.resprite` | Escalera de salida con letrero verde. | 64 × 64 | 1 |
 | `fondo-noche.resprite` | Fondo nocturno de ciudad | 256 × 256 | 1 |
 | `completo-italiano.resprite` | Completo italiano | 128 × 128 | 1 |
 | `juan-carlos-bodoque.resprite` | Juan Carlos Bodoque, presentador de la Nota Verde en la terminal final (ver abajo) | 32 × 32 | 1 |

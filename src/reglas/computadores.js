@@ -8,7 +8,6 @@ const COLOR = {
   ia: 0xffc7cb, // después de la revelación (T18)
   averiado: 0x3a4150,
   puerta: 0xe7ac65,
-  cable: 0xdf925e,
   apagado: 0x4b5563
 };
 
@@ -58,25 +57,17 @@ export function conectarComputadores(escena) {
   escena.physics.add.collider(jugador, puertas);
 
   for (const marcador of nivel.entidades.get('~') ?? []) {
-    const zona = escena.add.zone(marcador.x, marcador.y + lado / 4, lado - 4, lado / 2).setData('tipo', 'cable');
+    const ancho = marcador.getData('anchoAgua') - 4;
+    const zona = escena.add.zone(marcador.x, marcador.y + lado / 4, ancho, lado / 2).setData('tipo', 'cable');
     escena.peligros.add(zona);
-    // Parpadeo eléctrico mientras está activo.
-    const parpadeo = escena.tweens.add({
-      targets: marcador.list[0],
-      alpha: { from: 1, to: 0.45 },
-      duration: 90,
-      yoyo: true,
-      repeat: -1,
-      repeatDelay: 140
-    });
     const cable = {
       tipo: 'cable',
       x: marcador.x,
       y: marcador.y,
       desactivar() {
-        parpadeo.stop();
         zona.body.enable = false;
-        marcador.list[0].setFillStyle(COLOR.apagado).setAlpha(1);
+        // El cuadro 1 contiene solo agua, sin arcos eléctricos.
+        marcador.stop().setFrame(1).setTint(0x889aab).setAlpha(0.75);
       }
     };
     asignarAlMasCercano(computadores, cable);

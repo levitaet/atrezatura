@@ -16,7 +16,7 @@ Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejem
 | `M` | Mastermind (una sola). Se dibuja como un monitor de 3 × 3 celdas apoyado sobre la M. Los computadores a menos de 10 celdas en horizontal forman su escudo; al entrar en esa zona electrifica el suelo por turnos. |
 | `S` | Salida. Se abre al destruir la Mastermind; cruzarla abierta gana el nivel. Sin M en el mapa, está abierta desde el principio. |
 | `D` | Puerta. Bloquea toda su columna hacia arriba, hasta el primer `#` o el techo del mapa. Se abre al averiar su computador. |
-| `~` | Cable. Hace daño hasta que se avería su computador. |
+| `~` | Los símbolos consecutivos de una fila forman un solo charco electrificado. El computador más cercano al centro del charco controla todo el tramo. |
 | `!` | Disparador de la revelación. Ocurre una vez, al cruzar su columna. |
 | `o` | Completo italiano. Al recogerlo llena el tanque del extintor. |
 | `?` | Cartel de texto. Los textos están en `src/data/carteles.json`, una lista por nivel, en orden de izquierda a derecha. |

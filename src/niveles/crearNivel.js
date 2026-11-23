@@ -9,8 +9,8 @@ const archivos = import.meta.glob('../data/niveles/*.txt', {
 
 const colores = {
   '#': 0x52677a, '=': 0xa8c2d1, '^': 0xfe6960, P: 0x46bfa6,
-  M: 0xb885ed, S: 0x87c96d,
-  D: 0xe7ac65, '~': 0xdf925e, '!': 0xe6cc65, o: 0xf2c14e, '?': 0x8fa6c4, '*': 0xffd34d, e: 0xd33b2c, T: 0xd9b98a
+  M: 0xb885ed,
+  D: 0xe7ac65, '!': 0xe6cc65, o: 0xf2c14e, '?': 0x8fa6c4, '*': 0xffd34d, e: 0xd33b2c, T: 0xd9b98a
 };
 
 export function crearNivel(escena, nombre) {
@@ -30,15 +30,26 @@ export function crearNivel(escena, nombre) {
 
   const muros = [];
   const finas = [];
+  const agua = [];
   for (const { simbolo, columna, fila } of mapa.celdas) {
     const x = (columna + 0.5) * lado;
     const y = (fila + 0.5) * lado;
     if (simbolo === '#') { muros.push({ fila, columna }); continue; }
     if (simbolo === '=') { finas.push({ fila, columna }); continue; }
+    if (simbolo === '~') { agua.push({ fila, columna }); continue; }
     const objeto = crearMarcador(escena, simbolo, x, y, lado);
     if (!entidades.has(simbolo)) entidades.set(simbolo, []);
     entidades.get(simbolo).push(objeto);
   }
+  const charcos = unirEnRectangulos(agua, false).map(({ c0, c1, f0 }) => {
+    const anchoAgua = (c1 - c0 + 1) * lado;
+    const x = c0 * lado + anchoAgua / 2;
+    const y = (f0 + 0.5) * lado;
+    // Los 38 píxeles de agua del dibujo cubren el tramo completo; la altura no cambia.
+    return escena.add.sprite(x, y, 'charco-electrico').setScale(anchoAgua / 38, 1)
+      .setDisplayOrigin(32, 47 - lado / 2).setData('anchoAgua', anchoAgua).play('charco-con-corriente');
+  });
+  entidades.set('~', charcos);
   // Las celdas sólidas contiguas se unen en rectángulos grandes: con un cuerpo por celda, el jugador
   // se "engancha" en las uniones al subir rozando una pared (problema clásico de Arcade Physics).
   // El cuerpo de física es un rectángulo invisible; el dibujo es mobiliario de oficina provisorio.
@@ -67,6 +78,10 @@ export function crearNivel(escena, nombre) {
 }
 
 function crearMarcador(escena, simbolo, x, y, lado) {
+  if (simbolo === 'S') {
+    // Conserva el centro de la celda como referencia para el cruce.
+    return escena.add.image(x, y, 'salida').setDisplayOrigin(31, 64 - lado / 2).setDepth(-0.5);
+  }
   if (simbolo === 'c') {
     const computador = escena.add.image(x, y, 'computador', 'carcasa').setScale(COMPUTADOR.escala);
     return computador.setOrigin(0.5, 1 - lado / (2 * computador.displayHeight));

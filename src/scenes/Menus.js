@@ -65,6 +65,7 @@ export class Introduccion extends Phaser.Scene {
     const planos = datos.descenso ? [
       { src: escalera, alt: 'Felipito baja con el extintor por la escalera de emergencia.', texto: 'Un piso a la vez.', pensamiento: true },
       { src: monitores, piso: 'Piso 22', alt: 'Los monitores encendidos giran sus ojos rojos hacia Felipito.', texto: '¿Hola? ¿Hay alguien ahí?' },
+      { src: monitores, piso: 'Piso 22', alt: 'Los ojos rojos de los monitores miran a Felipito.', texto: '¡Se tomaron los computadores!' },
       { src: monitores, piso: 'Piso 22', alt: 'Todos los ojos de las pantallas miran hacia la puerta.', texto: 'Esos ojos… me siguen. Tengo que pasar sin que me alcancen.', pensamiento: true }
     ] : [
       { src: despierto, alt: 'Felipito levanta la cabeza del escritorio.', texto: '¿Me quedé dormido en el trabajo? ¿Qué hora es?' },
