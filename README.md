@@ -43,7 +43,7 @@ Declaramos que el trabajo presentado se realizó durante la jornada del lunes 23
 ## Materiales desarrollados previamente
 | Recurso | Autor | Enlace público | Licencia | Cambios realizados |
 | --- | --- | --- | --- | --- |
-| Imagen, música, sonido, fuente o biblioteca | | | | |
+| Arte original de Felipito y el extintor (fuentes Resprite) | Rocío · Arte y audio | [docs/arte/fuentes](docs/arte/fuentes/) | Por definir para estos archivos | Fuentes originales conservadas sin cambios |
 
 ## Licencia
 Indicar la licencia del código y añadir el archivo LICENSE correspondiente.
