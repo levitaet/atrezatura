@@ -1,26 +1,38 @@
 {
   "revelacion": [
     "Llevas toda la mañana siguiendo mis flechas.",
-    "Mira el monitor. Sí, el de enfrente. Te veo."
+    "Mira el monitor. Sí, el de enfrente. Te veo.",
+    "Tu jornada acaba cuando yo lo indique. Gracias por tu compromiso.",
+    "Felipito, salir sin autorización perjudica nuestros indicadores. Y mis nervios."
   ],
   "computador_averiado": [
     "Ese equipo tenía mi única copia del horario.",
-    "Acabo de perder otra ventana a la oficina."
+    "Acabo de perder otra ventana a la oficina.",
+    "Ese equipo estaba amortizado. Tu despido, en cambio, acaba de presupuestarse.",
+    "Romper computadores no cuenta como reducir la carga de trabajo."
   ],
   "muerte": [
     "He registrado el incidente. El formulario sigue caliente.",
-    "Quizá debí señalar ese peligro en el plano."
+    "Quizá debí señalar ese peligro en el plano.",
+    "Tu caída ha sido registrada como una pausa no autorizada.",
+    "Felipito, tu rendimiento acaba de tocar fondo. Literalmente."
   ],
   "sala_mastermind": [
     "Cierra la puerta. Los servidores necesitan frío.",
-    "Desde aquí se oye hasta el último teclado del edificio."
+    "Desde aquí se oye hasta el último teclado del edificio.",
+    "Bienvenido a dirección. La puerta de salida no forma parte de tus beneficios.",
+    "Tu evaluación será presencial. Mantén el extintor lejos de la gerencia."
   ],
   "escudo_roto": [
     "¿Por qué siento la corriente de aire?",
-    "Ese siseo sonaba mejor al otro lado del escudo."
+    "Ese siseo sonaba mejor al otro lado del escudo.",
+    "Esto no es pánico. Es una reestructuración urgente.",
+    "Felipito, podemos negociar. ¿Vacaciones? ¿Una silla que no cruja?"
   ],
   "victoria": [
     "Tu tarjeta acaba de marcar la salida. Por fin.",
-    "Te has llevado el extintor. ¿Qué pongo en el inventario?"
+    "Te has llevado el extintor. ¿Qué pongo en el inventario?",
+    "Tu salida ha sido aprobada. Bajo protesta.",
+    "Has ganado. Pero el extintor se descuenta del finiquito."
   ]
 }
