@@ -14,6 +14,8 @@ import { conectarTutorial } from '../reglas/tutorial.js';
 import { mostrarHud } from './Hud.js';
 import oficina from '../arte/fondos/oficina.png';
 import oficinaAlerta from '../arte/fondos/oficina-alerta.png';
+import placa from '../arte/tutorial/empleado-del-mes.png';
+import premiado from '../arte/tutorial/figura-premiada.png';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
@@ -32,6 +34,8 @@ export default class Juego extends Phaser.Scene {
     this.load.spritesheet('felipito-con-extintor', 'assets/sprites/felipito-con-extintor.png', { frameWidth: 128, frameHeight: 128 });
     this.load.image('oficina-fondo', oficina);
     this.load.image('oficina-alerta', oficinaAlerta);
+    this.load.image('placa-empleado', placa);
+    this.load.image('figura-premiada', premiado);
     for (const nombre of ['extintor', 'mastermind']) {
       this.load.image(nombre, `assets/sprites/${nombre}.png`);
     }

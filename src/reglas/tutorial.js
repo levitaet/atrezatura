@@ -42,9 +42,13 @@ export function conectarTutorial(escena) {
   const muros = escena.physics.add.staticGroup();
   const munecos = (nivel.entidades.get('T') ?? []).map((marcador) => {
     marcador.setVisible(false);
-    crearTexturaMuneco(escena);
     const piso = marcador.y + lado / 2;
-    const dibujo = escena.add.image(marcador.x, piso, 'muneco-temp').setOrigin(0.5, 1);
+    // La placa queda colgada mientras la figura con el mismo retrato cae a los pies de Felipito.
+    for (const clave of ['placa-empleado', 'figura-premiada']) {
+      escena.textures.get(clave).setFilter(Phaser.Textures.FilterMode.NEAREST);
+    }
+    escena.add.image(marcador.x, piso - 3 * lado, 'placa-empleado').setOrigin(0.5, 1).setDepth(1);
+    const dibujo = escena.add.image(marcador.x, piso, 'figura-premiada').setOrigin(0.5, 1);
     const cuerpo = escena.add.rectangle(marcador.x, piso - lado, lado - 6, lado * 2);
     cuerpo.setVisible(false);
     muros.add(cuerpo);
@@ -102,22 +106,4 @@ export function conectarTutorial(escena) {
     mundo.off('worldstep', paso);
     escena.events.off('update', temblar);
   });
-}
-
-// Cartel de cartón "EMPLEADO DEL MES" con diana, provisorio hasta tener arte (32 × 64).
-function crearTexturaMuneco(escena) {
-  if (escena.textures.exists('muneco-temp')) return;
-  const g = escena.make.graphics({ add: false });
-  g.fillStyle(0x8a6a44).fillRect(14, 50, 4, 14); // pata
-  g.fillStyle(0x5c4630).fillRect(6, 61, 20, 3); // base
-  g.fillStyle(0xd9b98a).fillRect(2, 2, 28, 50); // cartón
-  g.lineStyle(2, 0x8a6a44).strokeRect(2, 2, 28, 50);
-  g.fillStyle(0xf2c14e).fillCircle(16, 16, 7); // cabeza
-  g.fillStyle(0xffffff).fillRect(9, 24, 14, 16); // camisa
-  g.fillStyle(0xc0392b).fillRect(15, 25, 2, 10); // corbata
-  g.lineStyle(2, 0xfe6960).strokeCircle(16, 32, 11); // diana
-  g.fillStyle(0xfe6960).fillCircle(16, 32, 3);
-  g.fillStyle(0x3a2a1a).fillRect(6, 44, 20, 5); // placa
-  g.generateTexture('muneco-temp', 32, 64);
-  g.destroy();
 }
