@@ -71,6 +71,12 @@
   font: clamp(1.6rem, 5vw, 3rem)/1.2 var(--fuente-titulo);
   text-shadow: 4px 4px 0 #0b1620;
 }
+.logo-inicio {
+  display: block;
+  width: min(84vw, 633px);
+  height: auto;
+  image-rendering: pixelated;
+}
 /* Botones pixel: sin bordes redondeados y con sombra dura de 4 px. */
 .menu button {
   width: min(16rem, 90%);

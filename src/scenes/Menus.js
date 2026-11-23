@@ -11,7 +11,7 @@ function mostrarMenu(escena, titulo, opciones, contenido) {
   const panel = document.createElement('section');
   panel.className = 'menu';
   const encabezado = document.createElement('h1');
-  encabezado.textContent = titulo;
+  encabezado.append(titulo);
   panel.append(encabezado);
   if (contenido) panel.append(contenido);
   let elegida = false;
@@ -37,7 +37,11 @@ export class Inicio extends Phaser.Scene {
   constructor() { super('Inicio'); }
 
   create() {
-    mostrarMenu(this, 'MasterIA', [
+    const logo = new Image();
+    logo.src = `${import.meta.env.BASE_URL}assets/menu/masteria.png`;
+    logo.alt = 'MasterIA';
+    logo.className = 'logo-inicio';
+    mostrarMenu(this, logo, [
       ['Empezar', () => {
         this.registry.remove('nivelActual'); // empezar siempre desde el primer nivel (o ?nivel=)
         this.scene.start('Introduccion', { descenso: false });
