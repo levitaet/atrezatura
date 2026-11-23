@@ -92,7 +92,7 @@ export const MASTERMIND = {
 };
 
 export const TERMINAL = {
-  segundos: 25, // tiempo para hackear a la Mastermind antes de que restaure su sistema
+  segundos: 60, // tiempo para hackear a la Mastermind antes de que restaure su sistema (la Nota Verde pausa el reloj)
   letrasPorTecla: 3, // cuántas letras escribe cada tecla apretada
   tiempoAlerta: 1800, // ms para responder una alerta con la flecha pedida
   castigoAlerta: 4, // segundos que se pierden si la alerta no se responde bien
