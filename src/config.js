@@ -119,6 +119,7 @@ const depurar = new URLSearchParams(window.location.search).has('debug');
 
 export const config = {
   type: Phaser.AUTO,
+  pixelArt: true,
   parent: 'juego',
   width: 960,
   height: 540,
