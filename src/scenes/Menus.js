@@ -48,7 +48,10 @@ export class Inicio extends Phaser.Scene {
       </dl>
       <p>${mover ? 'Pulsa ↑ para subir con el chorro hacia abajo.' : 'Dispara hacia abajo (↓) para subir.'} Combina dos flechas para una diagonal. Suéltalas en el suelo para recargar.</p>`;
     mostrarMenu(this, 'MasterIA', [
-      ['Empezar', () => this.scene.start('Juego')]
+      ['Empezar', () => {
+        this.registry.remove('nivelActual'); // empezar siempre desde el primer nivel (o ?nivel=)
+        this.scene.start('Juego');
+      }]
     ], controles);
   }
 }

@@ -33,23 +33,29 @@ export function conectarRevelacion(escena) {
     escena.physics.add.overlap(jugador, zona, revelar);
   }
 
-  function revelar() {
+  // instantaneo: para niveles que empiezan ya revelados (sin destello ni diálogo).
+  function revelar(instantaneo = false) {
     if (estado.revelado) return;
     estado.revelado = true;
 
     const camara = escena.cameras.main;
-    camara.flash(300, 255, 70, 90);
-    camara.shake(350, 0.006);
+    const duracion = instantaneo ? 0 : 1200;
+    if (!instantaneo) {
+      camara.flash(300, 255, 70, 90);
+      camara.shake(350, 0.006);
+    }
     camara.setBackgroundColor(REVELACION.fondo);
     const noche = escena.add.image(camara.width / 2, 0, 'fondo-noche')
-      .setOrigin(0.5, 0).setScrollFactor(0).setDepth(-10).setAlpha(0);
+      .setOrigin(0.5, 0).setScrollFactor(0).setDepth(-10).setAlpha(instantaneo ? 0.8 : 0);
     noche.setScale(Math.max(camara.width / noche.width, camara.height / noche.height));
-    escena.tweens.add({ targets: noche, alpha: 0.8, duration: 1200 });
-    escena.tweens.add({ targets: tinte, fillAlpha: REVELACION.opacidad, duration: 1200, ease: 'Sine.easeOut' });
+    if (!instantaneo) escena.tweens.add({ targets: noche, alpha: 0.8, duration: duracion });
+    if (instantaneo) tinte.setFillStyle(REVELACION.color, REVELACION.opacidad);
+    else escena.tweens.add({ targets: tinte, fillAlpha: REVELACION.opacidad, duration: duracion, ease: 'Sine.easeOut' });
     for (const disparador of disparadores) disparador.setVisible(false);
 
     escena.events.emit('revelacion');
-    escena.events.emit('dialogo', 'revelacion', {});
+    if (!instantaneo) escena.events.emit('dialogo', 'revelacion', {});
   }
-  escena.revelar = revelar;
+  escena.revelar = () => revelar(false);
+  if (escena.configNivel?.revelado) revelar(true);
 }

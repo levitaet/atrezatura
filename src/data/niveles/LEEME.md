@@ -1,6 +1,6 @@
 # Diseñar un nivel
 
-Abre `base.txt`, mueve un símbolo, guarda, recarga la página con `npm run dev` en marcha y pulsa **Empezar**. Cada carácter ocupa una celda de 32 × 32 px. La esquina superior izquierda corresponde a la primera fila y la primera columna. El mapa puede ser más grande que la pantalla.
+Los niveles del juego son `tutorial.txt` y `oficina.txt` (el orden está en `NIVELES`, en `src/config.js`). Abre uno, mueve un símbolo, guarda, recarga la página con `npm run dev` en marcha y pulsa **Empezar**. Cada carácter ocupa una celda de 32 × 32 px. La esquina superior izquierda corresponde a la primera fila y la primera columna. El mapa puede ser más grande que la pantalla.
 
 Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejemplo `prueba.txt`. Añade `/?nivel=prueba` a la dirección local de Vite. La página principal abre `base.txt`. En producción, ejecuta de nuevo `npm run build` para incluir los cambios.
 
@@ -19,6 +19,7 @@ Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejem
 | `~` | Cable. Hace daño hasta que se avería su computador. |
 | `!` | Disparador de la revelación. Ocurre una vez, al cruzar su columna. |
 | `o` | Completo italiano. Al recogerlo llena el tanque del extintor. |
+| `?` | Cartel de texto. Los textos están en `src/data/carteles.json`, una lista por nivel, en orden de izquierda a derecha. |
 
 **Qué computador controla qué:** cada puerta `D` y cada cable `~` lo controla el computador `c` más cercano. Pon cada computador cerca de lo que debe abrir o apagar. Un peligro sin computadores en el mapa no se desactiva nunca.
 
@@ -34,3 +35,7 @@ Todas las filas deben tener el mismo ancho. Guarda en UTF-8. Usa saltos de líne
 ```
 
 En esta etapa el juego dibuja los elementos interactivos con su símbolo y color. Los comportamientos de daño, recarga, puertas y victoria se incorporan en sus tareas. Para integrar al jugador, la escena expone `this.nivel.inicio` en píxeles (centro de la celda) y `this.nivel.solidos`, el grupo estático que se pasa a `physics.add.collider`. Los marcadores se consultan por símbolo, por ejemplo `this.nivel.entidades.get('c') ?? []`.
+
+## Medidas útiles para diseñar
+
+Felipito mide 1 × 2 celdas. Salto normal: ~4 celdas de alto y ~8 de largo corriendo. Súper salto (W + ↓): ~10 celdas de alto. Salto + chorro lateral: ~10 celdas de largo. Las paredes de 3 celdas piden mantener W; las de 8 o 9, súper salto.

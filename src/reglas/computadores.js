@@ -165,7 +165,9 @@ function crearPuerta(escena, marcador, solidos) {
   const abajo = marcador.y + lado / 2;
   let arriba = 0;
   for (const bloque of solidos.getChildren()) {
-    const esMuro = bloque.height === lado && Math.abs(bloque.x - marcador.x) < 1;
+    // Muros (#): rectángulos que cubren la columna de la puerta (las plataformas finas no cuentan).
+    const cubreColumna = Math.abs(bloque.x - marcador.x) <= bloque.width / 2;
+    const esMuro = bloque.body.checkCollision.down && cubreColumna;
     const bordeInferior = bloque.y + bloque.height / 2;
     if (esMuro && bordeInferior <= marcador.y && bordeInferior > arriba) arriba = bordeInferior;
   }

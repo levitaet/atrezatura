@@ -7,6 +7,13 @@ export const TAMANO_CELDA = 32;
 // Unidades: píxeles, px/s (velocidad), px/s² (aceleración) y milisegundos (ms).
 // ---------------------------------------------------------------------------
 
+// Orden de los niveles. Al cruzar la salida de uno se pasa al siguiente; la del último gana el juego.
+// revelado: el nivel empieza con la oficina ya tomada por la IA (sin pasar por el disparador !).
+export const NIVELES = [
+  { nombre: 'tutorial' },
+  { nombre: 'oficina', revelado: true }
+];
+
 export const MUNDO = {
   gravedad: 1000 // px/s². Más alto = cae más rápido y los saltos se sienten más pesados.
 };

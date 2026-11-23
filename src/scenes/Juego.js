@@ -1,18 +1,24 @@
 import Phaser from 'phaser';
 import { crearNivel } from '../niveles/crearNivel.js';
 import Jugador from '../objetos/Jugador.js';
-import { CAMARA, TAMANO_CELDA } from '../config.js';
+import { CAMARA, NIVELES, TAMANO_CELDA } from '../config.js';
 import { conectarMonitor } from '../dialogos.js';
 import { conectarCorazones } from '../reglas/corazones.js';
 import { conectarComputadores } from '../reglas/computadores.js';
 import { conectarRevelacion } from '../reglas/revelacion.js';
 import { conectarMastermind } from '../reglas/mastermind.js';
 import { conectarCompletos } from '../reglas/completo.js';
+import { conectarCarteles } from '../reglas/carteles.js';
 import { mostrarHud } from './Hud.js';
 
 export default class Juego extends Phaser.Scene {
   constructor() {
     super('Juego');
+  }
+
+  // datos.nivel: nivel a cargar (lo usa el paso de un nivel al siguiente).
+  init(datos) {
+    this.datosNivel = datos ?? {};
   }
 
   // Sprites exportados con tools/exportar_resprite.py (Vite sirve public/ en la raíz).
@@ -40,7 +46,14 @@ export default class Juego extends Phaser.Scene {
     };
     this.input.keyboard.on('keydown-ESC', pausar);
     this.input.keyboard.on('keydown-P', pausar);
-    const nombre = new URLSearchParams(window.location.search).get('nivel') ?? 'base';
+    // Prioridad: nivel pedido al pasar de nivel → nivel en curso (reintentar) → ?nivel= → el primero.
+    const nombre = this.datosNivel.nivel
+      ?? this.registry.get('nivelActual')
+      ?? new URLSearchParams(window.location.search).get('nivel')
+      ?? NIVELES[0].nombre;
+    this.registry.set('nivelActual', nombre);
+    this.nombreNivel = nombre;
+    this.configNivel = NIVELES.find((n) => n.nombre === nombre) ?? {};
     try {
       this.nivel = crearNivel(this, nombre);
     } catch (error) {
@@ -54,6 +67,7 @@ export default class Juego extends Phaser.Scene {
     conectarComputadores(this);
     conectarMastermind(this);
     conectarCompletos(this);
+    conectarCarteles(this);
     conectarRevelacion(this);
     mostrarHud(this);
   }
@@ -80,8 +94,19 @@ export default class Juego extends Phaser.Scene {
     this.events.once('shutdown', () => this.events.off('resume', soltarTeclas));
   }
 
+  // Cruzar la salida: pasa al siguiente nivel o, si era el último, gana el juego.
   ganar() {
-    this.terminar('Victoria');
+    const i = NIVELES.findIndex((n) => n.nombre === this.nombreNivel);
+    const siguiente = i >= 0 ? NIVELES[i + 1] : undefined;
+    if (!siguiente) {
+      this.registry.remove('nivelActual');
+      this.terminar('Victoria');
+      return;
+    }
+    if (this.enTransicion) return;
+    this.enTransicion = true;
+    this.cameras.main.fadeOut(450, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => this.scene.restart({ nivel: siguiente.nombre }));
   }
 
   perder() {

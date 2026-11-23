@@ -34,8 +34,13 @@ export function conectarCorazones(escena) {
 
   // --- Peligros: los pinchos (^) dañan en la mitad inferior de su celda.
   escena.peligros = escena.physics.add.staticGroup();
+  // En la oficina los "pinchos" son chinches regadas por el suelo.
+  crearTexturaChinches(escena);
+  const texturaChinches = escena.textures.exists('chinches') ? 'chinches' : 'chinches-temp';
   for (const pincho of nivel.entidades.get('^') ?? []) {
-    const zona = escena.add.zone(pincho.x, pincho.y + lado / 4, lado - 6, lado / 2).setData('tipo', 'pinchos');
+    pincho.setVisible(false);
+    escena.add.image(pincho.x, pincho.y + lado / 2, texturaChinches).setOrigin(0.5, 1);
+    const zona = escena.add.zone(pincho.x, pincho.y + lado / 4, lado - 6, lado / 2).setData('tipo', 'chinches');
     escena.peligros.add(zona);
   }
   escena.physics.add.overlap(jugador, escena.peligros, (_j, peligro) => danar(peligro.getData('tipo') ?? 'peligro'));
@@ -81,4 +86,19 @@ export function conectarCorazones(escena) {
     escena.cameras.main.centerOn(x, y);
   }
   escena.danarJugador = danar;
+}
+
+// Chinches provisorias (3 por celda) hasta que exista public/assets/sprites/chinches.png.
+function crearTexturaChinches(escena) {
+  if (escena.textures.exists('chinches-temp')) return;
+  const g = escena.make.graphics({ add: false });
+  const colores = [0xfe6960, 0x6e9eed, 0xffd34d];
+  // Chinches con la cabeza en el suelo y la punta hacia arriba.
+  [6, 16, 26].forEach((x, i) => {
+    g.fillStyle(0xd7dde5).fillRect(x - 1, 3, 2, 9); // punta
+    g.fillStyle(colores[i]).fillEllipse(x, 13, 10, 5); // cabeza
+    g.fillStyle(0xffffff, 0.5).fillRect(x - 3, 12, 2, 1); // brillo
+  });
+  g.generateTexture('chinches-temp', 32, 16);
+  g.destroy();
 }
