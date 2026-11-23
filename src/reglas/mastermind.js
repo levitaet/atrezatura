@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { MASTERMIND, TAMANO_CELDA } from '../config.js';
 import { mostrarTerminal } from './terminal.js';
+import { numeroDanio } from './danio.js';
 
 const COLOR = {
   pantalla: 0x1d2433,
@@ -121,10 +122,12 @@ export function conectarMastermind(escena) {
 
   // --- Daño por chorro (por paso de física, como los computadores)
   let vida = MASTERMIND.resistencia;
+  const objetivoDanio = {}; // para espaciar los números de daño
   let golpeadaHasta = -Infinity;
   const paso = (delta) => {
     if (derrotada || escudoActivo || !jugador.extintor.alcanza(limites)) return;
     vida -= delta;
+    numeroDanio(escena, objetivoDanio, cx, cy - alto / 2);
     golpeadaHasta = jugador.reloj + 90;
     if (vida <= 0) hackear();
   };
@@ -187,6 +190,7 @@ export function conectarMastermind(escena) {
   escena.events.on('update', actualizar);
 
   function derrotar() {
+    numeroDanio(escena, objetivoDanio, cx, cy - alto / 2, true);
     derrotada = true;
     estado.mastermindDerrotada = true;
     descarga.body.enable = false;

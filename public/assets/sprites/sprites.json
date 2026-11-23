@@ -34,6 +34,13 @@
     "cuadros": 1,
     "fps": 10
   },
+  "juan-carlos-bodoque": {
+    "archivo": "juan-carlos-bodoque.png",
+    "anchoCuadro": 32,
+    "altoCuadro": 32,
+    "cuadros": 1,
+    "fps": 10
+  },
   "mastermind": {
     "archivo": "mastermind.png",
     "anchoCuadro": 128,

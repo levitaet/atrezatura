@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { COMPUTADOR, TAMANO_CELDA } from '../config.js';
+import { numeroDanio } from './danio.js';
 
 const TEXTURA_HUMO = 'humo-temp';
 const COLOR = {
@@ -91,6 +92,7 @@ export function conectarComputadores(escena) {
     for (const c of computadores) {
       if (c.averiado || !extintor.alcanza(c.limites)) continue;
       c.vida -= delta;
+      numeroDanio(escena, c, c.x, c.y - lado / 2);
       c.golpeadoHasta = jugador.reloj + 90;
       if (c.vida <= 0) averiar(c);
     }
@@ -124,6 +126,7 @@ export function conectarComputadores(escena) {
 
   function averiar(c) {
     c.averiado = true;
+    numeroDanio(escena, c, c.x, c.y - lado, true);
     c.vida = 0;
     c.objeto.x = c.x;
     c.fondo.setFillStyle(COLOR.averiado);

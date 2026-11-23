@@ -22,6 +22,6 @@ Para actualizar un dibujo: reemplaza su `.resprite` aquí, con el mismo nombre, 
 | `mastermind.resprite` | La Mastermind | 128 × 128 | 1 |
 | `fondo-noche.resprite` | Fondo nocturno de ciudad | 256 × 256 | 1 |
 | `completo-italiano.resprite` | Completo italiano | 128 × 128 | 1 |
-| `juan-carlos-bodoque.resprite` | Juan Carlos Bodoque. **No se publica en el juego** (ver abajo) | 32 × 32 | 1 |
+| `juan-carlos-bodoque.resprite` | Juan Carlos Bodoque, presentador de la Nota Verde en la terminal final (ver abajo) | 32 × 32 | 1 |
 
-**Licencias.** El arte original del equipo se publica con la licencia que el equipo elija. Juan Carlos Bodoque es un personaje de *31 Minutos* con derechos de autor de terceros: el script no lo exporta a `public/` y no debe usarse en el juego sin permiso.
+**Licencias.** El arte original del equipo se publica con la licencia que el equipo elija. Juan Carlos Bodoque es un personaje de *31 Minutos* (derechos de sus autores); el dibujo es una reinterpretación pixel art hecha por el equipo como homenaje, porque el evento pide un guiño a 31 Minutos.

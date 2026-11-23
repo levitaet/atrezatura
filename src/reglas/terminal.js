@@ -125,9 +125,16 @@ export function mostrarTerminal(escena, { alGanar, alPerder }) {
   function leer(lineasNota) {
     const caja = document.createElement('div');
     caja.className = 'terminal-lectura';
+    // Juan Carlos Bodoque (guiño a 31 Minutos) presenta la Nota Verde.
     caja.innerHTML = `
       <em>(Felipito se detiene a leer la nota…)</em>
-      <pre></pre>
+      <div class="terminal-lectura-cuerpo">
+        <figure>
+          <img src="assets/sprites/juan-carlos-bodoque.png" alt="Juan Carlos Bodoque, presentador de la Nota Verde" width="160" height="160">
+          <figcaption>J. C. Bodoque<br>Nota Verde</figcaption>
+        </figure>
+        <pre></pre>
+      </div>
       <span class="terminal-intro-empezar" hidden>Aprieta cualquier tecla para seguir hackeando</span>`;
     caja.querySelector('pre').textContent = lineasNota.join('\n');
     panel.append(caja);

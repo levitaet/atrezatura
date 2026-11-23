@@ -45,6 +45,7 @@ Declaramos que el trabajo presentado se realizó durante la jornada del lunes 23
 | --- | --- | --- | --- | --- |
 | Arte original de Felipito y el extintor (fuentes Resprite) | Rocío · Arte y audio | [docs/arte/fuentes](docs/arte/fuentes/) | Por definir para estos archivos | Fuentes originales conservadas sin cambios |
 | Fuentes Resprite adicionales (Noche, Mastermind, Juan Carlos Bodoque y completo italiano) | Por confirmar | [docs/arte/fuentes](docs/arte/fuentes/) | Por definir para estos archivos | Fuentes originales conservadas sin cambios |
+| Personaje Juan Carlos Bodoque (homenaje, dibujo pixel art propio del equipo) | Personaje de *31 Minutos* (sus autores) | [docs/arte/fuentes/juan-carlos-bodoque.resprite](docs/arte/fuentes/juan-carlos-bodoque.resprite) | Derechos del personaje de sus autores; se usa como guiño pedido por el evento | Reinterpretación como presentador de la «Nota Verde» en la terminal |
 | Tipografía Press Start 2P (paquete @fontsource/press-start-2p 5.3.0) | The Press Start 2P Project Authors (2012) | [fonts.google.com/specimen/Press+Start+2P](https://fonts.google.com/specimen/Press+Start+2P) | SIL Open Font License 1.1 | Sin cambios |
 | Tipografía VT323 (paquete @fontsource/vt323 5.3.0) | The VT323 Project Authors (2011) | [fonts.google.com/specimen/VT323](https://fonts.google.com/specimen/VT323) | SIL Open Font License 1.1 | Sin cambios |
 

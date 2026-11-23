@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { TAMANO_CELDA, TUTORIAL } from '../config.js';
+import { numeroDanio } from './danio.js';
 
 /**
  * Objetos del tutorial.
@@ -76,6 +77,7 @@ export function conectarTutorial(escena) {
         escena.pensar?.('muneco_sin_espacio');
       }
       m.vida -= delta;
+      numeroDanio(escena, m, m.dibujo.x, m.limites.y);
       m.golpeadoHasta = jugador.reloj + 90;
       if (m.vida <= 0) derribar(m);
     }
@@ -93,6 +95,7 @@ export function conectarTutorial(escena) {
   escena.events.on('update', temblar);
 
   function derribar(m) {
+    numeroDanio(escena, m, m.dibujo.x, m.limites.y - 8, true);
     m.caido = true;
     m.cuerpo.body.enable = false;
     const sentido = jugador.x < m.dibujo.x ? 1 : -1;

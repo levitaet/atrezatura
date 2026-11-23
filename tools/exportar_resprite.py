@@ -28,7 +28,7 @@ SALIDA = os.path.join(RAIZ, 'public', 'assets', 'sprites')
 VISTA_PREVIA = os.path.join(RAIZ, 'docs', 'arte', 'vista-previa.png')
 
 # Dibujos que se muestran en la vista previa pero NO se publican en public/ (por licencia).
-NO_PUBLICAR = {'juan-carlos-bodoque'}
+NO_PUBLICAR = set()  # (Bodoque se publica: es el guiño a 31 Minutos que pide el evento)
 
 
 def leer_resprite(ruta):
