@@ -1,13 +1,19 @@
-# Nombre del juego
+# MasterIA
 
 ## Descripción
-¿Qué hace el jugador y cuál es el objetivo del juego?
+Plataformas 2D en el que una persona oficinista se propulsa con un extintor para escapar de una oficina controlada por una IA.
 
 ## Cómo jugar o ejecutar
-- Enlace a la versión jugable, si existe:
-- Requisitos (sistema operativo, herramientas y versiones):
-- Pasos o comandos de instalación:
-- Pasos o comandos para iniciar el juego:
+Con Node.js 24 LTS y npm, ejecuta desde la raíz del repositorio:
+
+```sh
+npm ci
+npm run dev
+```
+
+Abre la dirección local que imprime Vite. La escena inicial muestra un lienzo vacío de 960 × 540 px, resolución provisional hasta T03. También puedes instalar las dependencias con `npm install`.
+
+Para comprobar la versión de producción, ejecuta `npm run build` y después `npm run preview`. La configuración del juego está en `src/config.js`, las escenas en `src/scenes/`, los mapas y diálogos en `src/data/` y los recursos estáticos en `public/assets/`.
 
 ## Controles
 - Movimiento:
