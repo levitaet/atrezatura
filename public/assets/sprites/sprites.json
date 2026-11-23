@@ -1,0 +1,44 @@
+{
+  "completo-italiano": {
+    "archivo": "completo-italiano.png",
+    "anchoCuadro": 128,
+    "altoCuadro": 128,
+    "cuadros": 1,
+    "fps": 10
+  },
+  "extintor": {
+    "archivo": "extintor.png",
+    "anchoCuadro": 128,
+    "altoCuadro": 128,
+    "cuadros": 1,
+    "fps": 10
+  },
+  "felipito-con-extintor": {
+    "archivo": "felipito-con-extintor.png",
+    "anchoCuadro": 128,
+    "altoCuadro": 128,
+    "cuadros": 2,
+    "fps": 10
+  },
+  "felipito": {
+    "archivo": "felipito.png",
+    "anchoCuadro": 128,
+    "altoCuadro": 128,
+    "cuadros": 11,
+    "fps": 5
+  },
+  "fondo-noche": {
+    "archivo": "fondo-noche.png",
+    "anchoCuadro": 256,
+    "altoCuadro": 256,
+    "cuadros": 1,
+    "fps": 10
+  },
+  "mastermind": {
+    "archivo": "mastermind.png",
+    "anchoCuadro": 128,
+    "altoCuadro": 128,
+    "cuadros": 1,
+    "fps": 10
+  }
+}
