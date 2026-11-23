@@ -42,5 +42,13 @@
   "tanque_vacio": [
     "Tu extintor agotó su presupuesto. Solicita más por escrito.",
     "Sin espuma no hay productividad. Te lo advertí."
+  ],
+  "queda_una_pura": [
+    "Queda una pura. Y esa no se toca.",
+    "Queda una pura... respira, Mastermind. Respira."
+  ],
+  "hackeo_fallido": [
+    "Sistema restaurado. Tu acceso fue revocado con copia a Recursos Humanos.",
+    "¿Hackearme? Primero aprende a llenar la planilla de horas."
   ]
 }

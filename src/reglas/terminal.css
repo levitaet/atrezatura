@@ -1,0 +1,42 @@
+/* Terminal del minijuego final. 'VT323' se usa si se agrega la fuente pixel; si no, monoespaciada. */
+.terminal {
+  position: absolute;
+  inset: 8% 10%;
+  display: flex;
+  flex-direction: column;
+  background: rgb(6 10 8 / 96%);
+  border: 2px solid #3fbf6f;
+  box-shadow: 0 0 24px rgb(63 191 111 / 35%);
+  color: #7dffa8;
+  font: 18px/1.25 'VT323', 'Consolas', 'Courier New', monospace;
+  z-index: 30;
+}
+.terminal header,
+.terminal footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0.75rem;
+  background: #0f2418;
+  color: #b8ffd0;
+}
+.terminal footer { justify-content: center; font-size: 0.85em; opacity: 0.8; }
+.terminal-texto {
+  flex: 1;
+  margin: 0;
+  padding: 0.75rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.terminal-urgente { color: #fe6960; }
+.terminal-alerta {
+  margin: 0 0.75rem 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #fe6960;
+  background: #3a0d12;
+  color: #ffd0cc;
+  text-align: center;
+  animation: terminal-parpadeo 0.25s steps(2) infinite;
+}
+@keyframes terminal-parpadeo { 50% { border-color: #ffd34d; } }

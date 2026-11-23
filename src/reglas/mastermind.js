@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { MASTERMIND, TAMANO_CELDA } from '../config.js';
+import { mostrarTerminal } from './terminal.js';
 
 const COLOR = {
   pantalla: 0x1d2433,
@@ -21,7 +22,8 @@ const COLOR = {
  *   Se debilita con cada uno que se avería; mientras quede uno, el chorro no la daña.
  * - Ataque: cuando el jugador entra a la sala, electrifica el suelo de la sala por turnos
  *   (aviso amarillo → descarga → calma). Sin escudo se desespera y ataca más seguido.
- * - Sin escudo, MASTERMIND.resistencia segundos de chorro acumulado la destruyen.
+ * - Sin escudo, MASTERMIND.resistencia segundos de chorro la dejan sin vida y se abre su terminal
+ *   (minijuego de terminal.js). Hackearla la destruye; si se acaba el tiempo, recupera vida.
  * - Al destruirla se abre la salida. Cruzar la salida abierta gana el nivel.
  * - Si el mapa no tiene M, la salida está abierta desde el principio.
  *
@@ -76,6 +78,7 @@ export function conectarMastermind(escena) {
     estado.escudo = restantesEscudo();
     escena.events.emit('escudo', estado.escudo);
     escudo.setAlpha(0.35 + 0.65 * (estado.escudo / delEscudo.length));
+    if (estado.escudo === 1) escena.events.emit('dialogo', 'queda_una_pura', {});
     if (estado.escudo === 0) romperEscudo();
   };
   escena.events.on('computador-averiado', alAveriar);
@@ -123,8 +126,31 @@ export function conectarMastermind(escena) {
     if (derrotada || escudoActivo || !jugador.extintor.alcanza(limites)) return;
     vida -= delta;
     golpeadaHasta = jugador.reloj + 90;
-    if (vida <= 0) derrotar();
+    if (vida <= 0) hackear();
   };
+
+  // Sin vida: se abre su terminal. El juego queda en pausa mientras se hackea.
+  let hackeando = false;
+  function hackear() {
+    if (hackeando || derrotada) return;
+    hackeando = true;
+    vida = 0;
+    escena.scene.pause();
+    mostrarTerminal(escena, {
+      alGanar: () => {
+        hackeando = false;
+        escena.scene.resume();
+        derrotar();
+      },
+      alPerder: () => {
+        hackeando = false;
+        vida = MASTERMIND.resistencia * MASTERMIND.vidaTrasRestaurar;
+        // El monitor ignora diálogos mientras la escena no está activa: esperar a que se reanude.
+        escena.events.once('resume', () => escena.events.emit('dialogo', 'hackeo_fallido', {}));
+        escena.scene.resume();
+      }
+    });
+  }
   const mundo = escena.physics.world;
   mundo.on('worldstep', paso);
 

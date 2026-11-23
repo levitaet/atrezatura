@@ -66,7 +66,15 @@ export const MASTERMIND = {
   calma: 1800, // ms entre descargas mientras tiene escudo
   calmaDesesperada: 1000, // ms entre descargas cuando ya perdió el escudo
   aviso: 800, // ms en que el suelo parpadea antes de electrificarse
-  descarga: 900 // ms en que el suelo de la sala hace daño
+  descarga: 900, // ms en que el suelo de la sala hace daño
+  vidaTrasRestaurar: 0.5 // si el jugador falla la terminal, recupera esta fracción de su vida
+};
+
+export const TERMINAL = {
+  segundos: 25, // tiempo para hackear a la Mastermind antes de que restaure su sistema
+  letrasPorTecla: 3, // cuántas letras escribe cada tecla apretada
+  tiempoAlerta: 1800, // ms para responder una alerta con la flecha pedida
+  castigoAlerta: 4 // segundos que se pierden si la alerta no se responde bien
 };
 
 export const REVELACION = {
