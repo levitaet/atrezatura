@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import EscenaInicial from './scenes/EscenaInicial.js';
+
+export const TAMANO_CELDA = 32;
 
 export const config = {
   type: Phaser.AUTO,
@@ -18,6 +19,5 @@ export const config = {
       fixedStep: true,
       fps: 60
     }
-  },
-  scene: [EscenaInicial]
+  }
 };

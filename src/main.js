@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
 import { config } from './config.js';
 
-new Phaser.Game(config);
+import EscenaInicial from './scenes/EscenaInicial.js';
+
+new Phaser.Game({ ...config, scene: [EscenaInicial] });

@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Abre la dirección local que imprime Vite. La escena inicial muestra un lienzo vacío de 960 × 540 px, resolución provisional hasta T03. También puedes instalar las dependencias con `npm install`.
+Abre la dirección local que imprime Vite. La escena inicial carga el mapa `base.txt`. Para editarlo o abrir otro mapa, consulta la [leyenda de niveles](src/data/niveles/LEEME.md). También puedes instalar las dependencias con `npm install`.
 
 Para comprobar la versión de producción, ejecuta `npm run build` y después `npm run preview`. La configuración del juego está en `src/config.js`, las escenas en `src/scenes/`, los mapas y diálogos en `src/data/` y los recursos estáticos en `public/assets/`.
 
