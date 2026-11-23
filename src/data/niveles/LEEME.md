@@ -1,6 +1,6 @@
 # Diseñar un nivel
 
-Abre `base.txt`, mueve un símbolo, guarda y recarga la página del juego con `npm run dev` en marcha. Cada carácter ocupa una celda de 32 × 32 px. La esquina superior izquierda corresponde a la primera fila y la primera columna. El mapa puede ser más grande que la pantalla.
+Abre `base.txt`, mueve un símbolo, guarda, recarga la página con `npm run dev` en marcha y pulsa **Empezar**. Cada carácter ocupa una celda de 32 × 32 px. La esquina superior izquierda corresponde a la primera fila y la primera columna. El mapa puede ser más grande que la pantalla.
 
 Para crear otra sala, copia `base.txt` en esta carpeta con otro nombre, por ejemplo `prueba.txt`. Añade `/?nivel=prueba` a la dirección local de Vite. La página principal abre `base.txt`. En producción, ejecuta de nuevo `npm run build` para incluir los cambios.
 
